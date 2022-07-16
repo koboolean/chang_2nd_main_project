@@ -11,6 +11,8 @@
 .packages
 .pub-cache/
 .pub/
+.idea/
+.idea
 build/
 coverage/
 lib/generated_plugin_registrant.dart
