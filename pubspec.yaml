@@ -12,9 +12,9 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2 # icon
-  #firebase_core: ^1.10.6 #firebase core
-  #firebase_auth: ^3.3.4 # auth
-  #cloud_firestore: ^3.1.4 #cloud_firestore
+  firebase_core: ^1.10.6 #firebase core
+  firebase_auth: ^3.3.4 # auth
+  cloud_firestore: ^3.1.4 #cloud_firestore
   provider: ^6.0.2 #provider
   google_fonts: ^2.2.0 #google Fonts
 dev_dependencies:
@@ -24,3 +24,12 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: SpoqaHanSansNeo
+      fonts:
+        - asset: fonts/SpoqaHanSansNeo-Bold.ttf
+        - asset: fonts/SpoqaHanSansNeo-Light.ttf
+        - asset: fonts/SpoqaHanSansNeo-Medium.ttf
+        - asset: fonts/SpoqaHanSansNeo-Regular.ttf
+        - asset: fonts/SpoqaHanSansNeo-Thin.ttf
+          style: italic
