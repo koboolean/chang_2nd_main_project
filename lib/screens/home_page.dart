@@ -1,9 +1,8 @@
-import 'package:chang_2nd_main_project/login_page.dart';
-import 'package:chang_2nd_main_project/main.dart';
+import 'package:chang_2nd_main_project/screens/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'auth_service.dart';
+import '../services/auth_service.dart';
 
 /// 홈페이지
 class HomePage extends StatefulWidget {

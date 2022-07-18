@@ -27,9 +27,9 @@ flutter:
   fonts:
     - family: SpoqaHanSansNeo
       fonts:
-        - asset: fonts/SpoqaHanSansNeo-Bold.ttf
-        - asset: fonts/SpoqaHanSansNeo-Light.ttf
-        - asset: fonts/SpoqaHanSansNeo-Medium.ttf
-        - asset: fonts/SpoqaHanSansNeo-Regular.ttf
-        - asset: fonts/SpoqaHanSansNeo-Thin.ttf
+        - asset: assets/fonts/SpoqaHanSansNeo-Bold.ttf
+        - asset: assets/fonts/SpoqaHanSansNeo-Light.ttf
+        - asset: assets/fonts/SpoqaHanSansNeo-Medium.ttf
+        - asset: assets/fonts/SpoqaHanSansNeo-Regular.ttf
+        - asset: assets/fonts/SpoqaHanSansNeo-Thin.ttf
           style: italic
