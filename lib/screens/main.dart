@@ -1,5 +1,5 @@
-import 'package:chang_2nd_main_project/screens/home_page.dart';
-import 'package:chang_2nd_main_project/screens/login_page.dart';
+import 'package:chang_2nd_main_project/screens/home.dart';
+import 'package:chang_2nd_main_project/screens/login.dart';
 import 'package:chang_2nd_main_project/services/auth_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
