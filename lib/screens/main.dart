@@ -1,4 +1,4 @@
-import 'package:chang_2nd_main_project/screens/addSchedule.dart';
+import 'package:chang_2nd_main_project/screens/add_schedule.dart';
 import 'package:chang_2nd_main_project/screens/home.dart';
 import 'package:chang_2nd_main_project/screens/login.dart';
 import 'package:chang_2nd_main_project/services/auth_service.dart';
