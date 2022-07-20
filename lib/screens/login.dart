@@ -1,3 +1,4 @@
+import 'package:chang_2nd_main_project/screens/addSchedule.dart';
 import 'package:chang_2nd_main_project/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -67,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                           // HomePage로 이동
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(builder: (context) => HomePage()),
+                            MaterialPageRoute(builder: (context) => AddSchedule()),
                           );
                         },
                         onError: (err) {

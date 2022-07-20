@@ -1,3 +1,4 @@
+import 'package:chang_2nd_main_project/screens/addSchedule.dart';
 import 'package:chang_2nd_main_project/screens/home.dart';
 import 'package:chang_2nd_main_project/screens/login.dart';
 import 'package:chang_2nd_main_project/services/auth_service.dart';
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
     final user = context.read<AuthService>().currentUser();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: user == null ? LoginPage() : HomePage(),
+      home: user == null ? LoginPage() : AddSchedule(),
     );
   }
 }
