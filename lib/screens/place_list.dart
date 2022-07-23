@@ -25,55 +25,99 @@ class _PlaceListState extends State<PlaceList> {
           body: DefaultTabController(
             length: 3,
             child: Scaffold(
+              //appbar
               appBar: AppBar(
                 elevation: 0,
                 backgroundColor: Colors.white,
                 centerTitle: false,
+                leading: InkWell(
+                  customBorder: CircleBorder(),
+                  onTap: () {},
+                  child: Icon(
+                    Icons.arrow_back_ios,
+                    color: Colors.black,
+                    size: 18,
+                  ),
+                ),
+                title: const Text(
+                  "제주도",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 17,
+                  ),
+                ),
+                actions: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 15.0),
+                    child: Icon(
+                      Icons.search,
+                      color: Colors.black,
+                    ),
+                  )
+                ],
                 bottom: PreferredSize(
-                  preferredSize: const Size(double.infinity, kToolbarHeight),
+                  preferredSize: const Size(double.infinity, 100),
                   child: Padding(
                     padding: const EdgeInsets.only(
                       left: 18.0,
                       right: 18.0,
                     ),
-                    child: const TabBar(
-                      labelColor: Colors.black,
-                      indicatorColor: Colors.black,
-                      indicator: UnderlineTabIndicator(
-                          borderSide: BorderSide(width: 2.0),
-                          insets: EdgeInsets.only(left: 1, right: 1)),
-                      tabs: [
-                        Tab(
-                            child: Text(
-                          "맛집",
-                          style: TextStyle(
-                            fontSize: 16,
+                    child: Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () {},
+                          child: Row(
+                            children: [
+                              Text(
+                                "애월",
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              InkWell(
+                                  customBorder: CircleBorder(),
+                                  onTap: () {},
+                                  child: Icon(Icons.arrow_drop_down))
+                            ],
                           ),
-                        )),
-                        Tab(
-                            child: Text(
-                          "숙소",
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
-                        )),
-                        Tab(
-                            child: Text(
-                          "관광지",
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
-                        )),
+                        ),
+                        const TabBar(
+                          labelColor: Color.fromRGBO(221, 81, 37, 0),
+                          labelStyle: TextStyle(fontWeight: FontWeight.bold),
+                          unselectedLabelColor: Color.fromRGBO(221, 81, 37, 0),
+                          indicator: UnderlineTabIndicator(
+                              borderSide: BorderSide(
+                                width: 2.0,
+                              ),
+                              insets: EdgeInsets.only(left: 1, right: 1)),
+                          tabs: [
+                            Tab(
+                                child: Text(
+                                  "맛집",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                )),
+                            Tab(
+                                child: Text(
+                                  "숙소",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                )),
+                            Tab(
+                                child: Text(
+                                  "관광지",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                )),
+                          ],
+                        ),
                       ],
                     ),
-                  ),
-                ),
-                title: const Text(
-                  "애월",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24,
                   ),
                 ),
               ),
@@ -103,17 +147,51 @@ class Dining extends StatefulWidget {
 class _DiningState extends State<Dining> {
   @override
   Widget build(BuildContext context) {
+    // 전체 Column 구조
     return Column(
       children: [
-        SingleChildScrollView(
-          child: Row(
-            children: [
-              Text("키워드"),
-              Text("키워드"),
-              Text("키워드"),
-            ],
-          ),
+        // 키워드 여백 조정
+        Padding(
+          padding: const EdgeInsets.only(top: 8.0, left: 8.0),
+
+          // Listview 높이 지정을 위한 sized box
+          child: SizedBox(
+              height: 36,
+
+              // 키워드 Listview
+              child: ListView.builder(
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemCount: 6,
+                itemBuilder: (context, index) {
+                  // 키워드 박스
+                  return Container(
+                    height: 28,
+                    width: 66,
+                    margin: EdgeInsets.fromLTRB(0, 4, 8, 10),
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          width: 1,
+                          color: Colors.grey[500]!,
+                        ),
+                        borderRadius: BorderRadius.circular(16),
+                        color: Colors.white),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        "제주도",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              )),
         ),
+
+        // 키워드에 따른 음식점 리스트
         Expanded(
           child: ListView.builder(
             itemCount: 6,
@@ -121,37 +199,114 @@ class _DiningState extends State<Dining> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  //Stack 구조
                   Stack(
                     children: [
+                      //사진 박스
                       Padding(
                         padding: const EdgeInsets.only(left: 18.0, right: 18.0),
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(10)),
                             color: Colors.grey,
+
+                            //사진 삽입
+                            image: DecorationImage(
+                              image: AssetImage(
+                                  "assets/images/login_background.jpeg"),
+                              fit: BoxFit.fill,
+                            ),
                           ),
                           width: double.maxFinite,
                           height: 200,
                         ),
                       ),
+                      // 하트 아이콘
                       Positioned(
                         top: 10,
-                        right: 28,
-                        child: Icon(
-                          Icons.favorite_border,
-                          color: Colors.black,
-                          size: 24,
+                        right: 30,
+                        child: GestureDetector(
+                          onTap: () {
+                            // setState(() => isPressed = !isPressed);
+                          },
+                          child: Container(
+                            height: 30,
+                            width: 30,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[700]!.withOpacity(0.2),
+                              borderRadius: BorderRadius.circular(100),
+                            ),
+                            child:
+                            // (isPressed) ? Icon(
+                            // Icons.favorite_border,
+                            // color: Colors.white,
+                            // size: 24,
+                            // ),
+                            // :
+                            // Icon(
+                            // Icons.favorite,
+                            // color: Colors.red,
+                            // size: 24,
+                            // ),
+                            Icon(
+                              Icons.favorite_border,
+                              color: Colors.white,
+                              size: 24,
+                            ),
+                          ),
+                        ),
+                      ),
+                      // 해시태그 키워드
+                      Positioned(
+                        bottom: 10,
+                        left: 28,
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: Text(
+                                "#1인 맛집",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: Text(
+                                "#12,000원",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 18.0),
-                    child: Text("맛집 이름"),
+                    padding: const EdgeInsets.only(
+                        top: 2.0, left: 24.0, bottom: 2.0),
+                    child: Text(
+                      "맛집 이름",
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 18.0),
-                    child: Text("음식점 장소"),
+                    padding: const EdgeInsets.only(
+                        top: 2.0, left: 24.0, bottom: 2.0),
+                    child: Text(
+                      "음식점 장소",
+                      style: TextStyle(
+                        fontSize: 12,
+                      ),
+                    ),
                   ),
                 ],
               );

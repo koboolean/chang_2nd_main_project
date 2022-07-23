@@ -1,10 +1,19 @@
 import 'package:chang_2nd_main_project/services/schedule_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+// import 'add_schedule.dart';
+// import 'favorite_list.dart';
+// import 'home.dart';
 import 'schedule_complete.dart';
 
-class SelectWantToGo extends StatelessWidget {
-  const SelectWantToGo({super.key});
+class SelectWantToGo extends StatefulWidget {
+  const SelectWantToGo({Key? key}) : super(key: key);
+
+  @override
+  State<SelectWantToGo> createState() => _SelectWantToGoState();
+}
+
+class _SelectWantToGoState extends State<SelectWantToGo> {
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +40,7 @@ class SelectWantToGo extends StatelessWidget {
                   backgroundColor: Colors.transparent,
                   elevation: 0,
                   bottom: PreferredSize(
-                    preferredSize: Size.fromHeight(150),
+                    preferredSize: Size.fromHeight(130),
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 18),
                       child: Column(
@@ -98,62 +107,7 @@ class SelectWantToGo extends StatelessWidget {
                     //           SizedBox(
                     //             width: 50,
                     //           ),
-                    //           TextButton(
-                    //             onPressed: () {},
-                    //             style: TextButton.styleFrom(
-                    //               padding: EdgeInsets.symmetric(vertical: 10),
-                    //               primary: Colors.black,
-                    //               backgroundColor: Colors.grey,
-                    //               minimumSize: Size(43, 22),
-                    //               shape: RoundedRectangleBorder(
-                    //                 borderRadius: BorderRadius.circular(100),
-                    //               ),
-                    //               textStyle: TextStyle(fontSize: 11),
-                    //             ),
-                    //             child: Text('전체'),
-                    //           ),
-                    //           TextButton(
-                    //             onPressed: () {},
-                    //             style: TextButton.styleFrom(
-                    //               padding: EdgeInsets.symmetric(vertical: 10),
-                    //               primary: Colors.black,
-                    //               backgroundColor: Colors.grey,
-                    //               minimumSize: Size(43, 22),
-                    //               shape: RoundedRectangleBorder(
-                    //                 borderRadius: BorderRadius.circular(100),
-                    //               ),
-                    //               textStyle: TextStyle(fontSize: 11),
-                    //             ),
-                    //             child: Text('1인분 주문가능 식당'),
-                    //           ),
-                    //           TextButton(
-                    //             onPressed: () {},
-                    //             style: TextButton.styleFrom(
-                    //               padding: EdgeInsets.symmetric(vertical: 10),
-                    //               primary: Colors.black,
-                    //               backgroundColor: Colors.grey,
-                    //               minimumSize: Size(43, 22),
-                    //               shape: RoundedRectangleBorder(
-                    //                 borderRadius: BorderRadius.circular(100),
-                    //               ),
-                    //               textStyle: TextStyle(fontSize: 11),
-                    //             ),
-                    //             child: Text('카페'),
-                    //           ),
-                    //           TextButton(
-                    //             onPressed: () {},
-                    //             style: TextButton.styleFrom(
-                    //               padding: EdgeInsets.symmetric(vertical: 10),
-                    //               primary: Colors.black,
-                    //               backgroundColor: Colors.grey,
-                    //               minimumSize: Size(43, 22),
-                    //               shape: RoundedRectangleBorder(
-                    //                 borderRadius: BorderRadius.circular(100),
-                    //               ),
-                    //               textStyle: TextStyle(fontSize: 11),
-                    //             ),
-                    //             child: Text('식당'),
-                    //           )
+
                     //         ],
                     //       ),
                     //     ),
@@ -183,17 +137,6 @@ class SelectWantToGo extends StatelessWidget {
                     ),
                   ],
                 ),
-                // bottomNavigationBar: BottomNavigationBar(
-                //   type: BottomNavigationBarType.fixed,
-                //   items: [
-                //     BottomNavigationBarItem(icon: Icon(Icons.home), label: '홈'),
-                //     BottomNavigationBarItem(icon: Icon(Icons.favorite), label: '찜한곳'),
-                //     BottomNavigationBarItem(
-                //         icon: Icon(Icons.flight_takeoff_outlined), label: '여행계획'),
-                //     BottomNavigationBarItem(
-                //         icon: Icon(Icons.account_circle), label: 'MY'),
-                //   ],
-                // ),
               ),
             ),
           );

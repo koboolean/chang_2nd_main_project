@@ -74,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                             // HomePage로 이동
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (context) => MyHomePage()),
+                              MaterialPageRoute(builder: (context) => HomePage()),
                             );
                           },
                           onError: (err) {

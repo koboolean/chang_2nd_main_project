@@ -1,5 +1,4 @@
 import 'package:chang_2nd_main_project/screens/login.dart';
-import 'package:chang_2nd_main_project/screens/select_want_to_go.dart';
 import 'package:chang_2nd_main_project/widgets/dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -7,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 import '../services/auth_service.dart';
 
 const double _kItemExtent = 32.0;
-
 const List<String> _transportation = <String>[
   '자차',
   '도보'
@@ -33,11 +31,29 @@ class _AddSchedulePageState extends State<AddSchedule> {
     return Consumer(
       builder: (context, bucketService, child) {
         return Scaffold(
+          appBar: AppBar(
+            backgroundColor: Color.fromRGBO(1, 1, 1, 0),
+            elevation: 0,
+            actions: [
+              IconButton(
+                icon: Icon(Icons.close, color: Colors.black,),
+                onPressed: (){
+                  // 로그아웃
+                  context.read<AuthService>().signOut();
+
+                  // 로그인 페이지로 이동
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                  );
+                },
+              ),
+            ],
+          ),
           body: Container(
             margin: EdgeInsets.all(20),
             child:Column(
               children: [
-                SizedBox(height: 100),
                 Row(children: [
                   Text(
                     '제주도',
@@ -247,52 +263,29 @@ class _AddSchedulePageState extends State<AddSchedule> {
                   ],
                 ),
                 SizedBox(height: 10,),
-
-                Row(
-                  children: [
-                    CupertinoButton(
-                      padding: EdgeInsets.zero,
-                      onPressed: (){ },
-                      child: Container(
-                        height: 36,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(
-                            width: 1.5,
-                            color: Color.fromRGBO(221, 81, 37, 1)
-                          ),
-                          borderRadius: BorderRadius.circular(100),
-                          
-                        ),
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 15.0),
-                              child: Text("내 숙소 검색하기",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontFamily: 'SpoqaHanSansNeo',
-                                  fontWeight: FontWeight.w500,
-                                  color: Color.fromRGBO(196, 196, 196, 1)
-                                ),),
-                            )
-                          ,
-                          SizedBox(width: 70,),
-                          Icon(Icons.search, color: Color.fromRGBO(221, 81, 37, 1)),
-                          SizedBox(width: 14,)
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 9),
-                    Text("이야",
-                      style: TextStyle(
-                      fontSize: 24,
-                      fontFamily: 'SpoqaHanSansNeo',
-                      fontWeight: FontWeight.w500,
-                    ),)],
+                Text(
+                  '제주도',
+                  style: TextStyle(
+                    color: Color.fromRGBO(221, 81, 37, 1),
+                    fontSize: 24,
+                    fontWeight: FontWeight.w700,
+                    decoration: TextDecoration.underline,
+                  ),
                 ),
-
+                TextField(
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Color.fromRGBO(221, 81, 37, 1))),
+                    disabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Color.fromRGBO(221, 81, 37, 1))),
+                    focusedBorder: OutlineInputBorder(borderSide: BorderSide(width : 3,color: Color.fromRGBO(221, 81, 37, 1))),
+                    hintText: "내 숙소 검색하기",
+                    suffixIcon: IconButton(
+                      icon: Icon(Icons.search,
+                        color: Color.fromRGBO(221, 81, 37, 1),),
+                      onPressed: () {
+                      },
+                    )
+                  ),
+                ),
                 Spacer(),
                 SizedBox(
                   width: double.infinity,
@@ -340,14 +333,7 @@ class _AddSchedulePageState extends State<AddSchedule> {
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.only(right: 8.0),
-                                      child: ElevatedButton(onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => SelectWantToGo(),
-                                          ),
-                                        );
-                                      },child: Text("계획 마저 세우기", style: TextStyle(color: Color.fromRGBO(90, 86, 82, 1)),),
+                                      child: ElevatedButton(onPressed: () {  },child: Text("계획 마저 세우기", style: TextStyle(color: Color.fromRGBO(90, 86, 82, 1)),),
                                         style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Color.fromRGBO(238, 238, 238, 1)), )
                                       ),
                                     ),

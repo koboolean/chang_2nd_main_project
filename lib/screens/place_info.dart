@@ -24,7 +24,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
         return Scaffold(
           appBar: AppBar(
             elevation: 0,
-            backgroundColor: Colors.white,
+            backgroundColor: Colors.black,
             centerTitle: false,
             flexibleSpace: Container(
               decoration: BoxDecoration(
@@ -36,7 +36,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
             ),
             leading: Icon(
               Icons.arrow_back_ios,
-              color: Colors.black,
+              color: Colors.white,
               size: 24,
             ),
             actions: [
@@ -44,7 +44,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                 padding: const EdgeInsets.only(right: 8),
                 child: Icon(
                   Icons.ios_share,
-                  color: Colors.black,
+                  color: Colors.white,
                   size: 24,
                 ),
               ),
@@ -52,7 +52,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                 padding: const EdgeInsets.only(right: 16.0),
                 child: Icon(
                   Icons.favorite_border,
-                  color: Colors.black,
+                  color: Colors.white,
                   size: 24,
                 ),
               ),
@@ -64,20 +64,25 @@ class _PlaceInfoState extends State<PlaceInfo> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("음식점 이름"),
+                    Text(
+                      "소랑드르",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     Row(
                       children: [
-                        GestureDetector(
-                          onTap: () {},
-                          child: Icon(
-                            Icons.place_outlined,
-                            color: Colors.black,
-                            size: 24,
-                          ),
-                        ),
                         Padding(
                           padding: const EdgeInsets.only(left: 18.0),
-                          child: Text("주소"),
+                          child: Text(
+                            "주소",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -87,8 +92,8 @@ class _PlaceInfoState extends State<PlaceInfo> {
                           onTap: () {},
                           child: Container(
                             margin: EdgeInsets.fromLTRB(0, 4, 8, 10),
-                            height: 32,
-                            width: 66,
+                            height: 23,
+                            width: 96,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(16),
                               color: Color(0xffd9d9d9),
@@ -99,6 +104,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                                 "# 1인분 주문 가능",
                                 style: TextStyle(
                                   fontWeight: FontWeight.w500,
+                                  fontSize: 11,
                                 ),
                               ),
                             ),
@@ -108,8 +114,8 @@ class _PlaceInfoState extends State<PlaceInfo> {
                           onTap: () {},
                           child: Container(
                             margin: EdgeInsets.fromLTRB(0, 4, 8, 10),
-                            height: 32,
-                            width: 66,
+                            height: 23,
+                            width: 47,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(16),
                               color: Color(0xffd9d9d9),
@@ -120,6 +126,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                                 "제주도",
                                 style: TextStyle(
                                   fontWeight: FontWeight.w500,
+                                  fontSize: 11,
                                 ),
                               ),
                             ),
@@ -216,6 +223,49 @@ class _PlaceInfoState extends State<PlaceInfo> {
                         ),
                       ),
                     ],
+                  ),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      margin: EdgeInsets.fromLTRB(0, 4, 8, 10),
+                      height: 23,
+                      width: 160,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        color: Color(0xffd9d9d9),
+                      ),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: Icon(
+                                Icons.info_outline,
+                                size: 16,
+                                color: Colors.red,
+                              ),
+                            ),
+                            Text(
+                              "잘못된 정보 제보하기",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12,
+                                color: Colors.red,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Icon(
+                                Icons.arrow_forward_ios,
+                                size: 11,
+                                color: Colors.red,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 15, bottom: 15.0),

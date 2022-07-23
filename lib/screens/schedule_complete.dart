@@ -1,139 +1,152 @@
 import 'dart:ui';
+import 'package:chang_2nd_main_project/services/schedule_service.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ScheduleComplete extends StatelessWidget {
   const ScheduleComplete({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      initialIndex: 0,
-      length: 3,
-      child: SafeArea(
-        child: Scaffold(
-          appBar: AppBar(
-            actions: [
-              IconButton(
-                onPressed: () {},
-                icon: Image.asset("assets/images/notebook.png"),
-              ),
-            ],
-            leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back_ios,
-                color: Colors.black,
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            bottom: PreferredSize(
-              preferredSize: Size.fromHeight(331), //431
-              child: Container(
-                child: Column(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 18),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                '제주도',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text('3박 4일')
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          TextButton.icon(
-                            onPressed: () {},
-                            style: TextButton.styleFrom(
-                              primary: Colors.black,
-                              backgroundColor: Colors.grey,
-                              minimumSize: Size(63, 32),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(100),
-                              ),
-                            ),
-                            icon: Icon(Icons.add),
-                            label: Text('숙소'),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      height: 211,
-                      width: double.infinity,
-                      decoration: BoxDecoration(color: Colors.grey),
-                      child: Center(
-                        child: Text('지도'),
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 18),
-                      child: TabBar(
-                        labelColor: Colors.black,
-                        tabs: [
-                          Tab(
-                            text: '1일차',
-                          ),
-                          Tab(
-                            text: '2일차',
-                          ),
-                          Tab(
-                            text: '3일차',
-                          ),
-                        ],
+    return Consumer<ScheduleService>(
+        builder: (context, scheduleService, child) {
+          var test = scheduleService.foodTabList.where((element) {
+            return element.checkBox == true;
+          }).toList();
+          // print(test[0].name);
+          // print(test[1].name);
+          return DefaultTabController(
+            initialIndex: 0,
+            length: 3,
+            child: SafeArea(
+              child: Scaffold(
+                appBar: AppBar(
+                  actions: [
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.delete,
+                        color: Colors.black,
                       ),
                     ),
                   ],
+                  leading: IconButton(
+                    icon: Icon(
+                      Icons.arrow_back_ios,
+                      color: Colors.black,
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  bottom: PreferredSize(
+                    preferredSize: Size.fromHeight(331), //431
+                    child: Container(
+                      child: Column(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 18),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(
+                                      '제주도',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text('3박 4일')
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                TextButton.icon(
+                                  onPressed: () {},
+                                  style: TextButton.styleFrom(
+                                    primary: Colors.black,
+                                    backgroundColor: Colors.grey,
+                                    minimumSize: Size(63, 32),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(100),
+                                    ),
+                                  ),
+                                  icon: Icon(Icons.add),
+                                  label: Text('숙소'),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            height: 211,
+                            width: double.infinity,
+                            decoration: BoxDecoration(color: Colors.grey),
+                            child: Center(
+                              child: Text('지도'),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 18),
+                            child: TabBar(
+                              labelColor: Colors.black,
+                              tabs: [
+                                Tab(
+                                  text: '1일차',
+                                ),
+                                Tab(
+                                  text: '2일차',
+                                ),
+                                Tab(
+                                  text: '3일차',
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                body: Container(
+                  //height: MediaQuery.of(context).size.height,
+                  // width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.only(left: 18, top: 10, right: 18),
+                  child: TabBarView(
+                    children: [
+                      DisplayScheduleList(
+                          name: '1일차 장소',
+                          catagory: '카페',
+                          address: '주소',
+                          moveTime: 10),
+                      DisplayScheduleList(
+                          name: '2일차 장소',
+                          catagory: '카페',
+                          address: '주소',
+                          moveTime: 20),
+                      DisplayScheduleList(
+                          name: '3일차 장소',
+                          catagory: '카페',
+                          address: '주소',
+                          moveTime: 30),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          body: Container(
-            //height: MediaQuery.of(context).size.height,
-            // width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.only(left: 18, top: 10, right: 18),
-            child: TabBarView(
-              children: [
-                DisplayScheduleList(
-                    name: '1일차 장소',
-                    catagory: '카페',
-                    address: '위치',
-                    moveTime: 10),
-                DisplayScheduleList(
-                    name: '2일차 장소',
-                    catagory: '카페',
-                    address: '주소',
-                    moveTime: 20),
-                DisplayScheduleList(
-                    name: '3일차 장소',
-                    catagory: '카페',
-                    address: '주소',
-                    moveTime: 30),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
+          );
+        });
   }
 }
 
@@ -160,7 +173,7 @@ class DisplayScheduleList extends StatelessWidget {
           leading: FlutterLogo(size: 56.0),
           title: Row(
             children: [
-              Text('장소'),
+              Text(name),
               SizedBox(
                 width: 6,
               ),

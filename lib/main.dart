@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Color.fromRGBO(221, 81, 37, 1))
       ),
-      home: user == null ? LoginPage() : MyHomePage(),
+      home: user == null ? LoginPage() : HomePage(),
     );
   }
 }

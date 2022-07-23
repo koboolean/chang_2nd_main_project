@@ -1,20 +1,21 @@
 import 'package:chang_2nd_main_project/screens/add_schedule.dart';
 import 'package:chang_2nd_main_project/screens/favorite_list.dart';
-import 'package:chang_2nd_main_project/screens/home.dart';
+import 'package:chang_2nd_main_project/screens/place.dart';
+import 'package:chang_2nd_main_project/screens/mypage.dart';
 import 'package:chang_2nd_main_project/screens/select_want_to_go.dart';
 import 'package:flutter/material.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _currentIndex = 2;
+class _HomePageState extends State<HomePage> {
+  int _currentIndex = 0;
 
-  final List<Widget> _children = [HomePage(), FavoritePage_Room(), AddSchedule(), SelectWantToGo()];
+  final List<Widget> _children = [Place(), FavoritePage_Room(), AddSchedule(), MyPage()];
   void _onTap(int index) {
     setState(() {
       _currentIndex = index;
