@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
     final user = context.read<AuthService>().currentUser();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: user == null ? LoginPage() : SelectWantToGo(), //AddSchedule(),
+      home: user == null ? LoginPage() : AddSchedule(), //SelectWantToGo()
     );
   }
 }
