@@ -1,6 +1,7 @@
 import 'package:chang_2nd_main_project/screens/add_schedule.dart';
 import 'package:chang_2nd_main_project/screens/favorite_list.dart';
 import 'package:chang_2nd_main_project/screens/home.dart';
+import 'package:chang_2nd_main_project/screens/select_want_to_go.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -11,9 +12,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _currentIndex = 0;
+  int _currentIndex = 2;
 
-  final List<Widget> _children = [HomePage(), FavoritePage_Room(), AddSchedule()];
+  final List<Widget> _children = [HomePage(), FavoritePage_Room(), AddSchedule(), SelectWantToGo()];
   void _onTap(int index) {
     setState(() {
       _currentIndex = index;

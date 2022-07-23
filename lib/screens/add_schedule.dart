@@ -237,6 +237,7 @@ class _AddSchedulePageState extends State<AddSchedule> {
                 Spacer(),
                 SizedBox(
                   width: double.infinity,
+                  height: 48,
                   child: ElevatedButton(
                     child: Text("확인"),
                     style: ButtonStyle(
