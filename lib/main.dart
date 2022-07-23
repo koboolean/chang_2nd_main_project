@@ -2,6 +2,7 @@ import 'package:chang_2nd_main_project/screens/add_schedule.dart';
 import 'package:chang_2nd_main_project/screens/favorite_list.dart';
 import 'package:chang_2nd_main_project/screens/home.dart';
 import 'package:chang_2nd_main_project/screens/login.dart';
+import 'package:chang_2nd_main_project/screens/main_page.dart';
 import 'package:chang_2nd_main_project/screens/place_info.dart';
 import 'package:chang_2nd_main_project/services/auth_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Color.fromRGBO(221, 81, 37, 1))
       ),
-      home: user == null ? LoginPage() : AddSchedule(),
+      home: user == null ? LoginPage() : MyHomePage(),
     );
   }
 }

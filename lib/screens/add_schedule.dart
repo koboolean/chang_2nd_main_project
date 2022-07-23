@@ -66,7 +66,7 @@ class _AddSchedulePageState extends State<AddSchedule> {
                         context: context,
                         builder: (BuildContext context) {
                           return Container(
-                            height: 500,
+                            height: 228,
                             color: Colors.white,
 
                           );
@@ -99,7 +99,7 @@ class _AddSchedulePageState extends State<AddSchedule> {
                         context: context,
                         builder: (BuildContext context) {
                           return Container(
-                            height: 500,
+                            height: 376,
                             color: Colors.white,
 
                           );
@@ -136,7 +136,7 @@ class _AddSchedulePageState extends State<AddSchedule> {
                           context: context,
                           builder: (BuildContext context) {
                             return Container(
-                              height: 500,
+                              height: 312,
                               color: Colors.white,
                             );
                           },
@@ -177,7 +177,7 @@ class _AddSchedulePageState extends State<AddSchedule> {
                           context: context,
                           builder: (BuildContext context) {
                             return Container(
-                              height: 500,
+                              height: 376,
                               color: Colors.white,
 
                             );
@@ -222,9 +222,9 @@ class _AddSchedulePageState extends State<AddSchedule> {
                 ,
                 TextField(
                   decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Color.fromRGBO(221, 81, 37, 1))),
-                    disabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Color.fromRGBO(221, 81, 37, 1))),
-                    focusedBorder: OutlineInputBorder(borderSide: BorderSide(width : 3,color: Color.fromRGBO(221, 81, 37, 1))),
+                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Color.fromRGBO(221, 81, 37, 1))),
+                    disabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Color.fromRGBO(221, 81, 37, 1))),
+                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(width : 3,color: Color.fromRGBO(221, 81, 37, 1))),
                     hintText: "내 숙소 검색하기",
                     suffixIcon: IconButton(
                       icon: Icon(Icons.search,
@@ -250,10 +250,15 @@ class _AddSchedulePageState extends State<AddSchedule> {
                     onPressed: () {
                       showModalBottomSheet<void>(
                         context: context,
+                        shape: const RoundedRectangleBorder( // <-- SEE HERE
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(40.0),
+                          ),
+                        ),
                         builder: (BuildContext context) {
                           return Container(
-                            height: 500,
-                            padding: EdgeInsets.all(25),
+                            height: 441,
+                            padding: EdgeInsets.all(23),
                             color: Colors.white,
                             child: Column(
                               children: [
@@ -308,8 +313,8 @@ class _AddSchedulePageState extends State<AddSchedule> {
                 )
               ]
             ),
+          ),
 
-          )
         );
       },
     );
