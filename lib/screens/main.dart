@@ -2,6 +2,7 @@ import 'package:chang_2nd_main_project/screens/add_schedule.dart';
 import 'package:chang_2nd_main_project/screens/home.dart';
 import 'package:chang_2nd_main_project/screens/login.dart';
 import 'package:chang_2nd_main_project/services/auth_service.dart';
+import 'package:chang_2nd_main_project/services/schedule_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,10 @@ void main() async {
   await Firebase.initializeApp(); // firebase 앱 시작
   runApp(
     MultiProvider(
-      providers: [ChangeNotifierProvider(create: (context) => AuthService())],
+      providers: [
+        ChangeNotifierProvider(create: (context) => AuthService()),
+        ChangeNotifierProvider(create: (context) => ScheduleService()),
+      ],
       child: const MyApp(),
     ),
   );
