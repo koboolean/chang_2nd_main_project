@@ -1,5 +1,3 @@
-import 'package:chang_2nd_main_project/screens/add_schedule.dart';
-import 'package:chang_2nd_main_project/screens/home.dart';
 import 'package:chang_2nd_main_project/screens/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

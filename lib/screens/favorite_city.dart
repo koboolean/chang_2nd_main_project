@@ -1,43 +1,19 @@
+import 'package:chang_2nd_main_project/models/food.dart';
+import 'package:chang_2nd_main_project/services/trip_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'favorite_list.dart';
 
-void main() {
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => TripService()),
-      ],
-      child: const MyApp(),
-    ),
-  );
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+/// 홈 페이지
+/// 홈페이지
+class FavoriteCity extends StatefulWidget {
+  const FavoriteCity({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: HomePage(),
-    );
-  }
+  State<FavoriteCity> createState() => _FavoriteCityPageState();
 }
 
-class Food {
-  String name; //이름
-  String address; //주소
-  Food(
-    this.name,
-    this.address,
-  ); //생성자
-}
-
-/// 홈 페이지
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
-
+class _FavoriteCityPageState extends State<FavoriteCity> {
   @override
   Widget build(BuildContext context) {
     return Consumer<TripService>(
@@ -52,6 +28,12 @@ class HomePage extends StatelessWidget {
               children: [
                 Divider(height: 10),
                 Container(
+                  width: double.infinity,
+                  height: 50,
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                  ),
                   child: Row(
                     children: [
                       GestureDetector(
@@ -67,12 +49,6 @@ class HomePage extends StatelessWidget {
                       Spacer(),
                       Text("15곳"),
                     ],
-                  ),
-                  width: double.infinity,
-                  height: 50,
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
                   ),
                 ),
                 Divider(height: 10),
@@ -112,6 +88,12 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 Container(
+                  width: double.infinity,
+                  height: 50,
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                  ),
                   child: Row(
                     children: [
                       GestureDetector(
@@ -128,14 +110,14 @@ class HomePage extends StatelessWidget {
                       Text("15곳"),
                     ],
                   ),
-                  width: double.infinity,
-                  height: 50,
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                  ),
                 ),
                 Container(
+                  width: double.infinity,
+                  height: 140,
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -200,12 +182,6 @@ class HomePage extends StatelessWidget {
                         ],
                       ),
                     ],
-                  ),
-                  width: double.infinity,
-                  height: 140,
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.red,
                   ),
                 ),
               ],

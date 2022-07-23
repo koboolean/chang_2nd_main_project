@@ -1,11 +1,7 @@
-import 'package:chang_2nd_main_project/screens/add_schedule.dart';
-import 'package:chang_2nd_main_project/screens/favorite_list.dart';
-import 'package:chang_2nd_main_project/screens/home.dart';
 import 'package:chang_2nd_main_project/screens/login.dart';
 import 'package:chang_2nd_main_project/screens/main_page.dart';
-import 'package:chang_2nd_main_project/screens/place_info.dart';
 import 'package:chang_2nd_main_project/services/auth_service.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:chang_2nd_main_project/services/trip_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +12,8 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => AuthService())
+        ChangeNotifierProvider(create: (context) => AuthService()),
+        ChangeNotifierProvider(create: (context) => TripService()),
       ],
       child: const MyApp(),
     ),

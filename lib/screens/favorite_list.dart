@@ -1,15 +1,9 @@
+import 'package:chang_2nd_main_project/models/food.dart';
+import 'package:chang_2nd_main_project/services/trip_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'favorite_city.dart';
 
-class TripService extends ChangeNotifier {
-  List<Food> foodList = [
-    Food(
-      "맛집이름1",
-      "맛집주소1",
-    )
-  ];
-}
 
 class FavoritePage_Room extends StatelessWidget {
   const FavoritePage_Room({Key? key}) : super(key: key);
@@ -194,18 +188,7 @@ class FavoritePage_Room extends StatelessWidget {
                   ),
                 ],
               ),
-              bottomNavigationBar: BottomNavigationBar(
-                type: BottomNavigationBarType.fixed,
-                items: [
-                  BottomNavigationBarItem(icon: Icon(Icons.home), label: '홈'),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.favorite), label: '찜한곳'),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.flight_takeoff_outlined), label: '여행계획'),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.account_circle), label: 'MY'),
-                ],
-              )),
+          )
         );
       },
     );
