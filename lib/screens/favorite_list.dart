@@ -28,190 +28,237 @@ class FavoritePage_Room extends StatelessWidget {
                   labelColor: Colors.black,
                 ),
               ),
-              body: TabBarView(
+              body: Column(
                 children: [
-                  foodList.isEmpty
-                      ? Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                Icon(Icons.face),
-                                SizedBox(height: 10),
-                                Text("아직 찜한 맛집이 없어요"),
-                                SizedBox(height: 10),
-                                GestureDetector(
-                                  onTap: () {}, //제주도 맛집 클릭시 이동
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        color: Colors.amber,
-                                        border: Border.all(
-                                          color: Colors.transparent,
-                                        ),
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(20),
-                                        )),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        "제주도 맛집 구경하기",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            margin: EdgeInsets.fromLTRB(18, 4, 8, 10),
+                            height: 32,
+                            width: 150,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16),
+                              color: Color(0xffd9d9d9),
+                            ),
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                "1인분 주문가능 식당",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
                                 ),
-                              ],
+                              ),
                             ),
                           ),
-                        )
-                      : Expanded(
-                          child: Column(
-                            children: [
-                              Expanded(
-                                child: GridView.builder(
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 2,
-                                          childAspectRatio: 3 / 4),
-                                  itemCount: foodList.length,
-                                  itemBuilder: (context, index) {
-                                    var Food = foodList[index];
-                                    return Padding(
-                                      padding: const EdgeInsets.all(2.0),
-                                      child: Container(
-                                        margin: EdgeInsets.only(
-                                          left: index % 2 == 1 ? 8 : 0,
-                                          right: index % 2 == 0 ? 8 : 0,
-                                          top: 8,
-                                          bottom: 8,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(8),
-                                          ),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color:
-                                                  Colors.grey.withOpacity(0.5),
-                                              blurRadius: 1,
-                                              spreadRadius: 1,
-                                            )
-                                          ],
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            ClipRRect(
-                                              borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(8),
-                                                topRight: Radius.circular(8),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: TabBarView(
+                      children: [
+                        foodList.isEmpty
+                            ? Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    children: [
+                                      Icon(Icons.face),
+                                      SizedBox(height: 10),
+                                      Text("아직 찜한 맛집이 없어요"),
+                                      SizedBox(height: 10),
+                                      GestureDetector(
+                                        onTap: () {}, //제주도 맛집 클릭시 이동
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              color: Colors.amber,
+                                              border: Border.all(
+                                                color: Colors.transparent,
                                               ),
-                                              child: Stack(
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(20),
+                                              )),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              "제주도 맛집 구경하기",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            : Expanded(
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                      child: GridView.builder(
+                                        gridDelegate:
+                                            SliverGridDelegateWithFixedCrossAxisCount(
+                                                crossAxisCount: 2,
+                                                childAspectRatio: 3 / 4),
+                                        itemCount: foodList.length,
+                                        itemBuilder: (context, index) {
+                                          var Food = foodList[index];
+                                          return Padding(
+                                            padding: const EdgeInsets.all(2.0),
+                                            child: Container(
+                                              margin: EdgeInsets.only(
+                                                left: index % 2 == 1 ? 8 : 0,
+                                                right: index % 2 == 0 ? 8 : 0,
+                                                top: 8,
+                                                bottom: 8,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius: BorderRadius.all(
+                                                  Radius.circular(8),
+                                                ),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey
+                                                        .withOpacity(0.5),
+                                                    blurRadius: 1,
+                                                    spreadRadius: 1,
+                                                  )
+                                                ],
+                                              ),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
-                                                  Image.network(
-                                                    Food.url,
-                                                    fit: BoxFit.fitHeight,
-                                                    height:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.4,
+                                                  ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.only(
+                                                      topLeft:
+                                                          Radius.circular(8),
+                                                      topRight:
+                                                          Radius.circular(8),
+                                                    ),
+                                                    child: Stack(
+                                                      children: [
+                                                        Image.network(
+                                                          Food.url,
+                                                          fit: BoxFit.fitHeight,
+                                                          height: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.4,
+                                                        ),
+                                                        Positioned(
+                                                          top: 10,
+                                                          right: 10,
+                                                          child:
+                                                              GestureDetector(
+                                                            onTap: () {
+                                                              // setState(() => isPressed = !isPressed);
+                                                            },
+                                                            child: Container(
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: Colors
+                                                                    .grey
+                                                                    .withOpacity(
+                                                                        0.5),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            100),
+                                                              ),
+                                                              child:
+                                                                  // (isPressed) ? Icon(
+                                                                  //   Icons.favorite_border,
+                                                                  //   color: Colors.white,
+                                                                  //   size: 24,
+                                                                  // ),
+                                                                  // :
+                                                                  //       Icon(
+                                                                  //   Icons.favorite,
+                                                                  //   color: Colors.red,
+                                                                  //   size: 24,
+                                                                  // ),
+                                                                  Icon(
+                                                                Icons
+                                                                    .favorite_border,
+                                                                color: Colors
+                                                                    .white,
+                                                                size: 24,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
-                                                  Positioned(
-                                                    top: 10,
-                                                    right: 10,
-                                                    child: GestureDetector(
-                                                      onTap: () {
-                                                        // setState(() => isPressed = !isPressed);
-                                                      },
-                                                      child: Container(
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: Colors.grey
-                                                              .withOpacity(0.5),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      100),
-                                                        ),
-                                                        child:
-                                                            // (isPressed) ? Icon(
-                                                            //   Icons.favorite_border,
-                                                            //   color: Colors.white,
-                                                            //   size: 24,
-                                                            // ),
-                                                            // :
-                                                            //       Icon(
-                                                            //   Icons.favorite,
-                                                            //   color: Colors.red,
-                                                            //   size: 24,
-                                                            // ),
-                                                            Icon(
-                                                          Icons.favorite_border,
-                                                          color: Colors.white,
-                                                          size: 24,
-                                                        ),
+                                                  Expanded(
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              6.0),
+                                                      child: Stack(
+                                                        children: [
+                                                          Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text(
+                                                                Food.name,
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 18,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                              ),
+                                                              Text(
+                                                                Food.address,
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 14,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .normal,
+                                                                  color: Colors
+                                                                          .grey[
+                                                                      600],
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
                                                       ),
                                                     ),
                                                   ),
                                                 ],
                                               ),
                                             ),
-                                            Expanded(
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(6.0),
-                                                child: Stack(
-                                                  children: [
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          Food.name,
-                                                          style: TextStyle(
-                                                            fontSize: 18,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          Food.address,
-                                                          style: TextStyle(
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .normal,
-                                                            color: Colors
-                                                                .grey[600],
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                          );
+                                        },
                                       ),
-                                    );
-                                  },
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
+                        Center(
+                          child: Text("숙소"),
                         ),
-                  Center(
-                    child: Text("숙소"),
-                  ),
-                  Center(
-                    child: Text("관광지"),
+                        Center(
+                          child: Text("관광지"),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
