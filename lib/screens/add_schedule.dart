@@ -17,75 +17,299 @@ class _AddSchedulePageState extends State<AddSchedule> {
 
   @override
   Widget build(BuildContext context) {
+
     final authService = context.read<AuthService>();
     final user = authService.currentUser()!;
     return Consumer(
       builder: (context, bucketService, child) {
         return Scaffold(
-          body: Column(
-            children: [
-              SizedBox(height: 30),
-              Padding(
-                padding: const EdgeInsets.only(right: 28.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    IconButton(
-                        icon: Image.asset("assets/images/notebook.png"),
-                        onPressed: (){
-                          // 로그아웃
-                          context.read<AuthService>().signOut();
+          appBar: AppBar(
+            backgroundColor: Color.fromRGBO(1, 1, 1, 0),
+            elevation: 0,
+            actions: [
+              IconButton(
+                icon: Icon(Icons.close, color: Colors.black,),
+                onPressed: (){
+                  // 로그아웃
+                  context.read<AuthService>().signOut();
 
-                          // 로그인 페이지로 이동
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (context) => LoginPage()),
-                          );
-                        },
-                    ),
-                  ],
-                ),
+                  // 로그인 페이지로 이동
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                  );
+                },
               ),
-
-              Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 50.0),
-                      child: Text("제주도를 3박 4일\n자차를 이용해\n하루 최대 5곳을 갈꺼야",
-                      textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontSize: 30,
-                          letterSpacing: 1.0,
-                          height:1.4,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 280.0),
-                      child:Text('추가 선택',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: 'NotoSansKR',
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 130.0),
-                      child:Text("숙소는 000 이야",
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontSize: 30,
-                          letterSpacing: 1.0,
-                          height:1.4,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
             ],
           ),
+          body: Container(
+            margin: EdgeInsets.all(20),
+            child:Column(
+              children: [
+                Row(children: [
+                  Text(
+                    '제주도',
+                    style: TextStyle(
+                      color: Color.fromRGBO(221, 81, 37, 1),
+                      fontSize: 24,
+                      fontWeight: FontWeight.w700,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.arrow_drop_down,
+                      color: Color.fromRGBO(131, 123, 117, 1),),
+                    padding: EdgeInsets.zero,
+                    constraints: BoxConstraints(),
+                    onPressed: () {
+                      showModalBottomSheet<void>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Container(
+                            height: 500,
+                            color: Colors.white,
+
+                          );
+                        },
+                      );
+                    },),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 20.0),
+                    child: Text("를", style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w500
+                    ),),
+                  ),
+                  Text(
+                    '3박 4일',
+                    style: TextStyle(
+                      color: Color.fromRGBO(221, 81, 37, 1),
+                      fontSize: 24,
+                      fontWeight: FontWeight.w700,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.arrow_drop_down,
+                      color: Color.fromRGBO(131, 123, 117, 1),),
+                    padding: EdgeInsets.zero,
+                    constraints: BoxConstraints(),
+                    onPressed: () {
+                      showModalBottomSheet<void>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Container(
+                            height: 500,
+                            color: Colors.white,
+
+                          );
+                        },
+                      );
+                    },),
+                ]),
+                SizedBox(height: 15,),
+                Row(
+                  children: [
+                    Text(
+                      '자차',
+                      style: TextStyle(
+                        color: Color.fromRGBO(221, 81, 37, 1),
+                        fontSize: 24,
+                        fontWeight: FontWeight.w700,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.arrow_drop_down,
+                        color: Color.fromRGBO(131, 123, 117, 1),),
+                      padding: EdgeInsets.zero,
+                      constraints: BoxConstraints(),
+                      onPressed: () {
+
+                        const List<String> _fruitNames = <String>[
+                          '자차',
+                          '대중교통',
+                          '도보',
+                        ];
+
+                        showModalBottomSheet<void>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Container(
+                              height: 500,
+                              color: Colors.white,
+                            );
+                          },
+                        );
+                      },),
+
+                    Text("를 이용해",
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w500)
+                    )
+                  ],
+                ),
+                SizedBox(height: 15,),
+                Row(
+                  children: [
+                    Text("하루 최대  ",
+                        style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w500)
+                    ),
+                    Text(
+                      '5',
+                      style: TextStyle(
+                        color: Color.fromRGBO(221, 81, 37, 1),
+                        fontSize: 24,
+                        fontWeight: FontWeight.w700,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.arrow_drop_down,
+                        color: Color.fromRGBO(131, 123, 117, 1),),
+                      padding: EdgeInsets.zero,
+                      constraints: BoxConstraints(),
+                      onPressed: () {
+                        showModalBottomSheet<void>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Container(
+                              height: 500,
+                              color: Colors.white,
+
+                            );
+                          },
+                        );
+                      },),
+
+                    Text("곳을 갈거야",
+                        style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w500)
+                    )
+                  ],
+                ),
+
+                SizedBox(height: 30,),
+                Row(
+                  children: [
+                    Text("선택사항",
+                      style: TextStyle(
+                        color: Color.fromRGBO(90, 86, 82, 1),
+                        fontWeight: FontWeight.w500
+                      )
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10,),
+                Row(
+                  children: [
+                    Text("숙소는",
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(height: 10,),
+                Row(
+
+                )
+                ,
+                TextField(
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Color.fromRGBO(221, 81, 37, 1))),
+                    disabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Color.fromRGBO(221, 81, 37, 1))),
+                    focusedBorder: OutlineInputBorder(borderSide: BorderSide(width : 3,color: Color.fromRGBO(221, 81, 37, 1))),
+                    hintText: "내 숙소 검색하기",
+                    suffixIcon: IconButton(
+                      icon: Icon(Icons.search,
+                        color: Color.fromRGBO(221, 81, 37, 1),),
+                      onPressed: () {
+                      },
+                    )
+                  ),
+                ),
+                Spacer(),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    child: Text("확인"),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(Color.fromRGBO(221, 81, 37, 1),),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius:BorderRadius.circular(100),
+                        )
+                      )
+                    ),
+                    onPressed: () {
+                      showModalBottomSheet<void>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Container(
+                            height: 500,
+                            padding: EdgeInsets.all(25),
+                            color: Colors.white,
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    IconButton(
+                                      alignment : Alignment.topRight,
+                                      icon: Icon(Icons.close, color: Colors.black,),
+                                      onPressed: (){
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Text('이런 숙소는 어떠세요?',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                        fontFamily: 'SpoqaHanSansNeo',
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Spacer(),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 8.0),
+                                      child: ElevatedButton(onPressed: () {  },child: Text("계획 마저 세우기", style: TextStyle(color: Color.fromRGBO(90, 86, 82, 1)),),
+                                        style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Color.fromRGBO(238, 238, 238, 1)), )
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 8.0),
+                                      child: ElevatedButton(onPressed: () {  },child: Text("추천 숙소보기"),
+                                        style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Color.fromRGBO(221, 81, 37, 1),),),),
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                )
+              ]
+            ),
+
+          )
         );
       },
     );

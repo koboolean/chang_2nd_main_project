@@ -1,6 +1,8 @@
 import 'package:chang_2nd_main_project/screens/add_schedule.dart';
+import 'package:chang_2nd_main_project/screens/favorite_list.dart';
 import 'package:chang_2nd_main_project/screens/home.dart';
 import 'package:chang_2nd_main_project/screens/login.dart';
+import 'package:chang_2nd_main_project/screens/place_info.dart';
 import 'package:chang_2nd_main_project/services/auth_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -28,6 +30,13 @@ class MyApp extends StatelessWidget {
     final user = context.read<AuthService>().currentUser();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+
+      theme: ThemeData(
+        fontFamily: 'SpoqaHanSansNeo',
+        primaryColor: Color.fromRGBO(221, 81, 37, 1),
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Color.fromRGBO(221, 81, 37, 1))
+      ),
       home: user == null ? LoginPage() : AddSchedule(),
     );
   }
