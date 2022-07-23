@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'favorite_city.dart';
 
-
 class FavoritePage_Room extends StatelessWidget {
   const FavoritePage_Room({Key? key}) : super(key: key);
 
@@ -14,8 +13,8 @@ class FavoritePage_Room extends StatelessWidget {
       builder: (context, tripService, child) {
         List<Food> foodList = tripService.foodList;
         return DefaultTabController(
-          length: 3,
-          child: Scaffold(
+            length: 3,
+            child: Scaffold(
               appBar: AppBar(
                 title: Text("제주도"),
                 backgroundColor: Colors.amber,
@@ -75,7 +74,7 @@ class FavoritePage_Room extends StatelessWidget {
                                   gridDelegate:
                                       SliverGridDelegateWithFixedCrossAxisCount(
                                           crossAxisCount: 2,
-                                          childAspectRatio: 3 / 5),
+                                          childAspectRatio: 3 / 4),
                                   itemCount: foodList.length,
                                   itemBuilder: (context, index) {
                                     var Food = foodList[index];
@@ -114,7 +113,7 @@ class FavoritePage_Room extends StatelessWidget {
                                               child: Stack(
                                                 children: [
                                                   Image.network(
-                                                    "https://cdn.iconscout.com/icon/free/png-256/shazam-3-761709.png",
+                                                    Food.url,
                                                     fit: BoxFit.fitHeight,
                                                     height:
                                                         MediaQuery.of(context)
@@ -125,10 +124,38 @@ class FavoritePage_Room extends StatelessWidget {
                                                   Positioned(
                                                     top: 10,
                                                     right: 10,
-                                                    child: Icon(
-                                                      Icons.favorite_border,
-                                                      color: Colors.black,
-                                                      size: 24,
+                                                    child: GestureDetector(
+                                                      onTap: () {
+                                                        // setState(() => isPressed = !isPressed);
+                                                      },
+                                                      child: Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.grey
+                                                              .withOpacity(0.5),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      100),
+                                                        ),
+                                                        child:
+                                                            // (isPressed) ? Icon(
+                                                            //   Icons.favorite_border,
+                                                            //   color: Colors.white,
+                                                            //   size: 24,
+                                                            // ),
+                                                            // :
+                                                            //       Icon(
+                                                            //   Icons.favorite,
+                                                            //   color: Colors.red,
+                                                            //   size: 24,
+                                                            // ),
+                                                            Icon(
+                                                          Icons.favorite_border,
+                                                          color: Colors.white,
+                                                          size: 24,
+                                                        ),
+                                                      ),
                                                     ),
                                                   ),
                                                 ],
@@ -188,8 +215,7 @@ class FavoritePage_Room extends StatelessWidget {
                   ),
                 ],
               ),
-          )
-        );
+            ));
       },
     );
   }
