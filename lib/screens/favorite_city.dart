@@ -41,7 +41,7 @@ class _FavoriteCityPageState extends State<FavoriteCity> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => FavoritePage_Room()),
+                                builder: (context) => FavoriteList()),
                           );
                         },
                         child: Text("제주도 >"),
@@ -101,7 +101,7 @@ class _FavoriteCityPageState extends State<FavoriteCity> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => FavoritePage_Room()),
+                                builder: (context) => FavoriteList()),
                           );
                         },
                         child: Text("부산 >"),
@@ -186,18 +186,7 @@ class _FavoriteCityPageState extends State<FavoriteCity> {
                 ),
               ],
             ),
-            bottomNavigationBar: BottomNavigationBar(
-              type: BottomNavigationBarType.fixed,
-              items: [
-                BottomNavigationBarItem(icon: Icon(Icons.home), label: '홈'),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.favorite), label: '찜한곳'),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.flight_takeoff_outlined), label: '여행계획'),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.account_circle), label: 'MY'),
-              ],
-            ));
+        );
       },
     );
   }
