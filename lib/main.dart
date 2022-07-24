@@ -30,15 +30,12 @@ class MyApp extends StatelessWidget {
     final user = context.read<AuthService>().currentUser();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-
       theme: ThemeData(
-        fontFamily: 'SpoqaHanSansNeo',
-        primaryColor: Color.fromRGBO(221, 81, 37, 1),
-        backgroundColor: Colors.white,
-        iconTheme: IconThemeData(color: Color.fromRGBO(221, 81, 37, 1))
-      ),
+          fontFamily: 'SpoqaHanSansNeo',
+          primaryColor: Color.fromRGBO(221, 81, 37, 1),
+          backgroundColor: Colors.white,
+          iconTheme: IconThemeData(color: Color.fromRGBO(221, 81, 37, 1))),
       home: user == null ? LoginPage() : HomePage(),
     );
   }
 }
-
