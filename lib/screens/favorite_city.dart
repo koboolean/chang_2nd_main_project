@@ -41,7 +41,7 @@ class _FavoriteCityPageState extends State<FavoriteCity> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => FavoritePage_Room()),
+                                builder: (context) => FavoriteList()),
                           );
                         },
                         child: Text("제주도 >"),
@@ -101,7 +101,7 @@ class _FavoriteCityPageState extends State<FavoriteCity> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => FavoritePage_Room()),
+                                builder: (context) => FavoriteList()),
                           );
                         },
                         child: Text("부산 >"),
