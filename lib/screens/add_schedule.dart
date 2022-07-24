@@ -140,6 +140,7 @@ class _AddSchedulePageState extends State<AddSchedule> {
                       onPressed: () => showsDialog(
                         context,
                           CupertinoPicker(
+                            scrollController: FixedExtentScrollController(initialItem: selectedTrans),
                             magnification: 1.22,
                             squeeze: 1.2,
                             useMagnifier: true,
