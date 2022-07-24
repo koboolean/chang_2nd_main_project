@@ -2,7 +2,6 @@ import 'package:chang_2nd_main_project/screens/add_schedule.dart';
 import 'package:chang_2nd_main_project/screens/favorite_list.dart';
 import 'package:chang_2nd_main_project/screens/place.dart';
 import 'package:chang_2nd_main_project/screens/mypage.dart';
-import 'package:chang_2nd_main_project/screens/select_want_to_go.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -25,18 +24,22 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
         body: _children[_currentIndex],
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          onTap: _onTap,
-          currentIndex: _currentIndex,
-          selectedItemColor: Color.fromRGBO(221, 81, 37, 1),
-          items: [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: '홈'),
-            BottomNavigationBarItem( icon: Icon(Icons.favorite), label: '찜한곳'),
-            BottomNavigationBarItem( icon: Icon(Icons.flight_takeoff_outlined), label: '여행계획'),
-            BottomNavigationBarItem( icon: Icon(Icons.account_circle), label: 'MY'),
-          ],
+        bottomNavigationBar: ClipRRect(
+          borderRadius: const BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
+          child: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            onTap: _onTap,
+            currentIndex: _currentIndex,
+            selectedItemColor: Color.fromRGBO(221, 81, 37, 1),
+            items: [
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: '홈'),
+              BottomNavigationBarItem( icon: Icon(Icons.favorite), label: '찜한곳'),
+              BottomNavigationBarItem( icon: Icon(Icons.flight_takeoff_outlined), label: '여행계획'),
+              BottomNavigationBarItem( icon: Icon(Icons.account_circle), label: 'MY'),
+            ],
+          ),
         )
     );
   }

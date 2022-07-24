@@ -1,6 +1,7 @@
 import 'package:chang_2nd_main_project/screens/login.dart';
 import 'package:chang_2nd_main_project/screens/select_want_to_go.dart';
 import 'package:chang_2nd_main_project/widgets/dialog.dart';
+import 'package:chang_2nd_main_project/widgets/recommend_accom.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -37,7 +38,7 @@ class _AddSchedulePageState extends State<AddSchedule> {
             margin: EdgeInsets.all(20),
             child:Column(
               children: [
-                SizedBox(height: 100),
+                SizedBox(height: 60),
                 Row(children: [
                   Text(
                     '제주도',
@@ -252,7 +253,16 @@ class _AddSchedulePageState extends State<AddSchedule> {
                   children: [
                     CupertinoButton(
                       padding: EdgeInsets.zero,
-                      onPressed: (){ },
+                      onPressed: (){
+                        // 숙소 검색
+                        /*
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AddScheduleHotelCheck(),
+                          ),
+                        );*/
+                      },
                       child: Container(
                         height: 36,
                         decoration: BoxDecoration(
@@ -334,28 +344,68 @@ class _AddSchedulePageState extends State<AddSchedule> {
                                     ),
                                   ],
                                 ),
-                                Spacer(),
+                                Row(
+                                  children: [
+                                    RecommendAccom(
+                                      imageUrl: 'assets/images/login_background.jpeg',
+                                      name: '제주공항게스트하우스',
+                                      address: '제주도 서귀포시',
+                                      price: "50000원 ~",),
+                                    RecommendAccom(imageUrl:
+                                    'assets/images/login_background.jpeg',
+                                      name: '제주공항게스트하우스',
+                                      address: '제주도 서귀포시',
+                                      price: "50000원 ~",),
+                                  ],
+                                ),
+                                SizedBox(height: 33,),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.only(right: 8.0),
-                                      child: ElevatedButton(onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => SelectWantToGo(),
+                                      child: SizedBox(
+                                        width: 150,
+                                        height: 48,
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => SelectWantToGo(),
+                                              ),
+                                            );
+                                          },
+                                          child: Text("계획 마저 세우기", style: TextStyle(color: Color.fromRGBO(90, 86, 82, 1)),),
+                                          style: ButtonStyle(
+                                            backgroundColor: MaterialStateProperty.all<Color>(Color.fromRGBO(238, 238, 238, 1)),
+                                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                  RoundedRectangleBorder(
+                                                    borderRadius:BorderRadius.circular(100),
+                                                  )
+                                              )
                                           ),
-                                        );
-                                      },child: Text("계획 마저 세우기", style: TextStyle(color: Color.fromRGBO(90, 86, 82, 1)),),
-                                        style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Color.fromRGBO(238, 238, 238, 1)), )
+
+                                        ),
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(left: 8.0),
-                                      child: ElevatedButton(onPressed: () {  },child: Text("추천 숙소보기"),
-                                        style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Color.fromRGBO(221, 81, 37, 1),),),),
-                                    )
+                                      padding: const EdgeInsets.only(left:8.0),
+                                      child: SizedBox(
+                                        width: 150,
+                                        height: 48,
+                                        child: ElevatedButton(onPressed: () {  },child: Text("추천 숙소 더 보기"),
+                                          style: ButtonStyle(
+                                            backgroundColor: MaterialStateProperty.all<Color>(Color.fromRGBO(221, 81, 37, 1),),
+                                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                RoundedRectangleBorder(
+                                                  borderRadius:BorderRadius.circular(100),
+                                                )
+                                            )
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                   ],
                                 )
                               ],
@@ -365,7 +415,8 @@ class _AddSchedulePageState extends State<AddSchedule> {
                       );
                     },
                   ),
-                )
+                ),
+                SizedBox(height: 60,)
               ]
             ),
           ),
