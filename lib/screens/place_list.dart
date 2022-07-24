@@ -95,25 +95,25 @@ class _PlaceListState extends State<PlaceList> {
                           tabs: [
                             Tab(
                                 child: Text(
-                                  "맛집",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                  ),
-                                )),
+                              "맛집",
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
+                            )),
                             Tab(
                                 child: Text(
-                                  "숙소",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                  ),
-                                )),
+                              "숙소",
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
+                            )),
                             Tab(
                                 child: Text(
-                                  "관광지",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                  ),
-                                )),
+                              "관광지",
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
+                            )),
                           ],
                         ),
                       ],
@@ -237,18 +237,18 @@ class _DiningState extends State<Dining> {
                               borderRadius: BorderRadius.circular(100),
                             ),
                             child:
-                            // (isPressed) ? Icon(
-                            // Icons.favorite_border,
-                            // color: Colors.white,
-                            // size: 24,
-                            // ),
-                            // :
-                            // Icon(
-                            // Icons.favorite,
-                            // color: Colors.red,
-                            // size: 24,
-                            // ),
-                            Icon(
+                                // (isPressed) ? Icon(
+                                // Icons.favorite_border,
+                                // color: Colors.white,
+                                // size: 24,
+                                // ),
+                                // :
+                                // Icon(
+                                // Icons.favorite,
+                                // color: Colors.red,
+                                // size: 24,
+                                // ),
+                                Icon(
                               Icons.favorite_border,
                               color: Colors.white,
                               size: 24,

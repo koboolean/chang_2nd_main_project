@@ -1,5 +1,6 @@
 import 'package:chang_2nd_main_project/screens/favorite_list.dart';
 import 'package:chang_2nd_main_project/screens/login.dart';
+import 'package:chang_2nd_main_project/services/trip_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -201,129 +202,133 @@ class RecommendList extends StatefulWidget {
 class _RecommendListState extends State<RecommendList> {
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: 6,
-      itemBuilder: (context, index) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 8.0, left: 18.0, bottom: 8.0),
-              child: Text(
-                "혼자 카페에서 여유로운 시간을",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+    return Consumer<TripService>(
+      builder: (context, tripService, child) {
+        List<Food> foodList = tripService.foodList;
+        return ListView.builder(
+          itemCount: 4,
+          itemBuilder: (context, index) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding:
+                      const EdgeInsets.only(top: 8.0, left: 18.0, bottom: 8.0),
+                  child: Text(
+                    "혼자 카페에서 여유로운 시간을",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            //사진
-            Padding(
-              padding: const EdgeInsets.only(left: 18.0),
-              child: SizedBox(
-                height: 220,
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    physics: ClampingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 6,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 8.0, bottom: 8.0),
-                        child: Stack(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(10)),
-                                color: Colors.grey,
-                                //사진 삽입
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                      "assets/images/login_background.jpeg"),
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                              width: 133,
-                              height: 180, //실제 사진 높이 = 250 - 8*5
-                            ),
-                            Positioned(
-                              top: 5,
-                              right: 5,
-                              child: GestureDetector(
-                                onTap: () {
-                                  // setState(() => isPressed = !isPressed);
-                                },
-                                child: Container(
-                                  height: 25,
-                                  width: 25,
+                //사진
+                Padding(
+                  padding: const EdgeInsets.only(left: 18.0),
+                  child: SizedBox(
+                    height: 220,
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: ClampingScrollPhysics(),
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 4,
+                        itemBuilder: (context, index) {
+                          var food = foodList[index];
+                          return Padding(
+                            padding:
+                                const EdgeInsets.only(right: 8.0, bottom: 8.0),
+                            child: Stack(
+                              children: [
+                                Container(
                                   decoration: BoxDecoration(
-                                    color: Colors.grey[700]!.withOpacity(0.2),
-                                    borderRadius: BorderRadius.circular(100),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                    color: Colors.grey,
+                                    //사진 삽입
+                                    image: DecorationImage(
+                                      image: NetworkImage(food.url),
+                                      fit: BoxFit.fill,
+                                    ),
                                   ),
-                                  child:
-                                  // (isPressed) ? Icon(
-                                  // Icons.favorite_border,
-                                  // color: Colors.white,
-                                  // size: 24,
-                                  // ),
-                                  // :
-                                  // Icon(
-                                  // Icons.favorite,
-                                  // color: Colors.red,
-                                  // size: 24,
-                                  // ),
-                                  Icon(
-                                    Icons.favorite_border,
-                                    color: Colors.white,
-                                    size: 18,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              bottom: 50,
-                              left: 5,
-                              child: Text(
-                                "카페 노티드 제주",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              bottom: 32,
-                              child: Container(
-                                  height: 20,
                                   width: 133,
-                                  decoration: BoxDecoration(
-                                    color: Colors.black.withOpacity(0.5),
-                                    borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(10),
-                                      bottomRight: Radius.circular(10),
+                                  height: 180, //실제 사진 높이 = 250 - 8*5
+                                ),
+                                Positioned(
+                                  top: 5,
+                                  right: 5,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      //하트 클릭시
+                                      food.isFavorite = !food.isFavorite;
+                                      tripService.updateFood(food, index);
+                                    },
+                                    child: Container(
+                                        height: 25,
+                                        width: 25,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey[700]!
+                                              .withOpacity(0.2),
+                                          borderRadius:
+                                              BorderRadius.circular(100),
+                                        ),
+                                        child: (food.isFavorite)
+                                            ? Icon(
+                                                Icons.favorite_border,
+                                                color: Colors.white,
+                                                size: 24,
+                                              )
+                                            : Icon(
+                                                Icons.favorite,
+                                                color: Colors.red,
+                                                size: 24,
+                                              )),
+                                  ),
+                                ),
+                                Positioned(
+                                  bottom: 50,
+                                  left: 5,
+                                  child: Text(
+                                    food.name,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  child: Padding(
-                                    padding:
-                                    const EdgeInsets.only(left: 5, top: 2),
-                                    child: Text(
-                                      "제주시 애월읍",
-                                      style: TextStyle(
-                                        fontSize: 11,
-                                        color: Colors.grey[500]!,
+                                ),
+                                Positioned(
+                                  bottom: 32,
+                                  child: Container(
+                                      height: 20,
+                                      width: 133,
+                                      decoration: BoxDecoration(
+                                        color: Colors.black.withOpacity(0.5),
+                                        borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(10),
+                                          bottomRight: Radius.circular(10),
+                                        ),
                                       ),
-                                    ),
-                                  )),
-                            )
-                          ],
-                        ),
-                      );
-                    }),
-              ),
-            ),
-          ],
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 5, top: 2),
+                                        child: Text(
+                                          food.address,
+                                          style: TextStyle(
+                                            fontSize: 11,
+                                            color: Colors.grey[500]!,
+                                          ),
+                                        ),
+                                      )),
+                                )
+                              ],
+                            ),
+                          );
+                        }),
+                  ),
+                ),
+              ],
+            );
+          },
         );
       },
     );
