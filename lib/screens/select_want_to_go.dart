@@ -63,7 +63,8 @@ class _SelectWantToGoState extends State<SelectWantToGo> {
                           height: 26,
                         ),
                         TabBar(
-                          labelColor: Colors.black,
+                          indicatorColor: Color.fromRGBO(221, 81, 37, 1),
+                          labelColor: Color.fromRGBO(221, 81, 37, 1),
                           tabs: [
                             Tab(
                               text: '맛집',
@@ -88,100 +89,113 @@ class _SelectWantToGoState extends State<SelectWantToGo> {
                 child: TabBarView(
                   children: [
                     Scaffold(
-                      appBar: AppBar(
-                          backgroundColor: Colors.transparent,
-                          elevation: 0,
-                          leadingWidth: 0,
-                          title: Row(
-                            children: [
-                              TextButton(
-                                onPressed: () {},
-                                style: TextButton.styleFrom(
-                                  primary: Colors.black,
-                                  backgroundColor:
-                                      Color.fromRGBO(229, 229, 229, 1),
-                                  minimumSize: Size(63, 32),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(100),
+                      // appBar: AppBar(
+                      //   //뒤로가기 버튼, 탭바 밑부분 같이 보임
+                      //   backgroundColor: Colors.transparent,
+                      //   elevation: 0,
+                      //   leadingWidth: 0,
+                      //   title: Container(
+                      //     child: ListView.builder(
+                      //       //shrinkWrap: true,
+                      //       scrollDirection: Axis.horizontal,
+                      //       itemCount: foodTab.length,
+                      //       itemBuilder: (context, index) {
+                      //         return TextButton(
+                      //           onPressed: () {},
+                      //           style: TextButton.styleFrom(
+                      //             primary: Colors.black,
+                      //             backgroundColor:
+                      //                 Color.fromRGBO(229, 229, 229, 1),
+                      //             minimumSize: Size(63, 32),
+                      //             shape: RoundedRectangleBorder(
+                      //               borderRadius: BorderRadius.circular(100),
+                      //             ),
+                      //           ),
+                      //           child: Text('전체'),
+                      //         );
+                      //       },
+                      //     ),
+                      //   ),
+                      // ),
+                      body: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 35,
+                            width: double.infinity,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              //container 2개 써서 리스트뷰 위아래로 컬럼으로 넣어보기
+                              itemCount: foodTab.length,
+                              itemBuilder: (context, index) {
+                                var food = foodTab[index];
+                                return Container(
+                                  padding: EdgeInsets.all(3),
+                                  child: TextButton(
+                                    onPressed: () {},
+                                    style: TextButton.styleFrom(
+                                      //padding: EdgeInsets.all(10),
+                                      primary: Colors.black,
+                                      backgroundColor:
+                                          Color.fromRGBO(229, 229, 229, 1),
+                                      minimumSize: Size(60, 12),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(100),
+                                      ),
+                                    ),
+                                    child: Text(
+                                      '전체',
+                                      style: TextStyle(fontSize: 11),
+                                    ),
                                   ),
-                                ),
-                                child: Text('전체'),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              TextButton(
-                                onPressed: () {},
-                                style: TextButton.styleFrom(
-                                  primary: Colors.black,
-                                  backgroundColor:
-                                      Color.fromRGBO(229, 229, 229, 1),
-                                  minimumSize: Size(63, 32),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(100),
-                                  ),
-                                ),
-                                child: Text('1인 주문가능'),
-                              )
-                            ],
-                          )
-                          //  ListView.builder(
-                          //   shrinkWrap: true,
-                          //   scrollDirection: Axis.horizontal,
-                          //   itemCount: foodTab.length,
-                          //   itemBuilder: (context, index) {
-                          //     return TextButton(
-                          //       onPressed: () {},
-                          //       style: TextButton.styleFrom(
-                          //         primary: Colors.black,
-                          //         backgroundColor:
-                          //             Color.fromRGBO(229, 229, 229, 1),
-                          //         minimumSize: Size(63, 32),
-                          //         shape: RoundedRectangleBorder(
-                          //           borderRadius: BorderRadius.circular(100),
-                          //         ),
-                          //       ),
-                          //       child: Text('전체'),
-                          //     );
-                          //   },
-                          // ),
+                                );
+                              },
+                            ),
                           ),
-                      body: ListView.builder(
-                        itemCount: foodTab.length,
-                        itemBuilder: (context, index) {
-                          var food = foodTab[index];
-                          return ListTile(
-                            leading: FlutterLogo(size: 56.0),
-                            title: Row(
-                              children: [
-                                Text(food.name),
-                                SizedBox(
-                                  width: 6,
-                                ),
-                                Text(food.category),
-                              ],
-                            ),
-                            subtitle: Row(
-                              children: [
-                                Icon(Icons.place_outlined),
-                                SizedBox(
-                                  width: 3.5,
-                                ),
-                                Text(food.address),
-                              ],
-                            ),
-                            trailing: scheduleService.checkedList.contains(food)
-                                ? Icon(Icons.check_circle,
-                                    color: Color.fromRGBO(237, 140, 29, 1))
-                                : Icon(
-                                    Icons.check_circle_outline,
-                                    color: Colors.grey[350],
+                          Expanded(
+                            child: ListView.builder(
+                              //container 2개 써서 리스트뷰 위아래로 컬럼으로 넣어보기
+                              itemCount: foodTab.length,
+                              itemBuilder: (context, index) {
+                                var food = foodTab[index];
+                                return ListTile(
+                                  leading: FlutterLogo(size: 56.0),
+                                  title: Row(
+                                    children: [
+                                      Text(food.name),
+                                      SizedBox(
+                                        width: 6,
+                                      ),
+                                      Text(food.category),
+                                    ],
                                   ),
-                            onTap: () {
-                              scheduleService.toggleCheckBox(food);
-                            },
-                          );
-                        },
+                                  subtitle: Row(
+                                    children: [
+                                      Icon(Icons.place_outlined),
+                                      SizedBox(
+                                        width: 3.5,
+                                      ),
+                                      Text(food.address),
+                                    ],
+                                  ),
+                                  trailing: scheduleService.checkedList
+                                          .contains(food)
+                                      ? Icon(Icons.check_circle,
+                                          color:
+                                              Color.fromRGBO(237, 140, 29, 1))
+                                      : Icon(
+                                          Icons.check_circle_outline,
+                                          color: Colors.grey[350],
+                                        ),
+                                  onTap: () {
+                                    scheduleService.toggleCheckBox(food);
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     Text('2'),
@@ -250,3 +264,14 @@ class _SelectWantToGoState extends State<SelectWantToGo> {
 //     );
 //   }
 // }
+
+class CoustomTabBar extends Tab {
+  final VoidCallback onpressd;
+  final Widget child;
+  const CoustomTabBar({super.key, required this.onpressd, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return child;
+  }
+}
