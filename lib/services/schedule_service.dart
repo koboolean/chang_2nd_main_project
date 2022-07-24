@@ -10,42 +10,42 @@ class ScheduleService extends ChangeNotifier {
       category: '카페',
       address: '주소',
       checkBox: false,
-      keyWord: false,
+      keyWordCheck: false,
     ),
     DisplaySelectList(
       name: '장소',
       category: '카페',
       address: '주소',
       checkBox: false,
-      keyWord: false,
+      keyWordCheck: false,
     ),
     DisplaySelectList(
       name: '장소',
       category: '카페',
       address: '주소',
       checkBox: false,
-      keyWord: false,
+      keyWordCheck: false,
     ),
     DisplaySelectList(
       name: '장소',
       category: '카페',
       address: '주소',
       checkBox: false,
-      keyWord: false,
+      keyWordCheck: false,
     ),
     DisplaySelectList(
       name: '장소',
       category: '카페',
       address: '주소',
       checkBox: false,
-      keyWord: false,
+      keyWordCheck: false,
     ),
     DisplaySelectList(
       name: '장소',
       category: '카페',
       address: '주소',
       checkBox: false,
-      keyWord: false,
+      keyWordCheck: false,
     ),
   ];
   List<DisplaySelectList> hotelTabList = [
@@ -55,42 +55,42 @@ class ScheduleService extends ChangeNotifier {
       category: '숙소',
       address: '주소',
       checkBox: false,
-      keyWord: false,
+      keyWordCheck: false,
     ),
     DisplaySelectList(
       name: '장소',
       category: '숙소',
       address: '주소',
       checkBox: false,
-      keyWord: false,
+      keyWordCheck: false,
     ),
     DisplaySelectList(
       name: '장소',
       category: '숙소',
       address: '주소',
       checkBox: false,
-      keyWord: false,
+      keyWordCheck: false,
     ),
     DisplaySelectList(
       name: '장소',
       category: '숙소',
       address: '주소',
       checkBox: false,
-      keyWord: false,
+      keyWordCheck: false,
     ),
     DisplaySelectList(
       name: '장소',
       category: '숙소',
       address: '주소',
       checkBox: false,
-      keyWord: false,
+      keyWordCheck: false,
     ),
     DisplaySelectList(
       name: '장소',
       category: '숙소',
       address: '주소',
       checkBox: false,
-      keyWord: false,
+      keyWordCheck: false,
     ),
   ];
   List<DisplaySelectList> touristTabList = [
@@ -100,42 +100,42 @@ class ScheduleService extends ChangeNotifier {
       category: '관광지',
       address: '주소',
       checkBox: false,
-      keyWord: false,
+      keyWordCheck: false,
     ),
     DisplaySelectList(
       name: '장소',
       category: '관광지',
       address: '주소',
       checkBox: false,
-      keyWord: false,
+      keyWordCheck: false,
     ),
     DisplaySelectList(
       name: '장소',
       category: '관광지',
       address: '주소',
       checkBox: false,
-      keyWord: false,
+      keyWordCheck: false,
     ),
     DisplaySelectList(
       name: '장소',
       category: '관광지',
       address: '주소',
       checkBox: false,
-      keyWord: false,
+      keyWordCheck: false,
     ),
     DisplaySelectList(
       name: '장소',
       category: '관광지',
       address: '주소',
       checkBox: false,
-      keyWord: false,
+      keyWordCheck: false,
     ),
     DisplaySelectList(
       name: '장소',
       category: '관광지',
       address: '주소',
       checkBox: false,
-      keyWord: false,
+      keyWordCheck: false,
     ),
   ];
   List<DisplaySelectList> checkedList = []; //체크된 항목 담을 변수
@@ -256,12 +256,12 @@ class DisplaySelectList {
   String category;
   String address;
   bool checkBox;
-  bool keyWord;
+  bool keyWordCheck;
   DisplaySelectList(
       {Key? key,
       required this.name,
       required this.category,
       required this.address,
       required this.checkBox,
-      required this.keyWord});
+      required this.keyWordCheck});
 }

@@ -85,8 +85,18 @@ class _ScheduleCompleteState extends State<ScheduleComplete> {
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 18),
                         child: TabBar(
-                          labelColor: Colors.black,
+                          isScrollable: true, //TabBar 스크롤 가능
+                          labelColor: Color.fromRGBO(221, 81, 37, 1),
                           tabs: [
+                            Tab(
+                              text: '1일차',
+                            ),
+                            Tab(
+                              text: '2일차',
+                            ),
+                            Tab(
+                              text: '3일차',
+                            ),
                             Tab(
                               text: '1일차',
                             ),
@@ -127,6 +137,7 @@ class _ScheduleCompleteState extends State<ScheduleComplete> {
                             ),
                             Spacer(),
                             Text(
+                              //ReorderableListView 위젯 : 목록 재정렬
                               '편집',
                               style:
                                   TextStyle(color: Colors.black, fontSize: 14),
