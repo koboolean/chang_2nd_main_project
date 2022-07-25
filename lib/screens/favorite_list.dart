@@ -1,4 +1,3 @@
-import 'package:chang_2nd_main_project/models/food.dart';
 import 'package:chang_2nd_main_project/services/auth_service.dart';
 import 'package:chang_2nd_main_project/services/trip_service.dart';
 import 'package:flutter/material.dart';
