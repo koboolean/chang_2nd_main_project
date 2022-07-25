@@ -1,5 +1,9 @@
 import 'package:chang_2nd_main_project/screens/favorite_list.dart';
 import 'package:chang_2nd_main_project/screens/login.dart';
+import 'package:chang_2nd_main_project/screens/notification.dart';
+import 'package:chang_2nd_main_project/screens/place_info.dart';
+import 'package:chang_2nd_main_project/screens/place_list.dart';
+
 import 'package:chang_2nd_main_project/services/trip_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +28,7 @@ class _PlaceState extends State<Place> {
     return Consumer(
       builder: (context, bucketService, child) {
         return Scaffold(
+          //AppBar
           appBar: AppBar(
             elevation: 0,
             backgroundColor: Colors.white,
@@ -32,7 +37,13 @@ class _PlaceState extends State<Place> {
               Padding(
                 padding: const EdgeInsets.only(top: 25.0, right: 10),
                 child: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => NotificationList()),
+                    );
+                  },
                   icon: Icon(
                     Icons.notifications_none_outlined,
                     color: Colors.black,
@@ -42,13 +53,17 @@ class _PlaceState extends State<Place> {
               ),
             ],
             bottom: PreferredSize(
-              preferredSize: const Size.fromHeight(180),
+              preferredSize: const Size.fromHeight(190),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
+                  ///AppBar Title
                   Padding(
-                    padding: const EdgeInsets.only(left: 18.0),
+                    padding: const EdgeInsets.only(
+                      left: 18.0,
+                      bottom: 8.0,
+                    ),
                     child: Text(
                       "어디로 여행가시나요?",
                       style: TextStyle(
@@ -67,7 +82,7 @@ class _PlaceState extends State<Place> {
                       //controller 삽입 필요
                       decoration: InputDecoration(
                         filled: true,
-                        fillColor: Color(0xffd9d9d9),
+                        fillColor: Color.fromRGBO(243, 243, 243, 1),
                         hintText: "ex.김녕 바당길(바닷길)",
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.white),
@@ -91,9 +106,9 @@ class _PlaceState extends State<Place> {
                   /// 요즘 인기있는 여행지
                   Padding(
                     padding: const EdgeInsets.only(
-                      top: 10,
+                      top: 8,
                       left: 16,
-                      bottom: 10,
+                      bottom: 8,
                     ),
                     child: Text(
                       "요즘 인기있는 여행지",
@@ -106,27 +121,16 @@ class _PlaceState extends State<Place> {
 
                   /// 여행지 아이콘
                   Padding(
-                    padding: const EdgeInsets.only(left: 18.0),
-                    child: Container(
-                      margin: EdgeInsets.fromLTRB(0, 4, 8, 10),
+                    padding: const EdgeInsets.only(left: 18, top: 0, bottom: 8),
+                    child: SizedBox(
                       height: 32,
-                      width: 66,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 1,
-                            color: Colors.grey[500]!,
-                          ),
-                          borderRadius: BorderRadius.circular(16),
-                          color: Colors.white),
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "제주도",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
+                      child: TravelPlace(),
+                    ),
+                  ),
+                  Container(
+                    height: 7,
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(243, 243, 243, 1),
                     ),
                   ),
                 ],
@@ -156,20 +160,24 @@ class _TravelPlaceState extends State<TravelPlace> {
     return ListView.builder(
       shrinkWrap: true,
       scrollDirection: Axis.horizontal,
-      itemCount: 4,
+      itemCount: 1,
       itemBuilder: ((context, index) {
-        return GestureDetector(
-          onTap: () {},
+        return InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => PlaceList()),
+            );
+          },
           child: Padding(
-            padding: const EdgeInsets.only(left: 18.0),
+            padding: const EdgeInsets.only(right: 6.0),
             child: Container(
-              margin: EdgeInsets.fromLTRB(0, 4, 8, 10),
               height: 32,
               width: 66,
               decoration: BoxDecoration(
                   border: Border.all(
                     width: 1,
-                    color: Colors.black,
+                    color: Colors.grey[500]!,
                   ),
                   borderRadius: BorderRadius.circular(16),
                   color: Colors.white),
@@ -239,35 +247,44 @@ class _RecommendListState extends State<RecommendList> {
                                 const EdgeInsets.only(right: 8.0, bottom: 8.0),
                             child: Stack(
                               children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                    color: Colors.grey,
-                                    //사진 삽입
-                                    image: DecorationImage(
-                                      image: NetworkImage(food.url),
-                                      fit: BoxFit.fill,
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => PlaceInfo()),
+                                    );
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(10)),
+                                      color: Colors.grey,
+                                      //사진 삽입
+                                      image: DecorationImage(
+                                        image: NetworkImage(food.url),
+                                        fit: BoxFit.fill,
+                                      ),
                                     ),
+                                    width: 133,
+                                    height:
+                                        double.infinity, //실제 사진 높이 = 250 - 8*5
                                   ),
-                                  width: 133,
-                                  height: 180, //실제 사진 높이 = 250 - 8*5
                                 ),
                                 Positioned(
                                   top: 5,
                                   right: 5,
-                                  child: GestureDetector(
+                                  child: InkWell(
                                     onTap: () {
                                       //하트 클릭시
                                       food.isFavorite = !food.isFavorite;
                                       tripService.updateFood(food, index);
                                     },
                                     child: Container(
-                                        height: 25,
-                                        width: 25,
+                                        height: 27,
+                                        width: 27,
                                         decoration: BoxDecoration(
-                                          color: Colors.grey[700]!
-                                              .withOpacity(0.2),
+                                          color: Colors.black.withOpacity(0.3),
                                           borderRadius:
                                               BorderRadius.circular(100),
                                         ),
@@ -279,13 +296,15 @@ class _RecommendListState extends State<RecommendList> {
                                               )
                                             : Icon(
                                                 Icons.favorite,
-                                                color: Colors.red,
+                                                color: Color.fromRGBO(
+                                                    234, 83, 36, 1),
                                                 size: 24,
                                               )),
                                   ),
                                 ),
+                                //맛집 이름
                                 Positioned(
-                                  bottom: 50,
+                                  bottom: 30,
                                   left: 5,
                                   child: Text(
                                     food.name,
@@ -296,13 +315,14 @@ class _RecommendListState extends State<RecommendList> {
                                     ),
                                   ),
                                 ),
+                                //맛집 주소
                                 Positioned(
-                                  bottom: 32,
+                                  bottom: 0,
                                   child: Container(
-                                      height: 20,
+                                      height: 30,
                                       width: 133,
                                       decoration: BoxDecoration(
-                                        color: Colors.black.withOpacity(0.5),
+                                        color: Colors.black.withOpacity(0.7),
                                         borderRadius: BorderRadius.only(
                                           bottomLeft: Radius.circular(10),
                                           bottomRight: Radius.circular(10),
@@ -315,7 +335,7 @@ class _RecommendListState extends State<RecommendList> {
                                           food.address,
                                           style: TextStyle(
                                             fontSize: 11,
-                                            color: Colors.grey[500]!,
+                                            color: Colors.grey[400]!,
                                           ),
                                         ),
                                       )),
