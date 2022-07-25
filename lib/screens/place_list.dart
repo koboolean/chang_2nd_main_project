@@ -1,4 +1,10 @@
+import 'package:chang_2nd_main_project/screens/favorite_list.dart';
 import 'package:chang_2nd_main_project/screens/login.dart';
+import 'package:chang_2nd_main_project/screens/notification.dart';
+import 'package:chang_2nd_main_project/screens/place_info.dart';
+import 'package:chang_2nd_main_project/screens/place_list.dart';
+
+import 'package:chang_2nd_main_project/services/trip_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -30,15 +36,7 @@ class _PlaceListState extends State<PlaceList> {
                 elevation: 0,
                 backgroundColor: Colors.white,
                 centerTitle: false,
-                leading: InkWell(
-                  customBorder: CircleBorder(),
-                  onTap: () {},
-                  child: Icon(
-                    Icons.arrow_back_ios,
-                    color: Colors.black,
-                    size: 18,
-                  ),
-                ),
+                iconTheme: IconThemeData(color: Colors.black),
                 title: const Text(
                   "제주도",
                   style: TextStyle(
@@ -65,23 +63,20 @@ class _PlaceListState extends State<PlaceList> {
                     ),
                     child: Column(
                       children: [
-                        GestureDetector(
-                          onTap: () {},
-                          child: Row(
-                            children: [
-                              Text(
-                                "애월",
-                                style: TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                        Row(
+                          children: [
+                            Text(
+                              "애월",
+                              style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
                               ),
-                              InkWell(
-                                  customBorder: CircleBorder(),
-                                  onTap: () {},
-                                  child: Icon(Icons.arrow_drop_down))
-                            ],
-                          ),
+                            ),
+                            InkWell(
+                                customBorder: CircleBorder(),
+                                onTap: () {},
+                                child: Icon(Icons.arrow_drop_down))
+                          ],
                         ),
                         const TabBar(
                           labelColor: Color.fromRGBO(221, 81, 37, 0),
@@ -150,47 +145,6 @@ class _DiningState extends State<Dining> {
     // 전체 Column 구조
     return Column(
       children: [
-        // 키워드 여백 조정
-        Padding(
-          padding: const EdgeInsets.only(top: 8.0, left: 8.0),
-
-          // Listview 높이 지정을 위한 sized box
-          child: SizedBox(
-              height: 36,
-
-              // 키워드 Listview
-              child: ListView.builder(
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: 6,
-                itemBuilder: (context, index) {
-                  // 키워드 박스
-                  return Container(
-                    height: 28,
-                    width: 66,
-                    margin: EdgeInsets.fromLTRB(0, 4, 8, 10),
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          width: 1,
-                          color: Colors.grey[500]!,
-                        ),
-                        borderRadius: BorderRadius.circular(16),
-                        color: Colors.white),
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        "제주도",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 13,
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              )),
-        ),
-
         // 키워드에 따른 음식점 리스트
         Expanded(
           child: ListView.builder(
@@ -200,92 +154,97 @@ class _DiningState extends State<Dining> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   //Stack 구조
-                  Stack(
-                    children: [
-                      //사진 박스
-                      Padding(
-                        padding: const EdgeInsets.only(left: 18.0, right: 18.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            color: Colors.grey,
-
-                            //사진 삽입
-                            image: DecorationImage(
-                              image: AssetImage(
-                                  "assets/images/login_background.jpeg"),
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                          width: double.maxFinite,
-                          height: 200,
-                        ),
-                      ),
-                      // 하트 아이콘
-                      Positioned(
-                        top: 10,
-                        right: 30,
-                        child: GestureDetector(
-                          onTap: () {
-                            // setState(() => isPressed = !isPressed);
-                          },
+                  Padding(
+                    padding: const EdgeInsets.only(top: 18.0),
+                    child: Stack(
+                      children: [
+                        //사진 박스
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(left: 18.0, right: 18.0),
                           child: Container(
-                            height: 30,
-                            width: 30,
                             decoration: BoxDecoration(
-                              color: Colors.grey[700]!.withOpacity(0.2),
-                              borderRadius: BorderRadius.circular(100),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                              color: Colors.grey,
+
+                              //사진 삽입
+                              image: DecorationImage(
+                                image: AssetImage(
+                                    "assets/images/login_background.jpeg"),
+                                fit: BoxFit.fill,
+                              ),
                             ),
-                            child:
-                                // (isPressed) ? Icon(
-                                // Icons.favorite_border,
-                                // color: Colors.white,
-                                // size: 24,
-                                // ),
-                                // :
-                                // Icon(
-                                // Icons.favorite,
-                                // color: Colors.red,
-                                // size: 24,
-                                // ),
-                                Icon(
-                              Icons.favorite_border,
-                              color: Colors.white,
-                              size: 24,
+                            width: double.maxFinite,
+                            height: 200,
+                          ),
+                        ),
+                        // 하트 아이콘
+                        Positioned(
+                          top: 10,
+                          right: 30,
+                          child: GestureDetector(
+                            onTap: () {
+                              // setState(() => isPressed = !isPressed);
+                            },
+                            child: Container(
+                              height: 30,
+                              width: 30,
+                              decoration: BoxDecoration(
+                                color: Colors.grey[700]!.withOpacity(0.2),
+                                borderRadius: BorderRadius.circular(100),
+                              ),
+                              child:
+                                  // (isPressed) ? Icon(
+                                  // Icons.favorite_border,
+                                  // color: Colors.white,
+                                  // size: 24,
+                                  // ),
+                                  // :
+                                  // Icon(
+                                  // Icons.favorite,
+                                  // color: Colors.red,
+                                  // size: 24,
+                                  // ),
+                                  Icon(
+                                Icons.favorite_border,
+                                color: Colors.white,
+                                size: 24,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      // 해시태그 키워드
-                      Positioned(
-                        bottom: 10,
-                        left: 28,
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(right: 8.0),
-                              child: Text(
-                                "#1인 맛집",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
+                        // 해시태그 키워드
+                        Positioned(
+                          bottom: 10,
+                          left: 28,
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: Text(
+                                  "#1인 맛집",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 8.0),
-                              child: Text(
-                                "#12,000원",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
+                              Padding(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: Text(
+                                  "#12,000원",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(
