@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Food {
@@ -14,6 +15,13 @@ class Food {
 }
 
 class TripService extends ChangeNotifier {
+  final tripCollection = FirebaseFirestore.instance.collection('foodArea');
+
+  Future<QuerySnapshot> read(String uid) async {
+    // Tripcollection 가져오기
+    return tripCollection.where('uid', isEqualTo: uid).get();
+  }
+
   List<Food> foodList = [
     Food(
         '맛집이름1',
