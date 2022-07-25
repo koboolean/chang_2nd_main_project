@@ -20,8 +20,16 @@ class _FavoriteCityPageState extends State<FavoriteCity> {
         List<Food> foodList = tripService.foodList;
         return Scaffold(
           appBar: AppBar(
-            title: Text("사용자님이 찜한 곳들이에요"),
-            backgroundColor: Colors.amber,
+            elevation: 0,
+            title: Text(
+              "사용자님이 찜한 곳들이에요",
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 17,
+              ),
+            ),
+            backgroundColor: Colors.white,
           ),
           body: Column(
             children: [
@@ -30,9 +38,6 @@ class _FavoriteCityPageState extends State<FavoriteCity> {
                 width: double.infinity,
                 height: 50,
                 padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                ),
                 child: Row(
                   children: [
                     GestureDetector(
@@ -50,138 +55,17 @@ class _FavoriteCityPageState extends State<FavoriteCity> {
                   ],
                 ),
               ),
-              Divider(height: 10),
-              Center(
-                child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      Icon(Icons.face),
-                      SizedBox(height: 10),
-                      Text("제주도에서 아직 찜한 곳이 없어요"),
-                      SizedBox(height: 10),
-                      GestureDetector(
-                        onTap: () {}, //제주도 구경하기 클릭시 이동
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.amber,
-                              border: Border.all(
-                                color: Colors.transparent,
-                              ),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(20),
-                              )),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "제주도 구경하기",
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
               Container(
                 width: double.infinity,
-                height: 50,
+                height: 200,
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: Colors.blue,
-                ),
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => FavoriteList()),
-                        );
-                      },
-                      child: Text("부산 >"),
-                    ),
-                    Spacer(),
-                    Text("15곳"),
-                  ],
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                height: 140,
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: Colors.red,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Image.network(
-                          'https://i.ibb.co/xf2HpfG/dynamite.jpg',
-                          width: MediaQuery.of(context).size.width * 0.20,
-                        ),
-                        Text('Dynamite',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            )),
-                        Text('BTS')
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Image.network(
-                          'https://i.ibb.co/xf2HpfG/dynamite.jpg',
-                          width: MediaQuery.of(context).size.width * 0.20,
-                        ),
-                        Text('Dynamite',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            )),
-                        Text('BTS')
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Image.network(
-                          'https://i.ibb.co/xf2HpfG/dynamite.jpg',
-                          width: MediaQuery.of(context).size.width * 0.20,
-                        ),
-                        Text('Dynamite',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            )),
-                        Text('BTS')
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Image.network(
-                          'https://i.ibb.co/xf2HpfG/dynamite.jpg',
-                          width: MediaQuery.of(context).size.width * 0.20,
-                        ),
-                        Text('Dynamite',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            )),
-                        Text('BTS')
-                      ],
-                    ),
-                  ],
-                ),
+                    color: Colors.blue,
+                    image: DecorationImage(
+                      image: NetworkImage(
+                          'https://api.cdn.visitjeju.net/photomng/imgpath/202110/28/11c3035e-03f9-4b41-9a9d-d21abc399ee0.jpg'),
+                      fit: BoxFit.fill,
+                    )),
               ),
             ],
           ),

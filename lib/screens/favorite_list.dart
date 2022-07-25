@@ -1,3 +1,5 @@
+import 'package:chang_2nd_main_project/screens/place_info.dart';
+import 'package:chang_2nd_main_project/screens/place_list.dart';
 import 'package:chang_2nd_main_project/services/auth_service.dart';
 import 'package:chang_2nd_main_project/services/trip_service.dart';
 import 'package:flutter/material.dart';
@@ -37,14 +39,19 @@ class _FavoriteListPageState extends State<FavoriteList> {
             child: Scaffold(
               appBar: AppBar(
                 elevation: 0,
-                title: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(Icons.chevron_left, color: Colors.black),
-                    Text("제주도", style: TextStyle(color: Colors.black)),
-                  ],
+                title: GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(Icons.chevron_left, color: Colors.black),
+                        Text("제주도", style: TextStyle(color: Colors.black)),
+                      ],
+                    ),
+                  ),
                 ),
-                backgroundColor: Colors.white,
+                backgroundColor: Colors.yellow[60],
               ),
               body: Column(
                 children: [
@@ -157,144 +164,159 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                             return Padding(
                                               padding:
                                                   const EdgeInsets.all(2.0),
-                                              child: Container(
-                                                margin: EdgeInsets.only(
-                                                  left: index % 2 == 1 ? 8 : 0,
-                                                  right: index % 2 == 0 ? 8 : 0,
-                                                  top: 8,
-                                                  bottom: 8,
-                                                ),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                    Radius.circular(8),
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            PlaceInfo()),
+                                                  );
+                                                },
+                                                child: Container(
+                                                  margin: EdgeInsets.only(
+                                                    left:
+                                                        index % 2 == 1 ? 8 : 0,
+                                                    right:
+                                                        index % 2 == 0 ? 8 : 0,
+                                                    top: 8,
+                                                    bottom: 8,
                                                   ),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.grey
-                                                          .withOpacity(0.5),
-                                                      blurRadius: 1,
-                                                      spreadRadius: 1,
-                                                    )
-                                                  ],
-                                                ),
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                        topLeft:
-                                                            Radius.circular(8),
-                                                        topRight:
-                                                            Radius.circular(8),
-                                                      ),
-                                                      child: Stack(
-                                                        children: [
-                                                          Image.network(
-                                                            Food.url,
-                                                            fit: BoxFit
-                                                                .fitHeight,
-                                                            height: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                0.4,
-                                                          ),
-                                                          Positioned(
-                                                            top: 10,
-                                                            right: 10,
-                                                            child:
-                                                                GestureDetector(
-                                                              onTap: () {
-                                                                // setState(() => isPressed = !isPressed);
-                                                              },
-                                                              child: Container(
-                                                                height: 30,
-                                                                width: 30,
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  color: Colors
-                                                                      .grey[
-                                                                          700]!
-                                                                      .withOpacity(
-                                                                          0.2),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              100),
-                                                                ),
-                                                                child:
-                                                                    // (isPressed) ? Icon(
-                                                                    // Icons.favorite_border,
-                                                                    // color: Colors.white,
-                                                                    // size: 24,
-                                                                    // ),
-                                                                    // :
-                                                                    // Icon(
-                                                                    // Icons.favorite,
-                                                                    // color: Colors.red,
-                                                                    // size: 24,
-                                                                    // ),
-                                                                    Icon(
-                                                                  Icons
-                                                                      .favorite_border,
-                                                                  color: Colors
-                                                                      .white,
-                                                                  size: 24,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                      Radius.circular(8),
                                                     ),
-                                                    Expanded(
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(6.0),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: Colors.grey
+                                                            .withOpacity(0.5),
+                                                        blurRadius: 1,
+                                                        spreadRadius: 1,
+                                                      )
+                                                    ],
+                                                  ),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius.only(
+                                                          topLeft:
+                                                              Radius.circular(
+                                                                  8),
+                                                          topRight:
+                                                              Radius.circular(
+                                                                  8),
+                                                        ),
                                                         child: Stack(
                                                           children: [
-                                                            Column(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
-                                                              children: [
-                                                                Text(
-                                                                  Food.name,
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontSize:
-                                                                        18,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                  ),
-                                                                ),
-                                                                Text(
-                                                                  Food.address,
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontSize:
-                                                                        14,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .normal,
+                                                            Image.network(
+                                                              Food.url,
+                                                              fit: BoxFit
+                                                                  .fitHeight,
+                                                              height: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.4,
+                                                            ),
+                                                            Positioned(
+                                                              top: 10,
+                                                              right: 10,
+                                                              child:
+                                                                  GestureDetector(
+                                                                onTap: () {
+                                                                  // setState(() => isPressed = !isPressed);
+                                                                },
+                                                                child:
+                                                                    Container(
+                                                                  height: 30,
+                                                                  width: 30,
+                                                                  decoration:
+                                                                      BoxDecoration(
                                                                     color: Colors
-                                                                            .grey[
-                                                                        600],
+                                                                        .grey[
+                                                                            700]!
+                                                                        .withOpacity(
+                                                                            0.2),
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            100),
+                                                                  ),
+                                                                  child:
+                                                                      // (isPressed) ? Icon(
+                                                                      // Icons.favorite_border,
+                                                                      // color: Colors.white,
+                                                                      // size: 24,
+                                                                      // ),
+                                                                      // :
+                                                                      // Icon(
+                                                                      // Icons.favorite,
+                                                                      // color: Colors.red,
+                                                                      // size: 24,
+                                                                      // ),
+                                                                      Icon(
+                                                                    Icons
+                                                                        .favorite_border,
+                                                                    color: Colors
+                                                                        .white,
+                                                                    size: 24,
                                                                   ),
                                                                 ),
-                                                              ],
+                                                              ),
                                                             ),
                                                           ],
                                                         ),
                                                       ),
-                                                    ),
-                                                  ],
+                                                      Expanded(
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(6.0),
+                                                          child: Stack(
+                                                            children: [
+                                                              Column(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  Text(
+                                                                    Food.name,
+                                                                    style:
+                                                                        TextStyle(
+                                                                      fontSize:
+                                                                          18,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                    ),
+                                                                  ),
+                                                                  Text(
+                                                                    Food.address,
+                                                                    style:
+                                                                        TextStyle(
+                                                                      fontSize:
+                                                                          14,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal,
+                                                                      color: Colors
+                                                                              .grey[
+                                                                          600],
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                             );
