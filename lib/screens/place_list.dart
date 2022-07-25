@@ -20,6 +20,18 @@ class PlaceList extends StatefulWidget {
 
 class _PlaceListState extends State<PlaceList> {
   TextEditingController jobController = TextEditingController();
+  final _valueList = [
+    '전체',
+    '한림/협재',
+    '애월',
+    '제주시',
+    '한라산 지구',
+    '서귀포/중문',
+    '성산',
+    '함덕/구좌',
+    '우도',
+  ];
+  var _selectedValue = "전체";
 
   @override
   Widget build(BuildContext context) {
@@ -63,30 +75,32 @@ class _PlaceListState extends State<PlaceList> {
                     ),
                     child: Column(
                       children: [
-                        Row(
-                          children: [
-                            Text(
-                              "애월",
-                              style: TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                              ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                          child: Container(
+                            alignment: Alignment.centerLeft,
+                            child: DropdownButton(
+                              value: _selectedValue,
+                              items: _valueList.map(
+                                (value) {
+                                  return DropdownMenuItem(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                },
+                              ).toList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  _selectedValue = value.toString();
+                                });
+                              },
                             ),
-                            InkWell(
-                                customBorder: CircleBorder(),
-                                onTap: () {},
-                                child: Icon(Icons.arrow_drop_down))
-                          ],
+                          ),
                         ),
                         const TabBar(
-                          labelColor: Color.fromRGBO(221, 81, 37, 0),
-                          labelStyle: TextStyle(fontWeight: FontWeight.bold),
-                          unselectedLabelColor: Color.fromRGBO(221, 81, 37, 0),
-                          indicator: UnderlineTabIndicator(
-                              borderSide: BorderSide(
-                                width: 2.0,
-                              ),
-                              insets: EdgeInsets.only(left: 1, right: 1)),
+                          indicatorColor: Colors.amber,
+                          labelColor: Colors.amber,
+                          unselectedLabelColor: Colors.black,
                           tabs: [
                             Tab(
                                 child: Text(

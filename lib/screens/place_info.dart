@@ -36,7 +36,8 @@ class _PlaceInfoState extends State<PlaceInfo> {
             flexibleSpace: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("assetName"),
+                  image: NetworkImage(
+                      "https://i.ibb.co/CwzHq4z/trans-logo-512.png"),
                   fit: BoxFit.fill,
                 ),
               ),
