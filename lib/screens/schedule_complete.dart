@@ -9,24 +9,33 @@ import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class ScheduleComplete extends StatefulWidget {
-  const ScheduleComplete({super.key});
-
+  ScheduleComplete({super.key, required this.daysTabBar});
+  late int daysTabBar;
   @override
   State<ScheduleComplete> createState() => _ScheduleCompleteState();
 }
 
-class _ScheduleCompleteState extends State<ScheduleComplete> {
+class _ScheduleCompleteState extends State<ScheduleComplete>
+    with TickerProviderStateMixin {
   WebViewController? controller;
   Set<JavascriptChannel>? channel;
 
+  late TabController TabBarController;
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     if (Platform.isAndroid) {
       WebView.platform = SurfaceAndroidWebView();
     }
+    TabBarController = TabController(length: widget.daysTabBar, vsync: this);
   }
+
+  // @override
+  // void dispose() {
+  //   TabBarController.dispose();
+  //   super.dispose();
+  // }
 
   void _loadHtmlFromAssets() async {
     String fileText = await rootBundle.loadString('assets/ref/index.html');
@@ -42,7 +51,7 @@ class _ScheduleCompleteState extends State<ScheduleComplete> {
         var totalChecked = scheduleService.checkedList;
         return DefaultTabController(
           initialIndex: 0,
-          length: 3,
+          length: 6,
           child: SafeArea(
             child: Scaffold(
               appBar: AppBar(
@@ -121,27 +130,15 @@ class _ScheduleCompleteState extends State<ScheduleComplete> {
                         Container(
                           padding: EdgeInsets.symmetric(horizontal: 18),
                           child: TabBar(
+                            controller:
+                                TabBarController, //TabBarController.length
                             isScrollable: true, //TabBar 스크롤 가능
                             labelColor: Color.fromRGBO(221, 81, 37, 1),
                             tabs: [
-                              Tab(
-                                text: '1일차',
-                              ),
-                              Tab(
-                                text: '2일차',
-                              ),
-                              Tab(
-                                text: '3일차',
-                              ),
-                              Tab(
-                                text: '1일차',
-                              ),
-                              Tab(
-                                text: '2일차',
-                              ),
-                              Tab(
-                                text: '3일차',
-                              ),
+                              for (int i = 0; i <= TabBarController.length; i++)
+                                Tab(
+                                  text: '${i + 1}일차',
+                                )
                             ],
                           ),
                         ),
