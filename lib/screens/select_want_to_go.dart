@@ -188,7 +188,6 @@ class _SelectWantToGoState extends State<SelectWantToGo> {
                       },
                       child: Text('확인'), //font 적용하기
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromRGBO(221, 81, 37, 1),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(100),
                         ),
