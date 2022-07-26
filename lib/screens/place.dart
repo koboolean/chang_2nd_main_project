@@ -3,8 +3,11 @@ import 'package:chang_2nd_main_project/screens/login.dart';
 import 'package:chang_2nd_main_project/screens/notification.dart';
 import 'package:chang_2nd_main_project/screens/place_info.dart';
 import 'package:chang_2nd_main_project/screens/place_list.dart';
+import 'package:chang_2nd_main_project/services/travel_service.dart';
+import 'package:chang_2nd_main_project/main.dart';
 
 import 'package:chang_2nd_main_project/services/trip_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,10 +26,8 @@ class _PlaceState extends State<Place> {
 
   @override
   Widget build(BuildContext context) {
-    final authService = context.read<AuthService>();
-    final user = authService.currentUser()!;
-    return Consumer(
-      builder: (context, bucketService, child) {
+    return Consumer<TravelService>(
+      builder: (context, travelService, child) {
         return Scaffold(
           //AppBar
           appBar: AppBar(
@@ -210,11 +211,17 @@ class RecommendList extends StatefulWidget {
 class _RecommendListState extends State<RecommendList> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<TripService>(
-      builder: (context, tripService, child) {
-        List<Food> foodList = tripService.foodList;
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance.collection('foodArea').snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        }
+        if (snapshot.hasError) {
+          return Text('Error loading data: ${snapshot.error!}');
+        }
         return ListView.builder(
-          itemCount: 4,
+          itemCount: (snapshot.data! as QuerySnapshot).docs.length,
           itemBuilder: (context, index) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -223,7 +230,7 @@ class _RecommendListState extends State<RecommendList> {
                   padding:
                       const EdgeInsets.only(top: 8.0, left: 18.0, bottom: 8.0),
                   child: Text(
-                    "혼자 카페에서 여유로운 시간을",
+                    '${(snapshot.data! as QuerySnapshot).docs[index]['name']}',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -241,7 +248,6 @@ class _RecommendListState extends State<RecommendList> {
                         scrollDirection: Axis.horizontal,
                         itemCount: 4,
                         itemBuilder: (context, index) {
-                          var food = foodList[index];
                           return Padding(
                             padding:
                                 const EdgeInsets.only(right: 8.0, bottom: 8.0),
@@ -261,10 +267,10 @@ class _RecommendListState extends State<RecommendList> {
                                           BorderRadius.all(Radius.circular(10)),
                                       color: Colors.grey,
                                       //사진 삽입
-                                      image: DecorationImage(
-                                        image: NetworkImage(food.url),
-                                        fit: BoxFit.fill,
-                                      ),
+                                      //image: DecorationImage(
+                                      //  image: NetworkImage(),
+                                      //  fit: BoxFit.fill,
+                                      //),
                                     ),
                                     width: 133,
                                     height:
@@ -277,29 +283,30 @@ class _RecommendListState extends State<RecommendList> {
                                   child: InkWell(
                                     onTap: () {
                                       //하트 클릭시
-                                      food.isFavorite = !food.isFavorite;
-                                      tripService.updateFood(food, index);
+                                      //food.isFavorite = !food.isFavorite;
+                                      //tripService.updateFood(food, index);
                                     },
                                     child: Container(
-                                        height: 27,
-                                        width: 27,
-                                        decoration: BoxDecoration(
-                                          color: Colors.black.withOpacity(0.3),
-                                          borderRadius:
-                                              BorderRadius.circular(100),
-                                        ),
-                                        child: (food.isFavorite)
-                                            ? Icon(
-                                                Icons.favorite_border,
-                                                color: Colors.white,
-                                                size: 24,
-                                              )
-                                            : Icon(
-                                                Icons.favorite,
-                                                color: Color.fromRGBO(
-                                                    234, 83, 36, 1),
-                                                size: 24,
-                                              )),
+                                      height: 27,
+                                      width: 27,
+                                      decoration: BoxDecoration(
+                                        color: Colors.black.withOpacity(0.3),
+                                        borderRadius:
+                                            BorderRadius.circular(100),
+                                      ),
+                                      //child: (food.isFavorite)
+                                      //    ? Icon(
+                                      //        Icons.favorite_border,
+                                      //        color: Colors.white,
+                                      //        size: 24,
+                                      //      )
+                                      //    : Icon(
+                                      //        Icons.favorite,
+                                      //        color: Color.fromRGBO(
+                                      //            234, 83, 36, 1),
+                                      //        size: 24,
+                                      //      ),
+                                    ),
                                   ),
                                 ),
                                 //맛집 이름
@@ -307,7 +314,7 @@ class _RecommendListState extends State<RecommendList> {
                                   bottom: 30,
                                   left: 5,
                                   child: Text(
-                                    food.name,
+                                    "",
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 14,
@@ -332,7 +339,7 @@ class _RecommendListState extends State<RecommendList> {
                                         padding: const EdgeInsets.only(
                                             left: 5, top: 2),
                                         child: Text(
-                                          food.address,
+                                          '',
                                           style: TextStyle(
                                             fontSize: 11,
                                             color: Colors.grey[400]!,
