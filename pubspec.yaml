@@ -19,6 +19,7 @@ dependencies:
   google_fonts: ^2.2.0 #google Fonts
   dotted_line: ^3.1.0 #dotted line
   webview_flutter: ^3.0.4  #webview
+  flutter_svg: ^1.0.1
 
 dev_dependencies:
   flutter_test:
