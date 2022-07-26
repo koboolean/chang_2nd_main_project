@@ -2,6 +2,7 @@ import 'package:chang_2nd_main_project/screens/login.dart';
 import 'package:chang_2nd_main_project/screens/main_page.dart';
 import 'package:chang_2nd_main_project/services/auth_service.dart';
 import 'package:chang_2nd_main_project/services/schedule_service.dart';
+import 'package:chang_2nd_main_project/services/travel_service.dart';
 import 'package:chang_2nd_main_project/services/trip_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AuthService()),
-        ChangeNotifierProvider(create: (context) => TripService()),
+        ChangeNotifierProvider(create: (context) => TravelService()),
         ChangeNotifierProvider(create: (context) => ScheduleService()),
       ],
       child: const MyApp(),
