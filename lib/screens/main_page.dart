@@ -46,21 +46,37 @@ class _HomePageState extends State<HomePage> {
                 icon: SvgPicture.asset(
                   'assets/images/home.svg',
                 ),
+                activeIcon: SvgPicture.asset(
+                  'assets/images/home.svg',
+                  color: Color.fromRGBO(221, 81, 37, 1),
+                ),
                 label: '홈',
               ),
               BottomNavigationBarItem(
                   icon: SvgPicture.asset(
                     'assets/images/favorite.svg',
                   ),
+                  activeIcon: SvgPicture.asset(
+                    'assets/images/favorite.svg',
+                    color: Color.fromRGBO(221, 81, 37, 1),
+                  ),
                   label: '찜한곳'),
               BottomNavigationBarItem(
                   icon: SvgPicture.asset(
                     'assets/images/airplane.svg',
                   ),
+                  activeIcon: SvgPicture.asset(
+                    'assets/images/airplane.svg',
+                    color: Color.fromRGBO(221, 81, 37, 1),
+                  ),
                   label: '여행계획'),
               BottomNavigationBarItem(
                   icon: SvgPicture.asset(
                     'assets/images/user.svg',
+                  ),
+                  activeIcon: SvgPicture.asset(
+                    'assets/images/user.svg',
+                    color: Color.fromRGBO(221, 81, 37, 1),
                   ),
                   label: 'MY'),
             ],
