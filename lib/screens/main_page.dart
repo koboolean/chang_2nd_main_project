@@ -41,7 +41,10 @@ class _HomePageState extends State<HomePage> {
             currentIndex: _currentIndex,
             selectedItemColor: Color.fromRGBO(221, 81, 37, 1),
             items: [
-              BottomNavigationBarItem(icon: Icon(Icons.home), label: '홈'),
+              BottomNavigationBarItem(
+                icon: Image.asset('images/home.svg', width: 10, height: 10),
+                label: '홈',
+              ),
               BottomNavigationBarItem(icon: Icon(Icons.favorite), label: '찜한곳'),
               BottomNavigationBarItem(
                   icon: Icon(Icons.flight_takeoff_outlined), label: '여행계획'),
