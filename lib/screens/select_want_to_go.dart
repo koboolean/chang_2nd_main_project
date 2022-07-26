@@ -83,40 +83,10 @@ class _SelectWantToGoState extends State<SelectWantToGo> {
                 ),
               ),
               body: Container(
-                // height: MediaQuery.of(context).size.height,
-                // width: MediaQuery.of(context).size.width,
                 padding: EdgeInsets.only(left: 18, top: 15, right: 18),
                 child: TabBarView(
                   children: [
                     Scaffold(
-                      // appBar: AppBar(
-                      //   //뒤로가기 버튼, 탭바 밑부분 같이 보임
-                      //   backgroundColor: Colors.transparent,
-                      //   elevation: 0,
-                      //   leadingWidth: 0,
-                      //   title: Container(
-                      //     child: ListView.builder(
-                      //       //shrinkWrap: true,
-                      //       scrollDirection: Axis.horizontal,
-                      //       itemCount: foodTab.length,
-                      //       itemBuilder: (context, index) {
-                      //         return TextButton(
-                      //           onPressed: () {},
-                      //           style: TextButton.styleFrom(
-                      //             primary: Colors.black,
-                      //             backgroundColor:
-                      //                 Color.fromRGBO(229, 229, 229, 1),
-                      //             minimumSize: Size(63, 32),
-                      //             shape: RoundedRectangleBorder(
-                      //               borderRadius: BorderRadius.circular(100),
-                      //             ),
-                      //           ),
-                      //           child: Text('전체'),
-                      //         );
-                      //       },
-                      //     ),
-                      //   ),
-                      // ),
                       body: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -125,7 +95,6 @@ class _SelectWantToGoState extends State<SelectWantToGo> {
                             width: double.infinity,
                             child: ListView.builder(
                               scrollDirection: Axis.horizontal,
-                              //container 2개 써서 리스트뷰 위아래로 컬럼으로 넣어보기
                               itemCount: foodTab.length,
                               itemBuilder: (context, index) {
                                 var food = foodTab[index];
@@ -134,7 +103,6 @@ class _SelectWantToGoState extends State<SelectWantToGo> {
                                   child: TextButton(
                                     onPressed: () {},
                                     style: TextButton.styleFrom(
-                                      //padding: EdgeInsets.all(10),
                                       primary: Colors.black,
                                       backgroundColor:
                                           Color.fromRGBO(229, 229, 229, 1),
@@ -155,7 +123,6 @@ class _SelectWantToGoState extends State<SelectWantToGo> {
                           ),
                           Expanded(
                             child: ListView.builder(
-                              //container 2개 써서 리스트뷰 위아래로 컬럼으로 넣어보기
                               itemCount: foodTab.length,
                               itemBuilder: (context, index) {
                                 var food = foodTab[index];
@@ -212,7 +179,6 @@ class _SelectWantToGoState extends State<SelectWantToGo> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        //scheduleService.checkedList.addAll(iterable);
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -229,9 +195,6 @@ class _SelectWantToGoState extends State<SelectWantToGo> {
                         minimumSize: Size(300, 48),
                       ),
                     ),
-                    // SizedBox(
-                    //   height: 5,
-                    // ),
                   ],
                 ),
               )),
@@ -240,30 +203,6 @@ class _SelectWantToGoState extends State<SelectWantToGo> {
     });
   }
 }
-
-// class KeyWordSort extends StatelessWidget {
-//   const KeyWordSort({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Row(
-//       children: [
-//         TextButton(
-//           onPressed: () {},
-//           style: TextButton.styleFrom(
-//             primary: Colors.black,
-//             backgroundColor: Color.fromRGBO(229, 229, 229, 1),
-//             minimumSize: Size(63, 32),
-//             shape: RoundedRectangleBorder(
-//               borderRadius: BorderRadius.circular(100),
-//             ),
-//           ),
-//           child: Text('전체'),
-//         ),
-//       ],
-//     );
-//   }
-// }
 
 class CoustomTabBar extends Tab {
   final VoidCallback onpressd;

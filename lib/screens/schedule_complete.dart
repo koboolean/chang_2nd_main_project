@@ -1,8 +1,12 @@
+import 'dart:convert';
+import 'dart:io';
 import 'dart:ui';
 import 'package:chang_2nd_main_project/services/schedule_service.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class ScheduleComplete extends StatefulWidget {
   const ScheduleComplete({super.key});
@@ -12,115 +16,147 @@ class ScheduleComplete extends StatefulWidget {
 }
 
 class _ScheduleCompleteState extends State<ScheduleComplete> {
+  WebViewController? controller;
+  Set<JavascriptChannel>? channel;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (Platform.isAndroid) {
+      WebView.platform = SurfaceAndroidWebView();
+    }
+  }
+
+  void _loadHtmlFromAssets() async {
+    String fileText = await rootBundle.loadString('assets/ref/index.html');
+    controller!.loadUrl(Uri.dataFromString(fileText,
+            mimeType: 'text/html', encoding: Encoding.getByName('utf-8'))
+        .toString());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<ScheduleService>(
-        builder: (context, scheduleService, child) {
-      var totalChecked = scheduleService.checkedList;
-
-      return DefaultTabController(
-        initialIndex: 0,
-        length: 3,
-        child: SafeArea(
-          child: Scaffold(
-            appBar: AppBar(
-              actions: [
-                IconButton(
-                  onPressed: () {},
-                  icon: Image.asset(
-                    'assets/images/trash.png',
+      builder: (context, scheduleService, child) {
+        var totalChecked = scheduleService.checkedList;
+        return DefaultTabController(
+          initialIndex: 0,
+          length: 3,
+          child: SafeArea(
+            child: Scaffold(
+              appBar: AppBar(
+                actions: [
+                  IconButton(
+                    onPressed: () {},
+                    icon: Image.asset(
+                      'assets/images/trash.png',
+                    ),
                   ),
+                ],
+                leading: IconButton(
+                  icon: Icon(
+                    Icons.arrow_back_ios,
+                    color: Colors.black,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
-              ],
-              leading: IconButton(
-                icon: Icon(
-                  Icons.arrow_back_ios,
-                  color: Colors.black,
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              bottom: PreferredSize(
-                preferredSize: Size.fromHeight(300), //431
-                child: Container(
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 18),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  '제주도',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                bottom: PreferredSize(
+                  preferredSize: Size.fromHeight(300), //431
+                  child: Container(
+                    child: Column(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 18),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    '제주도',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text('3박 4일')
-                              ],
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                          ],
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text('3박 4일')
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      Container(
-                        height: 211,
-                        width: double.infinity,
-                        decoration: BoxDecoration(color: Colors.grey),
-                        child: Center(
-                          child: Text('지도'),
+                        Container(
+                          height: 200,
+                          width: double.infinity,
+                          decoration: BoxDecoration(color: Colors.grey),
+                          child: Builder(
+                            builder: (context) {
+                              return WebView(
+                                // initialUrl: 'https://flutter.dev',
+                                javascriptMode: JavascriptMode.unrestricted,
+                                onProgress: (progress) {
+                                  print(
+                                      'WebView is loading (progress : $progress%)');
+                                },
+                                onWebViewCreated: (controller) {
+                                  this.controller = controller;
+                                  _loadHtmlFromAssets();
+                                },
+                                javascriptChannels: channel,
+                              );
+                            },
+                          ),
                         ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 18),
-                        child: TabBar(
-                          isScrollable: true, //TabBar 스크롤 가능
-                          labelColor: Color.fromRGBO(221, 81, 37, 1),
-                          tabs: [
-                            Tab(
-                              text: '1일차',
-                            ),
-                            Tab(
-                              text: '2일차',
-                            ),
-                            Tab(
-                              text: '3일차',
-                            ),
-                            Tab(
-                              text: '1일차',
-                            ),
-                            Tab(
-                              text: '2일차',
-                            ),
-                            Tab(
-                              text: '3일차',
-                            ),
-                          ],
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 18),
+                          child: TabBar(
+                            isScrollable: true, //TabBar 스크롤 가능
+                            labelColor: Color.fromRGBO(221, 81, 37, 1),
+                            tabs: [
+                              Tab(
+                                text: '1일차',
+                              ),
+                              Tab(
+                                text: '2일차',
+                              ),
+                              Tab(
+                                text: '3일차',
+                              ),
+                              Tab(
+                                text: '1일차',
+                              ),
+                              Tab(
+                                text: '2일차',
+                              ),
+                              Tab(
+                                text: '3일차',
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            body: Container(
-              //height: MediaQuery.of(context).size.height,
-              // width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.only(left: 18, top: 10, right: 18),
-              child: TabBarView(
-                children: [
-                  Scaffold(
+              body: Container(
+                //height: MediaQuery.of(context).size.height,
+                // width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.only(left: 18, top: 10, right: 18),
+                child: TabBarView(
+                  children: [
+                    Scaffold(
                       appBar: AppBar(
                         leadingWidth: 0,
                         backgroundColor: Colors.transparent,
@@ -206,28 +242,15 @@ class _ScheduleCompleteState extends State<ScheduleComplete> {
                             ],
                           );
                         },
-                      )),
-                  // DisplayScheduleList(
-                  //     name: '1일차 장소',
-                  //     catagory: '카페',
-                  //     address: '주소',
-                  //     moveTime: 10),
-                  // DisplayScheduleList(
-                  //     name: '2일차 장소',
-                  //     catagory: '카페',
-                  //     address: '주소',
-                  //     moveTime: 20),
-                  // DisplayScheduleList(
-                  //     name: '3일차 장소',
-                  //     catagory: '카페',
-                  //     address: '주소',
-                  //     moveTime: 30),
-                ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }
