@@ -2,7 +2,6 @@ import 'package:chang_2nd_main_project/screens/place_info.dart';
 import 'package:chang_2nd_main_project/screens/place_list.dart';
 import 'package:chang_2nd_main_project/services/auth_service.dart';
 import 'package:chang_2nd_main_project/services/travel_service.dart';
-import 'package:chang_2nd_main_project/services/trip_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'favorite_city.dart';
