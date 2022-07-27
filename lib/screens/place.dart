@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:chang_2nd_main_project/screens/favorite_list.dart';
 import 'package:chang_2nd_main_project/screens/login.dart';
 import 'package:chang_2nd_main_project/screens/notification.dart';
@@ -139,7 +141,13 @@ class _PlaceState extends State<Place> {
             ),
           ),
           //body
-          body: RecommendList(),
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                RecommendFoodList(),
+              ],
+            ),
+          ),
         );
       },
     );
@@ -201,14 +209,26 @@ class _TravelPlaceState extends State<TravelPlace> {
 
 //음식점 추천 리스트
 
-class RecommendList extends StatefulWidget {
-  RecommendList({Key? key}) : super(key: key);
+class RecommendFoodList extends StatefulWidget {
+  RecommendFoodList({Key? key}) : super(key: key);
 
   @override
-  State<RecommendList> createState() => _RecommendListState();
+  State<RecommendFoodList> createState() => _RecommendFoodListState();
 }
 
-class _RecommendListState extends State<RecommendList> {
+//음식점 제안 코멘트
+final foodComment = <String>{
+  '오늘 점심은 여기서! 어때요?',
+  '혼밥도 어렵지 않아요!',
+  '요즘 혼밥 핫플은 여기에요',
+  '1인분 주문도 가능한 식당',
+  '오늘 저녁은 혼자서 분위기 있게',
+};
+
+//Random 숫자 반환
+int foodrandomIndex = Random().nextInt(4);
+
+class _RecommendFoodListState extends State<RecommendFoodList> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
@@ -220,142 +240,148 @@ class _RecommendListState extends State<RecommendList> {
         if (snapshot.hasError) {
           return Text('Error loading data: ${snapshot.error!}');
         }
-        return ListView.builder(
-          itemCount: (snapshot.data! as QuerySnapshot).docs.length,
-          itemBuilder: (context, index) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.only(top: 8.0, left: 18.0, bottom: 8.0),
-                  child: Text(
-                    '${(snapshot.data! as QuerySnapshot).docs[index]['name']}',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            //리스트 설명 텍스트
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0, left: 18.0, bottom: 8.0),
+              child: Text(
+                //foodComment에 randomIndex 불러오기
+                foodComment.elementAt(foodrandomIndex),
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
                 ),
-                //사진
-                Padding(
-                  padding: const EdgeInsets.only(left: 18.0),
-                  child: SizedBox(
-                    height: 220,
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        physics: ClampingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 4,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding:
-                                const EdgeInsets.only(right: 8.0, bottom: 8.0),
-                            child: Stack(
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => PlaceInfo()),
-                                    );
-                                  },
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(10)),
-                                      color: Colors.grey,
-                                      //사진 삽입
-                                      //image: DecorationImage(
-                                      //  image: NetworkImage(),
-                                      //  fit: BoxFit.fill,
-                                      //),
-                                    ),
-                                    width: 133,
-                                    height:
-                                        double.infinity, //실제 사진 높이 = 250 - 8*5
+              ),
+            ),
+            //Horizontal Listview
+            Padding(
+              padding: const EdgeInsets.only(left: 18.0), //사진폭 18pt 축소
+              child: SizedBox(
+                height: 220,
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: ClampingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 6,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(
+                            right: 8.0, bottom: 8.0), //사진폭 8pt 축소
+                        child:
+                            //Stack 기능
+                            Stack(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => PlaceInfo()),
+                                );
+                              },
+                              child: Container(
+                                width: 159, //실제 너비 = 159-26 = 133
+                                height: double.infinity, //실제 사진 높이 = 220 - 8*5
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                  color: Colors.grey,
+                                  //사진 삽입
+                                  image: DecorationImage(
+                                    image: NetworkImage(
+                                        '${(snapshot.data! as QuerySnapshot).docs[index]['url']}'),
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
-                                Positioned(
-                                  top: 5,
-                                  right: 5,
-                                  child: InkWell(
-                                    onTap: () {
-                                      //하트 클릭시
-                                      //food.isFavorite = !food.isFavorite;
-                                      //tripService.updateFood(food, index);
-                                    },
-                                    child: Container(
-                                      height: 27,
-                                      width: 27,
-                                      decoration: BoxDecoration(
-                                        color: Colors.black.withOpacity(0.3),
-                                        borderRadius:
-                                            BorderRadius.circular(100),
-                                      ),
-                                      //child: (food.isFavorite)
-                                      //    ? Icon(
-                                      //        Icons.favorite_border,
-                                      //        color: Colors.white,
-                                      //        size: 24,
-                                      //      )
-                                      //    : Icon(
-                                      //        Icons.favorite,
-                                      //        color: Color.fromRGBO(
-                                      //            234, 83, 36, 1),
-                                      //        size: 24,
-                                      //      ),
-                                    ),
-                                  ),
-                                ),
-                                //맛집 이름
-                                Positioned(
-                                  bottom: 30,
-                                  left: 5,
-                                  child: Text(
-                                    "",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                                //맛집 주소
-                                Positioned(
-                                  bottom: 0,
-                                  child: Container(
-                                      height: 30,
-                                      width: 133,
-                                      decoration: BoxDecoration(
-                                        color: Colors.black.withOpacity(0.7),
-                                        borderRadius: BorderRadius.only(
-                                          bottomLeft: Radius.circular(10),
-                                          bottomRight: Radius.circular(10),
-                                        ),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 5, top: 2),
-                                        child: Text(
-                                          '',
-                                          style: TextStyle(
-                                            fontSize: 11,
-                                            color: Colors.grey[400]!,
-                                          ),
-                                        ),
-                                      )),
-                                )
-                              ],
+                              ),
                             ),
-                          );
-                        }),
-                  ),
-                ),
-              ],
-            );
-          },
+                            Container(
+                              width: 159,
+                              height: double.infinity, //실제 사진 높이 = 220 - 8*5
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                  color: Colors.white,
+                                  gradient: LinearGradient(
+                                      begin: FractionalOffset.topCenter,
+                                      end: FractionalOffset.bottomCenter,
+                                      colors: [
+                                        Colors.grey.withOpacity(0.0),
+                                        Colors.black.withOpacity(0.6),
+                                      ],
+                                      stops: [
+                                        0.0,
+                                        0.8,
+                                      ])),
+                            ),
+
+                            Positioned(
+                              top: 5,
+                              right: 5,
+                              child: InkWell(
+                                onTap: () {
+                                  //하트 클릭시
+                                  //food.isFavorite = !food.isFavorite;
+                                  //tripService.updateFood(food, index);
+                                },
+                                child: Container(
+                                  height: 27,
+                                  width: 27,
+                                  decoration: BoxDecoration(
+                                    color: Colors.black.withOpacity(0.3),
+                                    borderRadius: BorderRadius.circular(100),
+                                  ),
+                                  //child: (food.isFavorite)
+                                  //    ? Icon(
+                                  //        Icons.favorite_border,
+                                  //        color: Colors.white,
+                                  //        size: 24,
+                                  //      )
+                                  //    : Icon(
+                                  //        Icons.favorite,
+                                  //        color: Color.fromRGBO(
+                                  //            234, 83, 36, 1),
+                                  //        size: 24,
+                                  //      ),
+                                ),
+                              ),
+                            ),
+                            //맛집 이름
+                            Positioned(
+                              bottom: 30,
+                              left: 5,
+                              child: Text(
+                                "${(snapshot.data! as QuerySnapshot).docs[index]['name']}",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            //맛집 주소
+                            Positioned(
+                              bottom: 15,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 5, top: 2),
+                                child: Text(
+                                  '${(snapshot.data! as QuerySnapshot).docs[index]['area']}',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                    color: Colors.grey[400]!,
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      );
+                    }),
+              ),
+            ),
+          ],
         );
       },
     );
