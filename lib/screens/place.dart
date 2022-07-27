@@ -233,6 +233,7 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance.collection('foodArea').snapshots(),
       builder: (context, snapshot) {
+        final documents = snapshot.data?.docs ?? [];
         if (snapshot.connectionState == ConnectionState.waiting) {
           return CircularProgressIndicator();
         }
@@ -265,6 +266,11 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                     scrollDirection: Axis.horizontal,
                     itemCount: 6,
                     itemBuilder: (context, index) {
+                      final doc = documents[index];
+                      String name = doc.get('name');
+                      String url = doc.get('url');
+                      String area = doc.get('area');
+                      bool isFavorite = doc.get('isFavorite');
                       return Padding(
                         padding: const EdgeInsets.only(
                             right: 8.0, bottom: 8.0), //사진폭 8pt 축소
@@ -289,8 +295,7 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                                   color: Colors.grey,
                                   //사진 삽입
                                   image: DecorationImage(
-                                    image: NetworkImage(
-                                        '${(snapshot.data! as QuerySnapshot).docs[index]['url']}'),
+                                    image: NetworkImage(url),
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -321,9 +326,8 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                               right: 5,
                               child: InkWell(
                                 onTap: () {
-                                  //하트 클릭시
-                                  //food.isFavorite = !food.isFavorite;
-                                  //tripService.updateFood(food, index);
+                                  // TravelService.update(doc.id, !isFavorite);
+                                  // 클릭시 update error..
                                 },
                                 child: Container(
                                   height: 27,
@@ -332,18 +336,18 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                                     color: Colors.black.withOpacity(0.3),
                                     borderRadius: BorderRadius.circular(100),
                                   ),
-                                  //child: (food.isFavorite)
-                                  //    ? Icon(
-                                  //        Icons.favorite_border,
-                                  //        color: Colors.white,
-                                  //        size: 24,
-                                  //      )
-                                  //    : Icon(
-                                  //        Icons.favorite,
-                                  //        color: Color.fromRGBO(
-                                  //            234, 83, 36, 1),
-                                  //        size: 24,
-                                  //      ),
+                                  child: (isFavorite)
+                                      //svg image 로 변경필요함
+                                      ? Icon(
+                                          Icons.favorite_border,
+                                          color: Colors.white,
+                                          size: 24,
+                                        )
+                                      : Icon(
+                                          Icons.favorite,
+                                          color: Color.fromRGBO(234, 83, 36, 1),
+                                          size: 24,
+                                        ),
                                 ),
                               ),
                             ),
@@ -352,7 +356,7 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                               bottom: 30,
                               left: 5,
                               child: Text(
-                                "${(snapshot.data! as QuerySnapshot).docs[index]['name']}",
+                                name,
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 14,
@@ -366,7 +370,7 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                               child: Padding(
                                 padding: const EdgeInsets.only(left: 5, top: 2),
                                 child: Text(
-                                  '${(snapshot.data! as QuerySnapshot).docs[index]['area']}',
+                                  area,
                                   style: TextStyle(
                                     fontSize: 11,
                                     color: Colors.grey[400]!,
