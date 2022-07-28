@@ -144,6 +144,11 @@ class _PlaceState extends State<Place> {
             child: Column(
               children: [
                 RecommendFoodList(),
+                RecommendLodgeList(),
+                RecommendPlaceList(),
+                SizedBox(
+                  height: 85,
+                )
               ],
             ),
           ),
@@ -207,7 +212,6 @@ class _TravelPlaceState extends State<TravelPlace> {
 }
 
 //음식점 추천 리스트
-
 class RecommendFoodList extends StatefulWidget {
   RecommendFoodList({Key? key}) : super(key: key);
 
@@ -301,6 +305,375 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                                 ),
                               ),
                             ),
+                            Container(
+                              width: 159,
+                              height: double.infinity, //실제 사진 높이 = 220 - 8*5
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                  color: Colors.white,
+                                  gradient: LinearGradient(
+                                      begin: FractionalOffset.topCenter,
+                                      end: FractionalOffset.bottomCenter,
+                                      colors: [
+                                        Colors.grey.withOpacity(0.0),
+                                        Colors.black.withOpacity(0.6),
+                                      ],
+                                      stops: [
+                                        0.0,
+                                        0.8,
+                                      ])),
+                            ),
+
+                            Positioned(
+                              top: 5,
+                              right: 5,
+                              child: InkWell(
+                                onTap: () {
+                                  // TravelService.update(doc.id, !isFavorite);
+                                  // 클릭시 update error..
+                                },
+                                child: Container(
+                                  height: 27,
+                                  width: 27,
+                                  decoration: BoxDecoration(
+                                    color: Colors.black.withOpacity(0.3),
+                                    borderRadius: BorderRadius.circular(100),
+                                  ),
+                                  child: (isFavorite)
+                                      //svg image 로 변경필요함
+                                      ? Icon(
+                                          Icons.favorite_border,
+                                          color: Colors.white,
+                                          size: 24,
+                                        )
+                                      : Icon(
+                                          Icons.favorite,
+                                          color: Color.fromRGBO(234, 83, 36, 1),
+                                          size: 24,
+                                        ),
+                                ),
+                              ),
+                            ),
+                            //맛집 이름
+                            Positioned(
+                              bottom: 30,
+                              left: 5,
+                              child: Text(
+                                name,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            //맛집 주소
+                            Positioned(
+                              bottom: 15,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 5, top: 2),
+                                child: Text(
+                                  area,
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                    color: Colors.grey[400]!,
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      );
+                    }),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+//숙소 코멘트 및 리스트
+class RecommendLodgeList extends StatefulWidget {
+  const RecommendLodgeList({Key? key}) : super(key: key);
+
+  @override
+  State<RecommendLodgeList> createState() => _RecommendLodgeListState();
+}
+
+//숙소 제안 코멘트
+final lodgeComment = <String>{
+  '편안하게 쉴 수 있는 숙소',
+  '휴식과 가성비를 둘다 잡은 숙소',
+  '숙소를 아직 정하지 않았다면, 이곳도 알아보세요',
+  '많이 피곤하시죠? 여기서 푹 쉬고 내일도 활기차게!',
+};
+
+//Random 숫자 반환
+int lodgerandomIndex = Random().nextInt(3);
+
+class _RecommendLodgeListState extends State<RecommendLodgeList> {
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance.collection('lodgeArea').snapshots(),
+      builder: (context, snapshot) {
+        final documents = snapshot.data?.docs ?? [];
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        }
+        if (snapshot.hasError) {
+          return Text('Error loading data: ${snapshot.error!}');
+        }
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            //리스트 설명 텍스트
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0, left: 18.0, bottom: 8.0),
+              child: Text(
+                //foodComment에 randomIndex 불러오기
+                lodgeComment.elementAt(lodgerandomIndex),
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            //Horizontal Listview
+            Padding(
+              padding: const EdgeInsets.only(left: 18.0), //사진폭 18pt 축소
+              child: SizedBox(
+                height: 220,
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: ClampingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 6,
+                    itemBuilder: (context, index) {
+                      final doc = documents[index];
+                      String name = doc.get('name');
+                      String url = doc.get('url');
+                      String area = doc.get('area');
+                      bool isFavorite = doc.get('isFavorite');
+                      return Padding(
+                        padding: const EdgeInsets.only(
+                            right: 8.0, bottom: 8.0), //사진폭 8pt 축소
+                        child:
+                            //Stack 기능
+                            Stack(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => PlaceInfo()),
+                                );
+                              },
+                              child: Container(
+                                width: 159, //실제 너비 = 159-26 = 133
+                                height: double
+                                    .infinity, //실제 사진 높이 = 220 - 8*5 = 180
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                  color: Colors.grey,
+                                  //사진 삽입
+                                  image: DecorationImage(
+                                    image: NetworkImage(url),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: 159,
+                              height: double.infinity, //실제 사진 높이 = 220 - 8*5
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                  color: Colors.white,
+                                  gradient: LinearGradient(
+                                      begin: FractionalOffset.topCenter,
+                                      end: FractionalOffset.bottomCenter,
+                                      colors: [
+                                        Colors.grey.withOpacity(0.0),
+                                        Colors.black.withOpacity(0.6),
+                                      ],
+                                      stops: [
+                                        0.0,
+                                        0.8,
+                                      ])),
+                            ),
+
+                            Positioned(
+                              top: 5,
+                              right: 5,
+                              child: InkWell(
+                                onTap: () {
+                                  // TravelService.update(doc.id, !isFavorite);
+                                  // 클릭시 update error..
+                                },
+                                child: Container(
+                                  height: 27,
+                                  width: 27,
+                                  decoration: BoxDecoration(
+                                    color: Colors.black.withOpacity(0.3),
+                                    borderRadius: BorderRadius.circular(100),
+                                  ),
+                                  child: (isFavorite)
+                                      //svg image 로 변경필요함
+                                      ? Icon(
+                                          Icons.favorite_border,
+                                          color: Colors.white,
+                                          size: 24,
+                                        )
+                                      : Icon(
+                                          Icons.favorite,
+                                          color: Color.fromRGBO(234, 83, 36, 1),
+                                          size: 24,
+                                        ),
+                                ),
+                              ),
+                            ),
+                            //맛집 이름
+                            Positioned(
+                              bottom: 30,
+                              left: 5,
+                              child: Text(
+                                name,
+                                overflow: TextOverflow.clip,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            //맛집 주소
+                            Positioned(
+                              bottom: 15,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 5, top: 2),
+                                child: Text(
+                                  area,
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                    color: Colors.grey[400]!,
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      );
+                    }),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+//관광지 코멘트 및 리스트
+class RecommendPlaceList extends StatefulWidget {
+  const RecommendPlaceList({Key? key}) : super(key: key);
+
+  @override
+  State<RecommendPlaceList> createState() => _RecommendPlaceListState();
+}
+
+//숙소 제안 코멘트
+final placeComment = <String>{
+  '오늘 여행지는 여기!',
+  '여행을 떠나볼까요?',
+  '여행일정이 빈다면, 이곳을 들러보세요!',
+};
+
+//Random 숫자 반환
+int placerandomIndex = Random().nextInt(2);
+
+class _RecommendPlaceListState extends State<RecommendPlaceList> {
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance.collection('placeArea').snapshots(),
+      builder: (context, snapshot) {
+        final documents = snapshot.data?.docs ?? [];
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        }
+        if (snapshot.hasError) {
+          return Text('Error loading data: ${snapshot.error!}');
+        }
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            //리스트 설명 텍스트
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0, left: 18.0, bottom: 8.0),
+              child: Text(
+                //foodComment에 randomIndex 불러오기
+                placeComment.elementAt(placerandomIndex),
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            //Horizontal Listview
+            Padding(
+              padding: const EdgeInsets.only(left: 18.0), //사진폭 18pt 축소
+              child: SizedBox(
+                height: 220,
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: ClampingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 6,
+                    itemBuilder: (context, index) {
+                      final doc = documents[index];
+                      String name = doc.get('name');
+                      String url = doc.get('url');
+                      String area = doc.get('area');
+                      bool isFavorite = doc.get('isFavorite');
+                      return Padding(
+                        padding: const EdgeInsets.only(
+                            right: 8.0, bottom: 8.0), //사진폭 8pt 축소
+                        child:
+                            //Stack 기능
+                            Stack(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => PlaceInfo()),
+                                );
+                              },
+                              child: Container(
+                                width: 159, //실제 너비 = 159-26 = 133
+                                height: double
+                                    .infinity, //실제 사진 높이 = 220 - 8*5 = 180
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                  color: Colors.grey,
+                                  //사진 삽입
+                                  image: DecorationImage(
+                                    image: NetworkImage(url),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            //음영 및 Gradient 효과 layer
                             Container(
                               width: 159,
                               height: double.infinity, //실제 사진 높이 = 220 - 8*5
