@@ -282,6 +282,20 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                             //Stack 기능
                             Stack(
                           children: [
+                            Container(
+                              width: 159, //실제 너비 = 159-26 = 133
+                              height: double.infinity, //실제 사진 높이 = 220 - 8*5
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                                color: Colors.grey,
+                                //사진 삽입
+                                image: DecorationImage(
+                                  image: NetworkImage(url),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
                             InkWell(
                               onTap: () {
                                 Navigator.push(
@@ -291,38 +305,24 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                                 );
                               },
                               child: Container(
-                                width: 159, //실제 너비 = 159-26 = 133
+                                width: 159,
                                 height: double.infinity, //실제 사진 높이 = 220 - 8*5
                                 decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                  color: Colors.grey,
-                                  //사진 삽입
-                                  image: DecorationImage(
-                                    image: NetworkImage(url),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                    color: Colors.white,
+                                    gradient: LinearGradient(
+                                        begin: FractionalOffset.topCenter,
+                                        end: FractionalOffset.bottomCenter,
+                                        colors: [
+                                          Colors.grey.withOpacity(0.0),
+                                          Colors.black.withOpacity(0.6),
+                                        ],
+                                        stops: [
+                                          0.0,
+                                          0.8,
+                                        ])),
                               ),
-                            ),
-                            Container(
-                              width: 159,
-                              height: double.infinity, //실제 사진 높이 = 220 - 8*5
-                              decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                  color: Colors.white,
-                                  gradient: LinearGradient(
-                                      begin: FractionalOffset.topCenter,
-                                      end: FractionalOffset.bottomCenter,
-                                      colors: [
-                                        Colors.grey.withOpacity(0.0),
-                                        Colors.black.withOpacity(0.6),
-                                      ],
-                                      stops: [
-                                        0.0,
-                                        0.8,
-                                      ])),
                             ),
 
                             Positioned(
@@ -465,6 +465,22 @@ class _RecommendLodgeListState extends State<RecommendLodgeList> {
                             //Stack 기능
                             Stack(
                           children: [
+                            Container(
+                              width: 159, //실제 너비 = 159-26 = 133
+                              height:
+                                  double.infinity, //실제 사진 높이 = 220 - 8*5 = 180
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                                color: Colors.grey,
+                                //사진 삽입
+                                image: DecorationImage(
+                                  image: NetworkImage(url),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+
                             InkWell(
                               onTap: () {
                                 Navigator.push(
@@ -474,39 +490,24 @@ class _RecommendLodgeListState extends State<RecommendLodgeList> {
                                 );
                               },
                               child: Container(
-                                width: 159, //실제 너비 = 159-26 = 133
-                                height: double
-                                    .infinity, //실제 사진 높이 = 220 - 8*5 = 180
+                                width: 159,
+                                height: double.infinity, //실제 사진 높이 = 220 - 8*5
                                 decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                  color: Colors.grey,
-                                  //사진 삽입
-                                  image: DecorationImage(
-                                    image: NetworkImage(url),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                    color: Colors.white,
+                                    gradient: LinearGradient(
+                                        begin: FractionalOffset.topCenter,
+                                        end: FractionalOffset.bottomCenter,
+                                        colors: [
+                                          Colors.grey.withOpacity(0.0),
+                                          Colors.black.withOpacity(0.6),
+                                        ],
+                                        stops: [
+                                          0.0,
+                                          0.8,
+                                        ])),
                               ),
-                            ),
-                            Container(
-                              width: 159,
-                              height: double.infinity, //실제 사진 높이 = 220 - 8*5
-                              decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                  color: Colors.white,
-                                  gradient: LinearGradient(
-                                      begin: FractionalOffset.topCenter,
-                                      end: FractionalOffset.bottomCenter,
-                                      colors: [
-                                        Colors.grey.withOpacity(0.0),
-                                        Colors.black.withOpacity(0.6),
-                                      ],
-                                      stops: [
-                                        0.0,
-                                        0.8,
-                                      ])),
                             ),
 
                             Positioned(
@@ -649,6 +650,22 @@ class _RecommendPlaceListState extends State<RecommendPlaceList> {
                             //Stack 기능
                             Stack(
                           children: [
+                            Container(
+                              width: 159, //실제 너비 = 159-26 = 133
+                              height:
+                                  double.infinity, //실제 사진 높이 = 220 - 8*5 = 180
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                                color: Colors.grey,
+                                //사진 삽입
+                                image: DecorationImage(
+                                  image: NetworkImage(url),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            //음영 및 Gradient 효과 layer
                             InkWell(
                               onTap: () {
                                 Navigator.push(
@@ -658,42 +675,25 @@ class _RecommendPlaceListState extends State<RecommendPlaceList> {
                                 );
                               },
                               child: Container(
-                                width: 159, //실제 너비 = 159-26 = 133
-                                height: double
-                                    .infinity, //실제 사진 높이 = 220 - 8*5 = 180
+                                width: 159,
+                                height: double.infinity, //실제 사진 높이 = 220 - 8*5
                                 decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                  color: Colors.grey,
-                                  //사진 삽입
-                                  image: DecorationImage(
-                                    image: NetworkImage(url),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                    color: Colors.white,
+                                    gradient: LinearGradient(
+                                        begin: FractionalOffset.topCenter,
+                                        end: FractionalOffset.bottomCenter,
+                                        colors: [
+                                          Colors.grey.withOpacity(0.0),
+                                          Colors.black.withOpacity(0.6),
+                                        ],
+                                        stops: [
+                                          0.0,
+                                          0.8,
+                                        ])),
                               ),
                             ),
-                            //음영 및 Gradient 효과 layer
-                            Container(
-                              width: 159,
-                              height: double.infinity, //실제 사진 높이 = 220 - 8*5
-                              decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                  color: Colors.white,
-                                  gradient: LinearGradient(
-                                      begin: FractionalOffset.topCenter,
-                                      end: FractionalOffset.bottomCenter,
-                                      colors: [
-                                        Colors.grey.withOpacity(0.0),
-                                        Colors.black.withOpacity(0.6),
-                                      ],
-                                      stops: [
-                                        0.0,
-                                        0.8,
-                                      ])),
-                            ),
-
                             Positioned(
                               top: 5,
                               right: 5,
