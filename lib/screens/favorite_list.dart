@@ -147,12 +147,22 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                       ],
                                     ),
                                   ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(15.0),
+                                    child: Container(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        '총 15곳',
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ),
+                                  ),
                                   Expanded(
                                     child: GridView.builder(
                                       gridDelegate:
                                           SliverGridDelegateWithFixedCrossAxisCount(
                                               crossAxisCount: 2,
-                                              childAspectRatio: 3 / 4),
+                                              childAspectRatio: 1 / 1.74),
                                       itemCount: 4,
                                       itemBuilder: (context, index) {
                                         return Padding(
@@ -167,12 +177,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                               );
                                             },
                                             child: Container(
-                                              margin: EdgeInsets.only(
-                                                left: index % 2 == 1 ? 8 : 0,
-                                                right: index % 2 == 0 ? 8 : 0,
-                                                top: 8,
-                                                bottom: 8,
-                                              ),
+                                              margin: EdgeInsets.all(8),
                                               decoration: BoxDecoration(
                                                 color: Colors.white,
                                                 borderRadius: BorderRadius.all(
@@ -182,8 +187,8 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                   BoxShadow(
                                                     color: Colors.grey
                                                         .withOpacity(0.5),
-                                                    blurRadius: 1,
-                                                    spreadRadius: 1,
+                                                    // blurRadius: 1,
+                                                    // spreadRadius: 1,
                                                   )
                                                 ],
                                               ),
@@ -193,22 +198,16 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                 children: [
                                                   ClipRRect(
                                                     borderRadius:
-                                                        BorderRadius.only(
-                                                      topLeft:
-                                                          Radius.circular(8),
-                                                      topRight:
-                                                          Radius.circular(8),
-                                                    ),
+                                                        BorderRadius.all(
+                                                            Radius.circular(8)),
                                                     child: Stack(
                                                       children: [
                                                         Image.network(
                                                           'https://middleclass.sg/wp-content/uploads/2022/04/Donuts-at-Cafe-Knotted-Peaches.jpg',
-                                                          fit: BoxFit.fitHeight,
-                                                          height: MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width *
-                                                              0.4,
+                                                          fit: BoxFit.fill,
+                                                          height: 240,
+                                                          width:
+                                                              double.infinity,
                                                         ),
                                                         Positioned(
                                                           top: 10,
