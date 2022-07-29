@@ -101,6 +101,7 @@ class _PlaceListState extends State<PlaceList> {
                         const TabBar(
                           indicatorColor: Colors.amber,
                           labelColor: Colors.amber,
+                          indicatorWeight: 3,
                           unselectedLabelColor: Colors.black,
                           tabs: [
                             Tab(

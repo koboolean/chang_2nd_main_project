@@ -83,6 +83,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                       ],
                       indicatorColor: Colors.amber[800],
                       labelColor: Colors.amber[800],
+                      indicatorWeight: 3,
                       unselectedLabelColor: Colors.black,
                     ),
                     Expanded(
