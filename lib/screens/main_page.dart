@@ -31,56 +31,57 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        extendBody: true,
-        body: _children[_currentIndex],
-        bottomNavigationBar: ClipRRect(
-          borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(24), topRight: Radius.circular(24)),
-          child: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            onTap: _onTap,
-            currentIndex: _currentIndex,
-            selectedItemColor: Color.fromRGBO(221, 81, 37, 1),
-            items: [
-              BottomNavigationBarItem(
+      extendBody: true,
+      body: _children[_currentIndex],
+      bottomNavigationBar: ClipRRect(
+        borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(24), topRight: Radius.circular(24)),
+        child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          onTap: _onTap,
+          currentIndex: _currentIndex,
+          selectedItemColor: Color.fromRGBO(221, 81, 37, 1),
+          items: [
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                'assets/images/home.svg',
+              ),
+              activeIcon: SvgPicture.asset(
+                'assets/images/home.svg',
+                color: Color.fromRGBO(221, 81, 37, 1),
+              ),
+              label: '홈',
+            ),
+            BottomNavigationBarItem(
                 icon: SvgPicture.asset(
-                  'assets/images/home.svg',
+                  'assets/images/favorite.svg',
                 ),
                 activeIcon: SvgPicture.asset(
-                  'assets/images/home.svg',
+                  'assets/images/favorite.svg',
                   color: Color.fromRGBO(221, 81, 37, 1),
                 ),
-                label: '홈',
-              ),
-              BottomNavigationBarItem(
-                  icon: SvgPicture.asset(
-                    'assets/images/favorite.svg',
-                  ),
-                  activeIcon: SvgPicture.asset(
-                    'assets/images/favorite.svg',
-                    color: Color.fromRGBO(221, 81, 37, 1),
-                  ),
-                  label: '찜한곳'),
-              BottomNavigationBarItem(
-                  icon: SvgPicture.asset(
-                    'assets/images/airplane.svg',
-                  ),
-                  activeIcon: SvgPicture.asset(
-                    'assets/images/airplane.svg',
-                    color: Color.fromRGBO(221, 81, 37, 1),
-                  ),
-                  label: '여행계획'),
-              BottomNavigationBarItem(
-                  icon: SvgPicture.asset(
-                    'assets/images/user.svg',
-                  ),
-                  activeIcon: SvgPicture.asset(
-                    'assets/images/user.svg',
-                    color: Color.fromRGBO(221, 81, 37, 1),
-                  ),
-                  label: 'MY'),
-            ],
-          ),
-        ));
+                label: '찜한곳'),
+            BottomNavigationBarItem(
+                icon: SvgPicture.asset(
+                  'assets/images/airplane.svg',
+                ),
+                activeIcon: SvgPicture.asset(
+                  'assets/images/airplane.svg',
+                  color: Color.fromRGBO(221, 81, 37, 1),
+                ),
+                label: '여행계획'),
+            BottomNavigationBarItem(
+                icon: SvgPicture.asset(
+                  'assets/images/user.svg',
+                ),
+                activeIcon: SvgPicture.asset(
+                  'assets/images/user.svg',
+                  color: Color.fromRGBO(221, 81, 37, 1),
+                ),
+                label: 'MY'),
+          ],
+        ),
+      ),
+    );
   }
 }
