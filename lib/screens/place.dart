@@ -7,9 +7,11 @@ import 'package:chang_2nd_main_project/screens/place_info.dart';
 import 'package:chang_2nd_main_project/screens/place_list.dart';
 import 'package:chang_2nd_main_project/services/travel_service.dart';
 import 'package:chang_2nd_main_project/main.dart';
+import 'package:chang_2nd_main_project/screens/search_page.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../services/auth_service.dart';
@@ -80,28 +82,36 @@ class _PlaceState extends State<Place> {
                   Padding(
                     padding: const EdgeInsets.only(
                         left: 18.0, right: 18.0, top: 4.0, bottom: 4.0),
-                    child: TextField(
-                      //controller 삽입 필요
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Color.fromRGBO(243, 243, 243, 1),
-                        hintText: "ex.김녕 바당길(바닷길)",
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-
-                        /// 돋보기 아이콘
-                        suffixIcon: IconButton(
-                          icon: Icon(Icons.search),
-                          onPressed: () {
-                            // 돋보기 아이콘 클릭
-                          },
-                        ),
-                      ),
-                      onSubmitted: (v) {
-                        // 엔터를 누르는 경우
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => MySearch()),
+                        );
                       },
+                      child: TextField(
+                        //controller 삽입 필요
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Color.fromRGBO(243, 243, 243, 1),
+                          hintText: "ex.김녕 바당길(바닷길)",
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+
+                          /// 돋보기 아이콘
+                          suffixIcon: IconButton(
+                            icon: Icon(Icons.search),
+                            onPressed: () {
+                              // 돋보기 아이콘 클릭
+                            },
+                          ),
+                        ),
+                        onSubmitted: (v) {
+                          // 엔터를 누르는 경우
+                        },
+                      ),
                     ),
                   ),
 
@@ -341,16 +351,21 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                                     borderRadius: BorderRadius.circular(100),
                                   ),
                                   child: (isFavorite)
-                                      //svg image 로 변경필요함
-                                      ? Icon(
-                                          Icons.favorite_border,
-                                          color: Colors.white,
-                                          size: 24,
+                                      ? Container(
+                                          child: FittedBox(
+                                            fit: BoxFit.scaleDown,
+                                            child: SvgPicture.asset(
+                                              'assets/images/hearTrue.svg',
+                                            ),
+                                          ),
                                         )
-                                      : Icon(
-                                          Icons.favorite,
-                                          color: Color.fromRGBO(234, 83, 36, 1),
-                                          size: 24,
+                                      : Container(
+                                          child: FittedBox(
+                                            fit: BoxFit.scaleDown,
+                                            child: SvgPicture.asset(
+                                              'assets/images/heartFalse.svg',
+                                            ),
+                                          ),
                                         ),
                                 ),
                               ),
@@ -526,16 +541,21 @@ class _RecommendLodgeListState extends State<RecommendLodgeList> {
                                     borderRadius: BorderRadius.circular(100),
                                   ),
                                   child: (isFavorite)
-                                      //svg image 로 변경필요함
-                                      ? Icon(
-                                          Icons.favorite_border,
-                                          color: Colors.white,
-                                          size: 24,
+                                      ? Container(
+                                          child: FittedBox(
+                                            fit: BoxFit.scaleDown,
+                                            child: SvgPicture.asset(
+                                              'assets/images/hearTrue.svg',
+                                            ),
+                                          ),
                                         )
-                                      : Icon(
-                                          Icons.favorite,
-                                          color: Color.fromRGBO(234, 83, 36, 1),
-                                          size: 24,
+                                      : Container(
+                                          child: FittedBox(
+                                            fit: BoxFit.scaleDown,
+                                            child: SvgPicture.asset(
+                                              'assets/images/heartFalse.svg',
+                                            ),
+                                          ),
                                         ),
                                 ),
                               ),
@@ -710,16 +730,21 @@ class _RecommendPlaceListState extends State<RecommendPlaceList> {
                                     borderRadius: BorderRadius.circular(100),
                                   ),
                                   child: (isFavorite)
-                                      //svg image 로 변경필요함
-                                      ? Icon(
-                                          Icons.favorite_border,
-                                          color: Colors.white,
-                                          size: 24,
+                                      ? Container(
+                                          child: FittedBox(
+                                            fit: BoxFit.scaleDown,
+                                            child: SvgPicture.asset(
+                                              'assets/images/hearTrue.svg',
+                                            ),
+                                          ),
                                         )
-                                      : Icon(
-                                          Icons.favorite,
-                                          color: Color.fromRGBO(234, 83, 36, 1),
-                                          size: 24,
+                                      : Container(
+                                          child: FittedBox(
+                                            fit: BoxFit.scaleDown,
+                                            child: SvgPicture.asset(
+                                              'assets/images/heartFalse.svg',
+                                            ),
+                                          ),
                                         ),
                                 ),
                               ),
