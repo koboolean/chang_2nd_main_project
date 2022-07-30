@@ -4,6 +4,7 @@ import 'package:chang_2nd_main_project/screens/favorite_list.dart';
 import 'package:chang_2nd_main_project/screens/place.dart';
 import 'package:chang_2nd_main_project/screens/mypage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -42,14 +43,42 @@ class _HomePageState extends State<HomePage> {
             selectedItemColor: Color.fromRGBO(221, 81, 37, 1),
             items: [
               BottomNavigationBarItem(
-                icon: Image.asset('images/home.svg', width: 10, height: 10),
+                icon: SvgPicture.asset(
+                  'assets/images/home.svg',
+                ),
+                activeIcon: SvgPicture.asset(
+                  'assets/images/home.svg',
+                  color: Color.fromRGBO(221, 81, 37, 1),
+                ),
                 label: '홈',
               ),
-              BottomNavigationBarItem(icon: Icon(Icons.favorite), label: '찜한곳'),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.flight_takeoff_outlined), label: '여행계획'),
+                  icon: SvgPicture.asset(
+                    'assets/images/favorite.svg',
+                  ),
+                  activeIcon: SvgPicture.asset(
+                    'assets/images/favorite.svg',
+                    color: Color.fromRGBO(221, 81, 37, 1),
+                  ),
+                  label: '찜한곳'),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.account_circle), label: 'MY'),
+                  icon: SvgPicture.asset(
+                    'assets/images/airplane.svg',
+                  ),
+                  activeIcon: SvgPicture.asset(
+                    'assets/images/airplane.svg',
+                    color: Color.fromRGBO(221, 81, 37, 1),
+                  ),
+                  label: '여행계획'),
+              BottomNavigationBarItem(
+                  icon: SvgPicture.asset(
+                    'assets/images/user.svg',
+                  ),
+                  activeIcon: SvgPicture.asset(
+                    'assets/images/user.svg',
+                    color: Color.fromRGBO(221, 81, 37, 1),
+                  ),
+                  label: 'MY'),
             ],
           ),
         ));

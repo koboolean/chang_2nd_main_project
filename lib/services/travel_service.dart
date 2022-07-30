@@ -8,4 +8,10 @@ class TravelService extends ChangeNotifier {
     // 내 bucketList 가져오기
     return travelCollection.get();
   }
+
+  void update(String docId, bool isFavorite) async {
+    // bucket isDone 업데이트
+    await travelCollection.doc(docId).update({'isFavorite': isFavorite});
+    notifyListeners(); // 화면 갱신
+  }
 }

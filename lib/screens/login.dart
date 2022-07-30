@@ -1,8 +1,11 @@
 import 'package:chang_2nd_main_project/screens/main_page.dart';
+import 'package:chang_2nd_main_project/services/auth_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
-
-import '../services/auth_service.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart' as svg_provider;
 
 /// 로그인 페이지
 class LoginPage extends StatefulWidget {
@@ -16,6 +19,58 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  googleLogin(authService) async{
+    authService.loginWithGoogle(
+      onSuccess : (){
+        // 로그인 성공
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("로그인 성공"),
+        ));
+
+        // HomePage로 이동
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => HomePage()),
+        );
+      },
+      onError: (err) {
+        // 에러 발생
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("로그인이 실패하였습니다."),
+        ));
+      },
+    );
+  }
+
+  loginService(authService){
+    // 로그인
+    authService.signIn(
+      email: "aa@naver.com",
+      password: "123123",
+      onSuccess: () {
+        // 로그인 성공
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("로그인 성공"),
+        ));
+
+        // HomePage로 이동
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => HomePage()),
+        );
+      },
+      onError: (err) {
+        // 에러 발생
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(err),
+        ));
+      },
+    );
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<AuthService>(
@@ -27,79 +82,66 @@ class _LoginPageState extends State<LoginPage> {
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
               image: DecorationImage(
-               image: AssetImage("assets/images/login_background.jpeg"),
-                fit: BoxFit.fill,
-              )
+                image : AssetImage("assets/images/login_title.jpeg"),
+                fit: BoxFit.fitWidth
+              ),
             ),
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-
-                  SizedBox(height: 120),
-
-                  Image.asset("assets/images/icon_image.png", height: 200, width: 300,),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 50.0, right: 50.0),
-                    child: Text("1인 여행의 모든 것,\n'서비스이름'",
-                      textAlign: TextAlign.center,
+            child: Column(
+              children: [
+                SizedBox(height: MediaQuery.of(context).size.height/2-100,),
+                Column(
+                  children: [
+                    Text('1인 여행의 모든 것',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,
-                        fontWeight: FontWeight.w500,
-
+                        fontFamily: 'SpoqaHanSansNeo',
+                        fontWeight: FontWeight.w700,
                       ),
-
                     ),
-                  ),
-                  SizedBox(height: 80),
-                  /// 로그인 버튼
-                  Padding(
-                    padding: const EdgeInsets.all(30.0),
-                    child: IconButton(
-                      icon: Image.asset("assets/images/kakao_login_medium_wide.png"),
-                      iconSize: 80.0,
-                      onPressed: () {
-                        // 로그인
-                        authService.signIn(
-                          email: "koboolean@gmail.com",
-                          password: "guswns123!",
-                          onSuccess: () {
-                            // 로그인 성공
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text("로그인 성공"),
-                            ));
-
-                            // HomePage로 이동
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(builder: (context) => HomePage()),
-                            );
-                          },
-                          onError: (err) {
-                            // 에러 발생
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text(err),
-                            ));
-                          },
-                        );
+                    SizedBox(height: 20,),
+                    Image(image: svg_provider.Svg("assets/images/title_logo.svg", size: Size(153,36))),
+                  ],
+                ),
+                Spacer(),
+                Column(
+                  children: [
+                    MaterialButton(
+                      child: Container(
+                          width: 300,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage("assets/images/google_login.png"),
+                                fit: BoxFit.fill),
+                          )
+                      ),
+                      // ),
+                      onPressed: () async{
+                        googleLogin(authService);
                       },
                     ),
-                  ),
-                  SizedBox(height: 30),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Text("Photo by Doyle Shin on Unsplash",
-                      style: TextStyle(color: Colors.white,
-                        fontSize: 8,
-                        fontFamily: 'SpoqaHanSansNeo',
-                        fontWeight: FontWeight.w700,)),
-                  )
-                ],
-              ),
-            ),
-          ),
+                    SizedBox(height: 12),
+                    MaterialButton(
+                      child: Container(
+                        width: 300,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage("assets/images/apple_login.png"),
+                              fit: BoxFit.fill),
+                        ),
+                      ),
+                      // ),
+                      onPressed: () {
+                        loginService(authService);
+                      },
+                    ),
+                    SizedBox(height: 73,)
+                  ],),
+              ],
+            )
+            )
         );
       },
     );

@@ -5,7 +5,6 @@ import 'package:chang_2nd_main_project/screens/place_list.dart';
 
 import 'package:chang_2nd_main_project/services/auth_service.dart';
 import 'package:chang_2nd_main_project/services/schedule_service.dart';
-import 'package:chang_2nd_main_project/services/trip_service.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

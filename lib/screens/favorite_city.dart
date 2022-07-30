@@ -1,4 +1,4 @@
-import 'package:chang_2nd_main_project/services/trip_service.dart';
+import 'package:chang_2nd_main_project/services/travel_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'favorite_list.dart';
@@ -15,9 +15,8 @@ class FavoriteCity extends StatefulWidget {
 class _FavoriteCityPageState extends State<FavoriteCity> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<TripService>(
-      builder: (context, tripService, child) {
-        List<Food> foodList = tripService.foodList;
+    return Consumer<TravelService>(
+      builder: (context, travelService, child) {
         return Scaffold(
           appBar: AppBar(
             elevation: 0,
@@ -31,43 +30,45 @@ class _FavoriteCityPageState extends State<FavoriteCity> {
             ),
             backgroundColor: Colors.white,
           ),
-          body: Column(
-            children: [
-              Divider(height: 10),
-              Container(
-                width: double.infinity,
-                height: 50,
-                padding: EdgeInsets.all(10),
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => FavoriteList()),
-                        );
-                      },
-                      child: Text("제주도 >"),
-                    ),
-                    Spacer(),
-                    Text("15곳"),
-                  ],
+          body: SafeArea(
+            child: Column(
+              children: [
+                Divider(height: 10),
+                Container(
+                  width: double.infinity,
+                  height: 50,
+                  padding: EdgeInsets.all(10),
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FavoriteList()),
+                          );
+                        },
+                        child: Text("제주도 >"),
+                      ),
+                      Spacer(),
+                      Text("15곳"),
+                    ],
+                  ),
                 ),
-              ),
-              Container(
-                width: double.infinity,
-                height: 200,
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                    color: Colors.blue,
-                    image: DecorationImage(
-                      image: NetworkImage(
-                          'https://api.cdn.visitjeju.net/photomng/imgpath/202110/28/11c3035e-03f9-4b41-9a9d-d21abc399ee0.jpg'),
-                      fit: BoxFit.fill,
-                    )),
-              ),
-            ],
+                Container(
+                  width: double.infinity,
+                  height: 200,
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      color: Colors.blue,
+                      image: DecorationImage(
+                        image: NetworkImage(
+                            'https://api.cdn.visitjeju.net/photomng/imgpath/202110/28/11c3035e-03f9-4b41-9a9d-d21abc399ee0.jpg'),
+                        fit: BoxFit.fill,
+                      )),
+                ),
+              ],
+            ),
           ),
         );
       },
