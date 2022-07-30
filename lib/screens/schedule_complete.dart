@@ -29,7 +29,6 @@ class _ScheduleCompleteState extends State<ScheduleComplete>
 
   @override
   void initState() {
-    getLocation();
     TabBarController = TabController(length: widget.daysTabBar, vsync: this);
     super.initState();
   }
@@ -46,15 +45,6 @@ class _ScheduleCompleteState extends State<ScheduleComplete>
     _controller!.loadUrl(Uri.dataFromString(fileText,
             mimeType: 'text/html', encoding: Encoding.getByName('utf-8'))
         .toString());
-  }
-
-  void getLocation() async {
-    position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-    // setState(() {
-    //   this.position = position;
-    // });
-    print(position);
   }
 
   @override
@@ -135,9 +125,9 @@ class _ScheduleCompleteState extends State<ScheduleComplete>
                                   _controller = controller;
                                   _webViewController = controller.webViewController;
                                 },
-                                onPageFinished: (url) {
-                                  print(position.latitude.toString());
-                                  print(position.longitude.toString().replaceAll("-", ""));
+                                onPageFinished: (url) async{
+                                  position = await Geolocator.getCurrentPosition(
+                                      desiredAccuracy: LocationAccuracy.high);
                                   _webViewController?.runJavascript('currentLocation('+position.latitude.toString() + ',' + position.longitude.toString().replaceAll("-", "") +')');
                                 },
                                 javascriptChannels: <JavascriptChannel>{
