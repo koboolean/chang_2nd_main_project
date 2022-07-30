@@ -1,34 +1,39 @@
 import 'dart:convert';
-import 'dart:io';
+//import 'dart:io';
 import 'dart:ui';
+import 'dart:async';
 import 'package:chang_2nd_main_project/services/schedule_service.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'package:provider/provider.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+//import 'package:webview_flutter/webview_flutter.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:webview_flutter_plus/webview_flutter_plus.dart';
 
 class ScheduleComplete extends StatefulWidget {
   ScheduleComplete({super.key, required this.daysTabBar});
-  late int daysTabBar;
+  final int daysTabBar;
   @override
   State<ScheduleComplete> createState() => _ScheduleCompleteState();
 }
 
 class _ScheduleCompleteState extends State<ScheduleComplete>
     with TickerProviderStateMixin {
-  WebViewController? controller;
-  Set<JavascriptChannel>? channel;
+  WebViewPlusController? controller;
+  //Set<JavascriptChannel>? channel;
+  late Position position;
+  // final Completer<WebViewController> _controller = Completer<
+  //     WebViewController>(); //Completer는 callback 을 Future 로 변환해주는 클래스다.
 
   late TabController TabBarController;
 
   @override
   void initState() {
-    super.initState();
-    if (Platform.isAndroid) {
-      WebView.platform = SurfaceAndroidWebView();
-    }
+    getLocation();
     TabBarController = TabController(length: widget.daysTabBar, vsync: this);
+    super.initState();
   }
 
   // @override
@@ -37,11 +42,21 @@ class _ScheduleCompleteState extends State<ScheduleComplete>
   //   super.dispose();
   // }
 
+  //html 로컬파일 불러오기
   void _loadHtmlFromAssets() async {
     String fileText = await rootBundle.loadString('assets/ref/index.html');
     controller!.loadUrl(Uri.dataFromString(fileText,
             mimeType: 'text/html', encoding: Encoding.getByName('utf-8'))
         .toString());
+  }
+
+  void getLocation() async {
+    position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    // setState(() {
+    //   this.position = position;
+    // });
+    print(position);
   }
 
   @override
@@ -51,7 +66,7 @@ class _ScheduleCompleteState extends State<ScheduleComplete>
         var totalChecked = scheduleService.checkedList;
         return DefaultTabController(
           initialIndex: 0,
-          length: 6,
+          length: TabBarController.length,
           child: SafeArea(
             child: Scaffold(
               appBar: AppBar(
@@ -111,18 +126,37 @@ class _ScheduleCompleteState extends State<ScheduleComplete>
                           decoration: BoxDecoration(color: Colors.grey),
                           child: Builder(
                             builder: (context) {
-                              return WebView(
-                                // initialUrl: 'https://flutter.dev',
+                              return WebViewPlus(
+                                initialUrl: 'assets/ref/index.html',
                                 javascriptMode: JavascriptMode.unrestricted,
                                 onProgress: (progress) {
                                   print(
                                       'WebView is loading (progress : $progress%)');
                                 },
                                 onWebViewCreated: (controller) {
+                                  // onWebViewCreated: (controller) ->매개벼수 controller -> webview 페이지를 말함
                                   this.controller = controller;
-                                  _loadHtmlFromAssets();
+                                  //_loadHtmlFromAssets();
+                                  // controller.webViewController.evaluateJavascript(
+                                  //     'currentLocation(33.4794947,126.4919039)');
+                                  // controller.webViewController
+                                  //         .evaluateJavascript("웹뷰에 있는 실행할 스크립트 함수명()");
                                 },
-                                javascriptChannels: channel,
+                                onPageFinished: (url) {
+                                  //controller.evaluateJavascript() 이것보다 onpagefinished를 사용해 모든 자바스크립트를 로드하는게 가장좋을것이다
+                                  //controller.evaluateJavascript() ->플러터에서 웹뷰로 데이터를 보냄
+                                },
+                                javascriptChannels: <JavascriptChannel>{
+                                  JavascriptChannel(
+                                    name: 'JavascriptChannel',
+                                    onMessageReceived:
+                                        //message ->script.js 파일의 JavascriptChannel.pstMessage() 에서 넘어온 데이터
+                                        (JavascriptMessage message) {
+                                      print(
+                                          "message from the web view=\"${message.message}\"");
+                                    },
+                                  )
+                                },
                               );
                             },
                           ),
@@ -135,7 +169,7 @@ class _ScheduleCompleteState extends State<ScheduleComplete>
                             isScrollable: true, //TabBar 스크롤 가능
                             labelColor: Color.fromRGBO(221, 81, 37, 1),
                             tabs: [
-                              for (int i = 0; i <= TabBarController.length; i++)
+                              for (int i = 0; i < TabBarController.length; i++)
                                 Tab(
                                   text: '${i + 1}일차',
                                 )
@@ -148,8 +182,6 @@ class _ScheduleCompleteState extends State<ScheduleComplete>
                 ),
               ),
               body: Container(
-                //height: MediaQuery.of(context).size.height,
-                // width: MediaQuery.of(context).size.width,
                 padding: EdgeInsets.only(left: 18, top: 10, right: 18),
                 child: TabBarView(
                   children: [
@@ -161,7 +193,10 @@ class _ScheduleCompleteState extends State<ScheduleComplete>
                         title: Row(
                           children: [
                             TextButton.icon(
-                              onPressed: () {},
+                              onPressed: () {
+                                controller!.webViewController
+                                    .evaluateJavascript('currentLocation()');
+                              },
                               icon: Image.asset('assets/images/align.png'),
                               label: Text(
                                 '최적 경로로 수정',
@@ -183,7 +218,14 @@ class _ScheduleCompleteState extends State<ScheduleComplete>
                         itemBuilder: (context, index) {
                           var totalList = totalChecked[index];
                           return ListTile(
-                            leading: FlutterLogo(size: 56.0),
+                            leading: SizedBox(
+                              height: 56,
+                              width: 56,
+                              child: Image.network(
+                                totalList.imageUrl,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
                             title: Row(
                               children: [
                                 Text(totalList.name),
@@ -241,6 +283,8 @@ class _ScheduleCompleteState extends State<ScheduleComplete>
                         },
                       ),
                     ),
+                    Text('2일차 경로'),
+                    Text('3일차 경로'),
                   ],
                 ),
               ),

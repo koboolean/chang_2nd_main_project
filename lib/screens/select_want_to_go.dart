@@ -23,7 +23,7 @@ class _SelectWantToGoState extends State<SelectWantToGo> {
       // var touristTab = scheduleService.touristTabList;
       return DefaultTabController(
         initialIndex: 0,
-        length: 3,
+        length: 2,
         child: Scaffold(
           appBar: AppBar(
             leading: IconButton(
@@ -67,9 +67,6 @@ class _SelectWantToGoState extends State<SelectWantToGo> {
                       tabs: [
                         Tab(
                           text: '맛집',
-                        ),
-                        Tab(
-                          text: '숙소',
                         ),
                         Tab(
                           text: '관광지',
@@ -125,7 +122,14 @@ class _SelectWantToGoState extends State<SelectWantToGo> {
                           itemBuilder: (context, index) {
                             var food = foodTab[index];
                             return ListTile(
-                              leading: FlutterLogo(size: 56.0),
+                              leading: SizedBox(
+                                height: 56,
+                                width: 56,
+                                child: Image.network(
+                                  food.imageUrl,
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
                               title: Row(
                                 children: [
                                   Text(food.name),
@@ -137,11 +141,19 @@ class _SelectWantToGoState extends State<SelectWantToGo> {
                               ),
                               subtitle: Row(
                                 children: [
-                                  Icon(Icons.place_outlined),
-                                  SizedBox(
-                                    width: 3.5,
-                                  ),
-                                  Text(food.address),
+                                  Wrap(
+                                    children: [
+                                      Icon(Icons.place_outlined),
+                                      SizedBox(
+                                        width: 3.5,
+                                      ),
+                                      Text(
+                                        food.address,
+                                        // maxLines: 2,
+                                        // overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ],
+                                  )
                                 ],
                               ),
                               trailing: scheduleService.checkedList
@@ -163,7 +175,6 @@ class _SelectWantToGoState extends State<SelectWantToGo> {
                   ),
                 ),
                 Text('2'),
-                Text('3'),
               ],
             ),
           ),
@@ -180,7 +191,7 @@ class _SelectWantToGoState extends State<SelectWantToGo> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => ScheduleComplete(
-                          daysTabBar: 6, // 5박 6일 더미데이터
+                          daysTabBar: 3, // 2박 3일 더미데이터
                         ),
                       ),
                     );
