@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:chang_2nd_main_project/screens/main_page.dart';
 import 'package:chang_2nd_main_project/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -122,22 +124,28 @@ class _LoginPageState extends State<LoginPage> {
                       },
                     ),
                     SizedBox(height: 12),
-                    MaterialButton(
-                      child: Container(
-                        width: 300,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage("assets/images/apple_login.png"),
-                              fit: BoxFit.fill),
-                        ),
-                      ),
-                      // ),
-                      onPressed: () {
-                        loginService(authService);
-                      },
-                    ),
-                    SizedBox(height: 73,)
+                    Platform.isIOS ?
+                        Column(
+                          children: [
+                            MaterialButton(
+                              child: Container(
+                                width: 300,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage("assets/images/apple_login.png"),
+                                      fit: BoxFit.fill),
+                                ),
+                              ),
+                              // ),
+                              onPressed: () {
+                                loginService(authService);
+                              },
+                            ),
+                            SizedBox(height: 73,)
+                          ],
+                        )
+                        : SizedBox(height: 130,)
                   ],),
               ],
             )
