@@ -7,7 +7,6 @@ import 'package:chang_2nd_main_project/screens/place_info.dart';
 import 'package:chang_2nd_main_project/screens/place_list.dart';
 import 'package:chang_2nd_main_project/services/travel_service.dart';
 import 'package:chang_2nd_main_project/main.dart';
-import 'package:chang_2nd_main_project/screens/search_page.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -84,10 +83,7 @@ class _PlaceState extends State<Place> {
                         left: 18.0, right: 18.0, top: 4.0, bottom: 4.0),
                     child: GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => MySearch()),
-                        );
+
                       },
                       child: TextField(
                         //controller 삽입 필요

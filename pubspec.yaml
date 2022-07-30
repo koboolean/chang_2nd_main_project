@@ -20,6 +20,8 @@ dependencies:
   dotted_line: ^3.1.0 #dotted line
   webview_flutter: ^3.0.4  #webview
   flutter_svg: ^1.0.1
+  flutter_svg_provider: ^1.0.3
+  google_sign_in: ^5.4.0
 
 dev_dependencies:
   flutter_test:
