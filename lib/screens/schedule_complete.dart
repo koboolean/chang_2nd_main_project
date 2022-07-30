@@ -21,12 +21,10 @@ class ScheduleComplete extends StatefulWidget {
 
 class _ScheduleCompleteState extends State<ScheduleComplete>
     with TickerProviderStateMixin {
-  WebViewPlusController? controller;
+  WebViewPlusController? _controller;
+  WebViewController? _webViewController;
   //Set<JavascriptChannel>? channel;
   late Position position;
-  // final Completer<WebViewController> _controller = Completer<
-  //     WebViewController>(); //Completer는 callback 을 Future 로 변환해주는 클래스다.
-
   late TabController TabBarController;
 
   @override
@@ -45,7 +43,7 @@ class _ScheduleCompleteState extends State<ScheduleComplete>
   //html 로컬파일 불러오기
   void _loadHtmlFromAssets() async {
     String fileText = await rootBundle.loadString('assets/ref/index.html');
-    controller!.loadUrl(Uri.dataFromString(fileText,
+    _controller!.loadUrl(Uri.dataFromString(fileText,
             mimeType: 'text/html', encoding: Encoding.getByName('utf-8'))
         .toString());
   }
@@ -130,21 +128,17 @@ class _ScheduleCompleteState extends State<ScheduleComplete>
                                 initialUrl: 'assets/ref/index.html',
                                 javascriptMode: JavascriptMode.unrestricted,
                                 onProgress: (progress) {
-                                  print(
-                                      'WebView is loading (progress : $progress%)');
+                                  //print(
+                                  //    'WebView is loading (progress : $progress%)');
                                 },
                                 onWebViewCreated: (controller) {
-                                  // onWebViewCreated: (controller) ->매개벼수 controller -> webview 페이지를 말함
-                                  this.controller = controller;
-                                  //_loadHtmlFromAssets();
-                                  // controller.webViewController.evaluateJavascript(
-                                  //     'currentLocation(33.4794947,126.4919039)');
-                                  // controller.webViewController
-                                  //         .evaluateJavascript("웹뷰에 있는 실행할 스크립트 함수명()");
+                                  _controller = controller;
+                                  _webViewController = controller.webViewController;
                                 },
                                 onPageFinished: (url) {
-                                  //controller.evaluateJavascript() 이것보다 onpagefinished를 사용해 모든 자바스크립트를 로드하는게 가장좋을것이다
-                                  //controller.evaluateJavascript() ->플러터에서 웹뷰로 데이터를 보냄
+                                  print(position.latitude.toString());
+                                  print(position.longitude.toString().replaceAll("-", ""));
+                                  _webViewController?.runJavascript('currentLocation('+position.latitude.toString() + ',' + position.longitude.toString().replaceAll("-", "") +')');
                                 },
                                 javascriptChannels: <JavascriptChannel>{
                                   JavascriptChannel(
@@ -194,7 +188,7 @@ class _ScheduleCompleteState extends State<ScheduleComplete>
                           children: [
                             TextButton.icon(
                               onPressed: () {
-                                controller!.webViewController
+                                _controller!.webViewController
                                     .evaluateJavascript('currentLocation()');
                               },
                               icon: Image.asset('assets/images/align.png'),

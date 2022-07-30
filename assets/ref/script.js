@@ -1,7 +1,10 @@
+var map, marker;
+var markers = [];
+
 
 function createMap(){
     map = new Tmapv2.Map("map_div", {
-        center : new Tmapv2.LatLng(37.570028, 126.986072),
+        center : new Tmapv2.LatLng(33.4794947,126.4919039),
         width : "100%",
         height : "400px",
         zoom : 15,
@@ -10,21 +13,24 @@ function createMap(){
     
     });
 
-    //JavascriptChannel.postMessage(); 
-    // JavascriptChannel( name: 'JavascriptChannel',  .....) 이름이 같아야함
+    markerReset();
 
 }
-
-function currentLocation(){
-    map = null
-    let latLocation = 33.4794947
-    let lonLocation = 126.4919039
-     map = new Tmapv2.Map("map_div",  
-    {
-        center: new Tmapv2.LatLng(latLocation,lonLocation), // 지도 초기 좌표
-        width: "100%", 
-        height: "570px",
-        zoom: 15
+function markerReset(){
+    // 마커 초기화
+    marker = new Tmapv2.Marker({
+        map:map
     });
-    
+}
+ß
+function currentLocation(lat, lon){
+    marker.setMap(null);
+    var markerPosition = new Tmapv2.LatLng(lat, lon);
+
+    marker = new Tmapv2.Marker({
+        position : markerPosition,
+        map:map
+    });
+    map.setCenter(markerPosition);
+    markers.push(marker);
 }
