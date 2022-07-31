@@ -278,9 +278,8 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                     itemBuilder: (context, index) {
                       final doc = documents[index];
                       String name = doc.get('name');
-                      String url = doc.get('url');
+                      String url = doc.get('url1');
                       String area = doc.get('area');
-                      bool isFavorite = doc.get('isFavorite');
                       return Padding(
                         padding: const EdgeInsets.only(
                             right: 8.0, bottom: 8.0), //사진폭 8pt 축소
@@ -336,8 +335,15 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                               right: 5,
                               child: InkWell(
                                 onTap: () {
-                                  // TravelService.update(doc.id, !isFavorite);
-                                  // 클릭시 update error..
+                        User? user =
+                                      FirebaseAuth.instance.currentUser;
+
+                                  if (user != null) {
+                                    // data 의 name 보내기, favoriteFoodserivce 추가
+                                    FavoriteFoodService favoriteFoodService =
+                                        context.read<FavoriteFoodService>();
+                                    favoriteFoodService.toggleFavoriteFood(idx);
+                                  }
                                 },
                                 child: Container(
                                   height: 27,
@@ -346,16 +352,18 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                                     color: Colors.black.withOpacity(0.3),
                                     borderRadius: BorderRadius.circular(100),
                                   ),
-                                  child: (isFavorite)
-                                      ? Container(
-                                          child: FittedBox(
-                                            fit: BoxFit.scaleDown,
-                                            child: SvgPicture.asset(
-                                              'assets/images/hearTrue.svg',
-                                            ),
-                                          ),
-                                        )
-                                      : Container(
+                                  child: 
+//                                   (isFavorite)
+//                                       ? Container(
+//                                           child: FittedBox(
+//                                             fit: BoxFit.scaleDown,
+//                                             child: SvgPicture.asset(
+//                                               'assets/images/hearTrue.svg',
+//                                             ),
+//                                           ),
+//                                         )
+//                                       : 
+                                  Container(
                                           child: FittedBox(
                                             fit: BoxFit.scaleDown,
                                             child: SvgPicture.asset(
@@ -466,9 +474,8 @@ class _RecommendLodgeListState extends State<RecommendLodgeList> {
                     itemBuilder: (context, index) {
                       final doc = documents[index];
                       String name = doc.get('name');
-                      String url = doc.get('url');
+                      String url = doc.get('url1');
                       String area = doc.get('area');
-                      bool isFavorite = doc.get('isFavorite');
                       return Padding(
                         padding: const EdgeInsets.only(
                             right: 8.0, bottom: 8.0), //사진폭 8pt 축소
@@ -536,16 +543,18 @@ class _RecommendLodgeListState extends State<RecommendLodgeList> {
                                     color: Colors.black.withOpacity(0.3),
                                     borderRadius: BorderRadius.circular(100),
                                   ),
-                                  child: (isFavorite)
-                                      ? Container(
-                                          child: FittedBox(
-                                            fit: BoxFit.scaleDown,
-                                            child: SvgPicture.asset(
-                                              'assets/images/hearTrue.svg',
-                                            ),
-                                          ),
-                                        )
-                                      : Container(
+                                  child: 
+//                                   (isFavorite)
+//                                       ? Container(
+//                                           child: FittedBox(
+//                                             fit: BoxFit.scaleDown,
+//                                             child: SvgPicture.asset(
+//                                               'assets/images/hearTrue.svg',
+//                                             ),
+//                                           ),
+//                                         )
+//                                       : 
+                                  Container(
                                           child: FittedBox(
                                             fit: BoxFit.scaleDown,
                                             child: SvgPicture.asset(
@@ -656,9 +665,8 @@ class _RecommendPlaceListState extends State<RecommendPlaceList> {
                     itemBuilder: (context, index) {
                       final doc = documents[index];
                       String name = doc.get('name');
-                      String url = doc.get('url');
+                      String url = doc.get('url1');
                       String area = doc.get('area');
-                      bool isFavorite = doc.get('isFavorite');
                       return Padding(
                         padding: const EdgeInsets.only(
                             right: 8.0, bottom: 8.0), //사진폭 8pt 축소
@@ -725,16 +733,18 @@ class _RecommendPlaceListState extends State<RecommendPlaceList> {
                                     color: Colors.black.withOpacity(0.3),
                                     borderRadius: BorderRadius.circular(100),
                                   ),
-                                  child: (isFavorite)
-                                      ? Container(
-                                          child: FittedBox(
-                                            fit: BoxFit.scaleDown,
-                                            child: SvgPicture.asset(
-                                              'assets/images/hearTrue.svg',
-                                            ),
-                                          ),
-                                        )
-                                      : Container(
+                                  child: 
+//                                   (isFavorite)
+//                                       ? Container(
+//                                           child: FittedBox(
+//                                             fit: BoxFit.scaleDown,
+//                                             child: SvgPicture.asset(
+//                                               'assets/images/hearTrue.svg',
+//                                             ),
+//                                           ),
+//                                         )
+//                                       : 
+                                  Container(
                                           child: FittedBox(
                                             fit: BoxFit.scaleDown,
                                             child: SvgPicture.asset(
