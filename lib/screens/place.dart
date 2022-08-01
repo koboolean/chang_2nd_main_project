@@ -17,6 +17,20 @@ import 'package:provider/provider.dart';
 
 import '../services/auth_service.dart';
 
+//sending data class 생성
+
+class SendingFoodData {
+  late final String foodname;
+}
+
+class SendingLodgeData {
+  late final String lodgename;
+}
+
+class SendingPlaceData {
+  late final String placename;
+}
+
 /// 홈페이지
 class Place extends StatefulWidget {
   const Place({Key? key}) : super(key: key);
@@ -315,7 +329,9 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => PlaceInfo()),
+                                      builder: (context) => PlaceInfo(
+                                            sendName: name,
+                                          )),
                                 );
                               },
                               child: Container(
@@ -521,7 +537,9 @@ class _RecommendLodgeListState extends State<RecommendLodgeList> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => PlaceInfo()),
+                                      builder: (context) => PlaceInfo(
+                                            sendName: name,
+                                          )),
                                 );
                               },
                               child: Container(
@@ -686,7 +704,7 @@ class _RecommendPlaceListState extends State<RecommendPlaceList> {
                     shrinkWrap: true,
                     physics: ClampingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
-                    itemCount: 6,
+                    itemCount: 10,
                     itemBuilder: (context, index) {
                       final doc = documents[ramdomplaceIndexList[index]];
                       String name = doc.get('name');
@@ -720,7 +738,9 @@ class _RecommendPlaceListState extends State<RecommendPlaceList> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => PlaceInfo()),
+                                      builder: (context) => PlaceInfo(
+                                            sendName: name,
+                                          )),
                                 );
                               },
                               child: Container(
