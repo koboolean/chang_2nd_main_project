@@ -106,7 +106,9 @@ class _MySearchState extends State<MySearch> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => PlaceInfo()),
+                                      builder: (context) => PlaceInfo(
+                                            sendName: ('소랑드르'),
+                                          )),
                                 );
                               },
                               child: ListTile(
