@@ -173,7 +173,9 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        PlaceInfo()),
+                                                        PlaceInfo(
+                                                          sendName: ('소랑드르'),
+                                                        )),
                                               );
                                             },
                                             child: Container(
