@@ -293,7 +293,8 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
               child: SizedBox(
                 height: 220,
                 child: ListView.builder(
-                    shrinkWrap: true,
+                    // shrinkWrap: true,
+
                     physics: ClampingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
                     itemCount: 10,
@@ -303,6 +304,8 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                       String name = doc.get('name');
                       String url = doc.get('url1');
                       String area = doc.get('area');
+                      String idx = doc.get('idx');
+
                       return Padding(
                         padding: const EdgeInsets.only(
                             right: 8.0, bottom: 8.0), //사진폭 8pt 축소
@@ -367,7 +370,7 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                                     // data 의 name 보내기, favoriteFoodserivce 추가
                                     FavoriteFoodService favoriteFoodService =
                                         context.read<FavoriteFoodService>();
-                                    //favoriteFoodService.toggleFavoriteFood(idx);
+                                    favoriteFoodService.toggleFavoriteFood(idx);
                                   }
                                 },
                                 child: Container(
@@ -509,6 +512,8 @@ class _RecommendLodgeListState extends State<RecommendLodgeList> {
                       String name = doc.get('name');
                       String url = doc.get('url1');
                       String area = doc.get('area');
+                      String idx = doc.get('idx');
+
                       return Padding(
                         padding: const EdgeInsets.only(
                             right: 8.0, bottom: 8.0), //사진폭 8pt 축소
@@ -568,8 +573,16 @@ class _RecommendLodgeListState extends State<RecommendLodgeList> {
                               right: 5,
                               child: InkWell(
                                 onTap: () {
-                                  // TravelService.update(doc.id, !isFavorite);
-                                  // 클릭시 update error..
+                                  User? user =
+                                      FirebaseAuth.instance.currentUser;
+
+                                  if (user != null) {
+                                    // data 의 name 보내기, favoriteFoodserivce 추가
+                                    FavoriteLodgeService favoriteLodgeService =
+                                        context.read<FavoriteLodgeService>();
+                                    favoriteLodgeService
+                                        .toggleFavoriteLodge(idx);
+                                  }
                                 },
                                 child: Container(
                                   height: 27,
@@ -710,6 +723,8 @@ class _RecommendPlaceListState extends State<RecommendPlaceList> {
                       String name = doc.get('name');
                       String url = doc.get('url1');
                       String area = doc.get('area');
+                      String idx = doc.get('idx');
+
                       return Padding(
                         padding: const EdgeInsets.only(
                             right: 8.0, bottom: 8.0), //사진폭 8pt 축소
@@ -768,8 +783,16 @@ class _RecommendPlaceListState extends State<RecommendPlaceList> {
                               right: 5,
                               child: InkWell(
                                 onTap: () {
-                                  // TravelService.update(doc.id, !isFavorite);
-                                  // 클릭시 update error..
+                                  User? user =
+                                      FirebaseAuth.instance.currentUser;
+
+                                  if (user != null) {
+                                    // data 의 name 보내기, favoriteFoodserivce 추가
+                                    FavoritePlaceService favoritePlaceService =
+                                        context.read<FavoritePlaceService>();
+                                    favoritePlaceService
+                                        .toggleFavoritePlace(idx);
+                                  }
                                 },
                                 child: Container(
                                   height: 27,

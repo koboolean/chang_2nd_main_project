@@ -2,6 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class TravelService extends ChangeNotifier {
+  final travelFoodCollection =
+      FirebaseFirestore.instance.collection('foodArea');
+  final travelLodgeCollection =
+      FirebaseFirestore.instance.collection('foodArea');
   final travelCollection = FirebaseFirestore.instance.collection('foodArea');
 
   Future<QuerySnapshot> read(String name) async {
