@@ -3,6 +3,7 @@ import 'package:chang_2nd_main_project/screens/place_list.dart';
 import 'package:chang_2nd_main_project/services/auth_service.dart';
 import 'package:chang_2nd_main_project/services/travel_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'favorite_city.dart';
 
@@ -36,19 +37,21 @@ class _FavoriteListPageState extends State<FavoriteList> {
             child: Scaffold(
               appBar: AppBar(
                 elevation: 0,
-                title: GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(Icons.chevron_left, color: Colors.black),
-                        Text("제주도", style: TextStyle(color: Colors.black)),
-                      ],
-                    ),
+                leading: IconButton(
+                  icon: Icon(
+                    Icons.chevron_left,
+                    color: Colors.black,
+                  ),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+                titleSpacing: 0.0,
+                title: Text(
+                  "제주도",
+                  style: TextStyle(
+                    color: Colors.black,
                   ),
                 ),
-                backgroundColor: Colors.yellow[60],
+                backgroundColor: Colors.white,
               ),
               body: SafeArea(
                 child: Column(
@@ -59,6 +62,12 @@ class _FavoriteListPageState extends State<FavoriteList> {
                         alignment: Alignment.centerLeft,
                         child: DropdownButton(
                           value: _selectedValue,
+                          style: TextStyle(
+                            fontSize: 22,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          underline: Container(),
                           items: _valueList.map(
                             (value) {
                               return DropdownMenuItem(
@@ -84,7 +93,11 @@ class _FavoriteListPageState extends State<FavoriteList> {
                       indicatorColor: Colors.amber[800],
                       labelColor: Colors.amber[800],
                       indicatorWeight: 3,
-                      unselectedLabelColor: Colors.black,
+                      unselectedLabelColor: Colors.grey,
+                      labelStyle: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Expanded(
                       child: TabBarView(
@@ -101,15 +114,16 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                         GestureDetector(
                                           onTap: () {},
                                           child: Container(
-                                            margin: EdgeInsets.fromLTRB(
-                                                12, 12, 0, 0),
-                                            height: 32,
-                                            width: 60,
+                                            height: 28,
+                                            width: 47,
                                             decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(16),
-                                              color: Color(0xffd9d9d9),
-                                            ),
+                                                border: Border.all(
+                                                  width: 1,
+                                                  color: Colors.grey[500]!,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(16),
+                                                color: Colors.white),
                                             child: Align(
                                               alignment: Alignment.center,
                                               child: Text(
@@ -121,22 +135,53 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                             ),
                                           ),
                                         ),
+                                        SizedBox(
+                                          width: 8,
+                                        ),
                                         GestureDetector(
                                           onTap: () {},
                                           child: Container(
-                                            margin: EdgeInsets.fromLTRB(
-                                                12, 12, 0, 0),
-                                            height: 32,
-                                            width: 150,
+                                            height: 28,
+                                            width: 47,
                                             decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(16),
-                                              color: Color(0xffd9d9d9),
-                                            ),
+                                                border: Border.all(
+                                                  width: 1,
+                                                  color: Colors.grey[500]!,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(16),
+                                                color: Colors.white),
                                             child: Align(
                                               alignment: Alignment.center,
                                               child: Text(
-                                                "1인분 주문가능 식당",
+                                                "한식",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 8,
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {},
+                                          child: Container(
+                                            height: 28,
+                                            width: 47,
+                                            decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  width: 1,
+                                                  color: Colors.grey[500]!,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(16),
+                                                color: Colors.white),
+                                            child: Align(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                "양식",
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.w500,
                                                 ),
@@ -166,7 +211,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                       itemCount: 4,
                                       itemBuilder: (context, index) {
                                         return Padding(
-                                          padding: const EdgeInsets.all(2.0),
+                                          padding: const EdgeInsets.all(0.0),
                                           child: GestureDetector(
                                             onTap: () {
                                               Navigator.push(
@@ -181,14 +226,13 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                             child: Container(
                                               margin: EdgeInsets.all(8),
                                               decoration: BoxDecoration(
-                                                color: Colors.white,
+                                                color: Colors.transparent,
                                                 borderRadius: BorderRadius.all(
                                                   Radius.circular(8),
                                                 ),
                                                 boxShadow: [
                                                   BoxShadow(
-                                                    color: Colors.grey
-                                                        .withOpacity(0.5),
+                                                    color: Colors.transparent,
                                                     // blurRadius: 1,
                                                     // spreadRadius: 1,
                                                   )
@@ -207,9 +251,8 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                         Image.network(
                                                           'https://middleclass.sg/wp-content/uploads/2022/04/Donuts-at-Cafe-Knotted-Peaches.jpg',
                                                           fit: BoxFit.fill,
-                                                          height: 240,
-                                                          width:
-                                                              double.infinity,
+                                                          height: 220,
+                                                          width: 163,
                                                         ),
                                                         Positioned(
                                                           top: 10,
@@ -293,6 +336,19 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                                       600],
                                                                 ),
                                                               ),
+                                                              Text(
+                                                                '카페',
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 14,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .normal,
+                                                                  color: Colors
+                                                                          .grey[
+                                                                      600],
+                                                                ),
+                                                              ),
                                                             ],
                                                           ),
                                                         ],
@@ -315,8 +371,14 @@ class _FavoriteListPageState extends State<FavoriteList> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(Icons.sentiment_dissatisfied,
-                                    color: Colors.grey, size: 35),
+                                Container(
+                                  child: FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    child: SvgPicture.asset(
+                                      'assets/images/sad.svg',
+                                    ),
+                                  ),
+                                ),
                                 SizedBox(height: 10),
                                 Text(
                                   "아직 찜한 숙소가 없어요",
@@ -344,6 +406,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                         "제주도 숙소 구경하기",
                                         style: TextStyle(
                                           color: Colors.white,
+                                          fontWeight: FontWeight.w500,
                                         ),
                                       ),
                                     ),
