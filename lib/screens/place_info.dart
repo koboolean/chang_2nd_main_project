@@ -3,6 +3,8 @@ import 'package:chang_2nd_main_project/screens/login.dart';
 import 'package:chang_2nd_main_project/screens/notification.dart';
 import 'package:chang_2nd_main_project/screens/place_info.dart';
 import 'package:chang_2nd_main_project/screens/place_list.dart';
+import 'package:chang_2nd_main_project/services/travel_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +13,8 @@ import '../services/auth_service.dart';
 
 /// 홈페이지
 class PlaceInfo extends StatefulWidget {
-  const PlaceInfo({Key? key}) : super(key: key);
+  String sendName;
+  PlaceInfo({Key? key, required this.sendName}) : super(key: key);
 
   @override
   State<PlaceInfo> createState() => _PlaceInfoState();
@@ -25,8 +28,9 @@ class _PlaceInfoState extends State<PlaceInfo> {
     final authService = context.read<AuthService>();
     final user = authService.currentUser()!;
     return Consumer(
-      builder: (context, bucketService, child) {
+      builder: (context, travelService, child) {
         return Scaffold(
+          //appbar
           appBar: AppBar(
             iconTheme: IconThemeData(color: Colors.white),
             elevation: 0,
@@ -34,10 +38,10 @@ class _PlaceInfoState extends State<PlaceInfo> {
             centerTitle: false,
             flexibleSpace: Container(
               decoration: BoxDecoration(
+                //appabar 배경 이미지
                 image: DecorationImage(
-                  image: NetworkImage(
-                      "https://i.ibb.co/CwzHq4z/trans-logo-512.png"),
-                  fit: BoxFit.fill,
+                  image: NetworkImage(''),
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
@@ -71,7 +75,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 6.0),
                       child: Text(
-                        "소랑드르",
+                        widget.sendName,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
@@ -84,7 +88,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 6.0),
                       child: Text(
-                        "주소",
+                        widget.sendName,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 14,
