@@ -10,6 +10,7 @@ import 'package:chang_2nd_main_project/services/travel_service.dart';
 import 'package:chang_2nd_main_project/main.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -83,9 +84,7 @@ class _PlaceState extends State<Place> {
                     padding: const EdgeInsets.only(
                         left: 18.0, right: 18.0, top: 4.0, bottom: 4.0),
                     child: GestureDetector(
-                      onTap: () {
-
-                      },
+                      onTap: () {},
                       child: TextField(
                         //controller 삽입 필요
                         decoration: InputDecoration(
@@ -236,7 +235,7 @@ final foodComment = <String>{
 };
 
 //Random 숫자 반환
-int foodrandomIndex = Random().nextInt(4);
+int foodcommentrandomIndex = Random().nextInt(4);
 
 class _RecommendFoodListState extends State<RecommendFoodList> {
   @override
@@ -244,7 +243,15 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance.collection('foodArea').snapshots(),
       builder: (context, snapshot) {
+        //document를 firebase database에서 불러옴
         final documents = snapshot.data?.docs ?? [];
+
+        //foodArea의 index로 number index list 생성
+        List<int> ramdomfoodIndexList =
+            List<int>.generate(documents.length, (index) => index);
+        //foodArea index list를 shuffle하여 랜덤 음식점 리스트 호출
+        ramdomfoodIndexList.shuffle();
+
         if (snapshot.connectionState == ConnectionState.waiting) {
           return CircularProgressIndicator();
         }
@@ -259,7 +266,7 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
               padding: const EdgeInsets.only(top: 8.0, left: 18.0, bottom: 8.0),
               child: Text(
                 //foodComment에 randomIndex 불러오기
-                foodComment.elementAt(foodrandomIndex),
+                foodComment.elementAt(foodcommentrandomIndex),
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -275,9 +282,10 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                     shrinkWrap: true,
                     physics: ClampingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
-                    itemCount: 6,
+                    itemCount: 10,
                     itemBuilder: (context, index) {
-                      final doc = documents[index];
+                      //랜덤 음식점 index 호출하여 음식점 무작위 나열
+                      final doc = documents[ramdomfoodIndexList[index]];
                       String name = doc.get('name');
                       String url = doc.get('url1');
                       String area = doc.get('area');
@@ -336,14 +344,14 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                               right: 5,
                               child: InkWell(
                                 onTap: () {
-                        User? user =
+                                  User? user =
                                       FirebaseAuth.instance.currentUser;
 
                                   if (user != null) {
                                     // data 의 name 보내기, favoriteFoodserivce 추가
                                     FavoriteFoodService favoriteFoodService =
                                         context.read<FavoriteFoodService>();
-                                    favoriteFoodService.toggleFavoriteFood(idx);
+                                    //favoriteFoodService.toggleFavoriteFood(idx);
                                   }
                                 },
                                 child: Container(
@@ -353,7 +361,7 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                                     color: Colors.black.withOpacity(0.3),
                                     borderRadius: BorderRadius.circular(100),
                                   ),
-                                  child: 
+                                  child:
 //                                   (isFavorite)
 //                                       ? Container(
 //                                           child: FittedBox(
@@ -363,15 +371,15 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
 //                                             ),
 //                                           ),
 //                                         )
-//                                       : 
-                                  Container(
-                                          child: FittedBox(
-                                            fit: BoxFit.scaleDown,
-                                            child: SvgPicture.asset(
-                                              'assets/images/heartFalse.svg',
-                                            ),
-                                          ),
-                                        ),
+//                                       :
+                                      Container(
+                                    child: FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: SvgPicture.asset(
+                                        'assets/images/heartFalse.svg',
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
@@ -440,7 +448,15 @@ class _RecommendLodgeListState extends State<RecommendLodgeList> {
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance.collection('lodgeArea').snapshots(),
       builder: (context, snapshot) {
+        //document를 firebase database에서 불러옴
         final documents = snapshot.data?.docs ?? [];
+
+        //lodgeArea의 index로 number index 생성
+        List<int> ramdomlodgeIndexList =
+            List<int>.generate(documents.length, (index) => index);
+        //lodgeArea index list를 shuffle하여 랜덤 음식점 리스트 호출
+        ramdomlodgeIndexList.shuffle();
+
         if (snapshot.connectionState == ConnectionState.waiting) {
           return CircularProgressIndicator();
         }
@@ -473,7 +489,7 @@ class _RecommendLodgeListState extends State<RecommendLodgeList> {
                     scrollDirection: Axis.horizontal,
                     itemCount: 6,
                     itemBuilder: (context, index) {
-                      final doc = documents[index];
+                      final doc = documents[ramdomlodgeIndexList[index]];
                       String name = doc.get('name');
                       String url = doc.get('url1');
                       String area = doc.get('area');
@@ -544,7 +560,7 @@ class _RecommendLodgeListState extends State<RecommendLodgeList> {
                                     color: Colors.black.withOpacity(0.3),
                                     borderRadius: BorderRadius.circular(100),
                                   ),
-                                  child: 
+                                  child:
 //                                   (isFavorite)
 //                                       ? Container(
 //                                           child: FittedBox(
@@ -554,15 +570,15 @@ class _RecommendLodgeListState extends State<RecommendLodgeList> {
 //                                             ),
 //                                           ),
 //                                         )
-//                                       : 
-                                  Container(
-                                          child: FittedBox(
-                                            fit: BoxFit.scaleDown,
-                                            child: SvgPicture.asset(
-                                              'assets/images/heartFalse.svg',
-                                            ),
-                                          ),
-                                        ),
+//                                       :
+                                      Container(
+                                    child: FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: SvgPicture.asset(
+                                        'assets/images/heartFalse.svg',
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
@@ -631,7 +647,15 @@ class _RecommendPlaceListState extends State<RecommendPlaceList> {
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance.collection('placeArea').snapshots(),
       builder: (context, snapshot) {
+        //document를 firebase database에서 불러옴
         final documents = snapshot.data?.docs ?? [];
+
+        //lodgeArea의 index로 number index 생성
+        List<int> ramdomplaceIndexList =
+            List<int>.generate(documents.length, (index) => index);
+        //lodgeArea index list를 shuffle하여 랜덤 음식점 리스트 호출
+        ramdomplaceIndexList.shuffle();
+
         if (snapshot.connectionState == ConnectionState.waiting) {
           return CircularProgressIndicator();
         }
@@ -664,7 +688,7 @@ class _RecommendPlaceListState extends State<RecommendPlaceList> {
                     scrollDirection: Axis.horizontal,
                     itemCount: 6,
                     itemBuilder: (context, index) {
-                      final doc = documents[index];
+                      final doc = documents[ramdomplaceIndexList[index]];
                       String name = doc.get('name');
                       String url = doc.get('url1');
                       String area = doc.get('area');
@@ -734,7 +758,7 @@ class _RecommendPlaceListState extends State<RecommendPlaceList> {
                                     color: Colors.black.withOpacity(0.3),
                                     borderRadius: BorderRadius.circular(100),
                                   ),
-                                  child: 
+                                  child:
 //                                   (isFavorite)
 //                                       ? Container(
 //                                           child: FittedBox(
@@ -744,15 +768,15 @@ class _RecommendPlaceListState extends State<RecommendPlaceList> {
 //                                             ),
 //                                           ),
 //                                         )
-//                                       : 
-                                  Container(
-                                          child: FittedBox(
-                                            fit: BoxFit.scaleDown,
-                                            child: SvgPicture.asset(
-                                              'assets/images/heartFalse.svg',
-                                            ),
-                                          ),
-                                        ),
+//                                       :
+                                      Container(
+                                    child: FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: SvgPicture.asset(
+                                        'assets/images/heartFalse.svg',
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
