@@ -1,6 +1,7 @@
 import 'package:chang_2nd_main_project/screens/login.dart';
 import 'package:chang_2nd_main_project/screens/main_page.dart';
 import 'package:chang_2nd_main_project/services/auth_service.dart';
+import 'package:chang_2nd_main_project/services/favorite_service.dart';
 import 'package:chang_2nd_main_project/services/schedule_service.dart';
 import 'package:chang_2nd_main_project/services/travel_service.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -18,6 +19,9 @@ void main() async {
         ChangeNotifierProvider(create: (context) => AuthService()),
         ChangeNotifierProvider(create: (context) => TravelService()),
         ChangeNotifierProvider(create: (context) => ScheduleService()),
+        ChangeNotifierProvider(create: (context) => FavoriteFoodService()),
+        ChangeNotifierProvider(create: (context) => FavoriteLodgeService()),
+        ChangeNotifierProvider(create: (context) => FavoritePlaceService()),
       ],
       child: const MyApp(),
     ),
