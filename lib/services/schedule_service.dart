@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ScheduleService extends ChangeNotifier {
   List<String> itemsList = []; //화면에 출력된 항목 담을 변수
+  //List<int> countingSelect = [1,2,3,]
   //List<DisplaySelectList> checkedList = []; //체크된 항목 담을 변수
 
   void toggleCheckBox(String idx) {
@@ -38,6 +39,8 @@ class DisplaySelectList {
   String imageUrl;
   bool selectRouteEnable;
   String idx;
+  String lat;
+  String long;
   //bool keyWordCheck;
   DisplaySelectList(
       {Key? key,
@@ -47,5 +50,7 @@ class DisplaySelectList {
       required this.imageUrl,
       required this.selectRouteEnable,
       // required keyWordCheck
-      required this.idx});
+      required this.idx,
+      required this.lat,
+      required this.long});
 }
