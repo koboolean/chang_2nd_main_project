@@ -82,9 +82,7 @@ class _PlaceState extends State<Place> {
                     padding: const EdgeInsets.only(
                         left: 18.0, right: 18.0, top: 4.0, bottom: 4.0),
                     child: GestureDetector(
-                      onTap: () {
-
-                      },
+                      onTap: () {},
                       child: TextField(
                         //controller 삽입 필요
                         decoration: InputDecoration(

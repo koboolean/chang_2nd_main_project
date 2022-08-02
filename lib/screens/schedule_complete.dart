@@ -51,7 +51,7 @@ class _ScheduleCompleteState extends State<ScheduleComplete>
   Widget build(BuildContext context) {
     return Consumer<ScheduleService>(
       builder: (context, scheduleService, child) {
-        var totalChecked = scheduleService.checkedList;
+        var totalCheckedList = scheduleService.itemsList;
         return DefaultTabController(
           initialIndex: 0,
           length: TabBarController.length,
@@ -123,12 +123,22 @@ class _ScheduleCompleteState extends State<ScheduleComplete>
                                 },
                                 onWebViewCreated: (controller) {
                                   _controller = controller;
-                                  _webViewController = controller.webViewController;
+                                  _webViewController =
+                                      controller.webViewController;
                                 },
-                                onPageFinished: (url) async{
-                                  position = await Geolocator.getCurrentPosition(
-                                      desiredAccuracy: LocationAccuracy.high);
-                                  _webViewController?.runJavascript('currentLocation('+position.latitude.toString() + ',' + position.longitude.toString().replaceAll("-", "") +')');
+                                onPageFinished: (url) async {
+                                  position =
+                                      await Geolocator.getCurrentPosition(
+                                          desiredAccuracy:
+                                              LocationAccuracy.high);
+                                  _webViewController?.runJavascript(
+                                      'currentLocation(' +
+                                          position.latitude.toString() +
+                                          ',' +
+                                          position.longitude
+                                              .toString()
+                                              .replaceAll("-", "") +
+                                          ')');
                                 },
                                 javascriptChannels: <JavascriptChannel>{
                                   JavascriptChannel(
@@ -178,8 +188,8 @@ class _ScheduleCompleteState extends State<ScheduleComplete>
                           children: [
                             TextButton.icon(
                               onPressed: () {
-                                _controller!.webViewController
-                                    .evaluateJavascript('currentLocation()');
+                                // _controller!.webViewController
+                                //     .evaluateJavascript('currentLocation()');
                               },
                               icon: Image.asset('assets/images/align.png'),
                               label: Text(
@@ -198,25 +208,25 @@ class _ScheduleCompleteState extends State<ScheduleComplete>
                         ),
                       ),
                       body: ListView.separated(
-                        itemCount: totalChecked.length,
+                        itemCount: totalCheckedList.length,
                         itemBuilder: (context, index) {
-                          var totalList = totalChecked[index];
+                          var totalList = totalCheckedList[index];
                           return ListTile(
                             leading: SizedBox(
                               height: 56,
                               width: 56,
                               child: Image.network(
-                                totalList.imageUrl,
+                                totalCheckedList[index],
                                 fit: BoxFit.fill,
                               ),
                             ),
                             title: Row(
                               children: [
-                                Text(totalList.name),
+                                //Text(totalList.name),
                                 SizedBox(
                                   width: 6,
                                 ),
-                                Text(totalList.category),
+                                // Text(totalList.classification),
                               ],
                             ),
                             subtitle: Row(
@@ -225,7 +235,7 @@ class _ScheduleCompleteState extends State<ScheduleComplete>
                                 SizedBox(
                                   width: 3.5,
                                 ),
-                                Text(totalList.address),
+                                //Text(totalList.address),
                               ],
                             ),
                           );

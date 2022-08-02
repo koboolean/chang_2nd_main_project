@@ -44,6 +44,14 @@ class _MyPageState extends State<MyPage> {
               ),
             ],
           ),
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('이메일 : ${user.email}'),
+              Text('사용자 UID : ${user.uid}'),
+            ],
+          ),
         );
       },
     );
