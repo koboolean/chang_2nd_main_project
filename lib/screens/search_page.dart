@@ -103,13 +103,13 @@ class _MySearchState extends State<MySearch> {
                           children: [
                             InkWell(
                               onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => PlaceInfo(
-                                            sendName: ('소랑드르'),
-                                          )),
-                                );
+                                //Navigator.push(
+                                //  context,
+                                //  MaterialPageRoute(
+                                //      builder: (context) => PlaceInfo(
+                                //            sendName: ('소랑드르'),
+                                //          )),
+                                //);
                               },
                               child: ListTile(
                                 //검색 제목결과
