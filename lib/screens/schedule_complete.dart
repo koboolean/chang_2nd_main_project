@@ -51,7 +51,7 @@ class _ScheduleCompleteState extends State<ScheduleComplete>
   Widget build(BuildContext context) {
     return Consumer<ScheduleService>(
       builder: (context, scheduleService, child) {
-        var totalCheckedList = scheduleService.itemsList;
+        var totalCheckedList = scheduleService.foodAndPlaceItemsList;
         return DefaultTabController(
           initialIndex: 0,
           length: TabBarController.length,
@@ -211,6 +211,7 @@ class _ScheduleCompleteState extends State<ScheduleComplete>
                         itemCount: totalCheckedList.length,
                         itemBuilder: (context, index) {
                           var totalList = totalCheckedList[index];
+                          //DisplaySelectList itemList = DisplaySelectList(name:totalCheckedList[index].na , classification: classification, address: address, imageUrl: imageUrl, idx: idx, lat: lat, long: long)
                           return ListTile(
                             leading: SizedBox(
                               height: 56,

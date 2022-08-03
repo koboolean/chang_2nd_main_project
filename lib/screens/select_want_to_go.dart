@@ -58,14 +58,18 @@ class _SelectWantToGoState extends State<SelectWantToGo> {
                       Text(
                         '가고 싶은 곳을 \n 5개 이상 선택해주세요',
                         style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
+                            fontSize: 24, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
                         height: 20,
                       ),
                       TabBar(
-                        indicatorColor: Color.fromRGBO(221, 81, 37, 1),
-                        labelColor: Color.fromRGBO(221, 81, 37, 1),
+                        // indicator: BoxDecoration(shape: BoxShape.circle),
+                        indicatorColor:
+                            Color.fromRGBO(221, 81, 37, 1), //탭바 밑줄 색
+                        labelColor: Color.fromRGBO(221, 81, 37, 1), //탭바 글자색
+                        unselectedLabelColor: Color.fromRGBO(188, 188, 188, 1),
+
                         tabs: [
                           Tab(
                             text: '맛집',
@@ -84,6 +88,7 @@ class _SelectWantToGoState extends State<SelectWantToGo> {
               padding: EdgeInsets.only(left: 18, top: 15, right: 18),
               child: TabBarView(
                 children: [
+                  //맛집 탭 메뉴
                   Scaffold(
                     body: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -124,67 +129,256 @@ class _SelectWantToGoState extends State<SelectWantToGo> {
                                 .snapshots(),
                             builder: (context, foodArea) {
                               return StreamBuilder<QuerySnapshot>(
+                                stream: FirebaseFirestore.instance
+                                    .collection('foodNameUser')
+                                    .snapshots(),
+                                builder: (context, foodNameUser) {
+                                  return StreamBuilder<QuerySnapshot>(
+                                    stream: FirebaseFirestore.instance
+                                        .collection('geocode_foodArea')
+                                        .snapshots(),
+                                    builder: (context, geocode_foodArea) {
+                                      final foodAreaItems =
+                                          foodArea.data?.docs ?? [];
+                                      final authService =
+                                          context.read<AuthService>();
+                                      final foodNameUserItems =
+                                          foodNameUser.data?.docs ?? [];
+                                      final authUserIdInfoodTab =
+                                          foodNameUserItems.where((element) {
+                                        return element.get('userId') ==
+                                            authService.currentUser()!.uid;
+                                      }).toList();
+                                      final geocodeFoodAreaItems =
+                                          geocode_foodArea.data?.docs ?? [];
+
+                                      return ListView.builder(
+                                        itemCount: authUserIdInfoodTab.length,
+                                        itemBuilder: (context, index) {
+                                          final foodAreaObjectTypeItems =
+                                              foodAreaItems.where((element) {
+                                            return (element.get('idx') ==
+                                                foodNameUserItems[index]
+                                                    .get('idx'));
+                                            //          &&
+                                            // (foodNameUserItems[index]
+                                            //         .get('userId') ==
+                                            //     authService
+                                            //         .currentUser()!
+                                            //         .uid);
+                                          }).toList();
+
+                                          final geocodeObjectTypeItems =
+                                              geocodeFoodAreaItems
+                                                  .where((element) {
+                                            return element.get('idx') ==
+                                                foodAreaObjectTypeItems[0]
+                                                    .get('idx');
+                                          }).toList();
+                                          DisplaySelectList itemList =
+                                              DisplaySelectList(
+                                                  name:
+                                                      foodAreaObjectTypeItems[0]
+                                                          .get('name'),
+                                                  classification:
+                                                      foodAreaObjectTypeItems[0]
+                                                          .get(
+                                                              'classification'),
+                                                  address:
+                                                      foodAreaObjectTypeItems[0]
+                                                          .get('address'),
+                                                  imageUrl:
+                                                      foodAreaObjectTypeItems[0]
+                                                          .get('url1'),
+                                                  idx: foodNameUserItems[index]
+                                                      .get('idx'),
+                                                  // selectRouteEnable:// 객체 생성시 디비에서가 아닌 디폴트 값으로 세팅해보기 그럼 디비 데이터 필요없을것같음
+                                                  //     foodNameUserItems[index]
+                                                  //         .get('selectRouteEnable'),
+                                                  lat: geocodeObjectTypeItems[0]
+                                                      .get('lat'),
+                                                  long:
+                                                      geocodeObjectTypeItems[0]
+                                                          .get('long'));
+
+                                          return ListTile(
+                                            leading: SizedBox(
+                                              height: 56,
+                                              width: 56,
+                                              child: Image.network(
+                                                itemList.imageUrl,
+                                                fit: BoxFit.fill,
+                                              ),
+                                            ),
+                                            title: Row(
+                                              children: [
+                                                Text(itemList.name),
+                                                SizedBox(
+                                                  width: 6,
+                                                ),
+                                                Text(itemList.classification),
+                                              ],
+                                            ),
+                                            subtitle: Row(
+                                              children: [
+                                                Icon(Icons.place_outlined),
+                                                SizedBox(
+                                                  width: 3.5,
+                                                ),
+                                                Flexible(
+                                                  child: Text(
+                                                    itemList.address,
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            trailing: //itemList.selectRouteEnable
+                                                scheduleService
+                                                        .foodAndPlaceItemsList
+                                                        .contains(itemList.idx)
+                                                    ? Icon(Icons.check_circle,
+                                                        color: Color.fromRGBO(
+                                                            237, 140, 29, 1))
+                                                    : Icon(
+                                                        Icons
+                                                            .check_circle_outline,
+                                                        color: Colors.grey[350],
+                                                      ),
+                                            onTap: () {
+                                              scheduleService.TabToggle(
+                                                  itemList.idx); // 선택된 리스트 담기
+                                            },
+                                          );
+                                        },
+                                      );
+                                    },
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  //관광지 탭 메뉴
+                  Scaffold(
+                    body: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 35,
+                          width: double.infinity,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: 3,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                padding: EdgeInsets.all(3),
+                                child: TextButton(
+                                  onPressed: () {},
+                                  style: TextButton.styleFrom(
+                                    primary: Colors.black,
+                                    backgroundColor:
+                                        Color.fromRGBO(229, 229, 229, 1),
+                                    minimumSize: Size(60, 12),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(100),
+                                    ),
+                                  ),
+                                  child: Text(
+                                    '전체',
+                                    style: TextStyle(fontSize: 11),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: StreamBuilder<QuerySnapshot>(
+                            stream: FirebaseFirestore.instance
+                                .collection('placeArea')
+                                .snapshots(),
+                            builder: (context, placeArea) {
+                              return StreamBuilder<QuerySnapshot>(
                                   stream: FirebaseFirestore.instance
-                                      .collection('foodNameUser')
+                                      .collection('placeNameUser')
                                       .snapshots(),
-                                  builder: (context, foodNameUser) {
+                                  builder: (context, placeNameUser) {
                                     return StreamBuilder<QuerySnapshot>(
                                       stream: FirebaseFirestore.instance
-                                          .collection('geocode_foodArea')
+                                          .collection('geocode_placeArea')
                                           .snapshots(),
-                                      builder: (context, geocode_foodArea) {
-                                        final foodAreaItems =
-                                            foodArea.data?.docs ?? [];
-                                        final foodNameUserItems =
-                                            foodNameUser.data?.docs ?? [];
+                                      builder: (context, geocode_placeArea) {
+                                        final placeAreaItems =
+                                            placeArea.data?.docs ?? [];
+                                        final placeNameUserItems =
+                                            placeNameUser.data?.docs ?? [];
                                         final authService =
                                             context.read<AuthService>();
-                                        final geocodeFoodAreaItems =
-                                            geocode_foodArea.data?.docs ?? [];
+                                        final authUserIdInfoodTab =
+                                            placeNameUserItems.where((element) {
+                                          return element.get('userId') ==
+                                              authService.currentUser()!.uid;
+                                        }).toList();
+                                        final geocode_placeAreaItems =
+                                            geocode_placeArea.data?.docs ?? [];
 
                                         return ListView.builder(
-                                          itemCount: foodNameUserItems.length,
+                                          itemCount: placeNameUserItems.length,
                                           itemBuilder: (context, index) {
-                                            var foodAreaObjectTypeItems =
-                                                foodAreaItems.where(
+                                            var placeAreaObjectTypeItems =
+                                                placeAreaItems.where(
                                               (element) {
                                                 return (element.get('idx') ==
-                                                        foodNameUserItems[index]
+                                                        placeNameUserItems[
+                                                                index]
                                                             .get('idx')) &&
-                                                    (foodNameUserItems[index]
+                                                    (placeNameUserItems[index]
                                                             .get('userId') ==
                                                         authService
                                                             .currentUser()!
                                                             .uid);
                                               },
                                             ).toList();
-                                            var geocodeObjectTypeItems =
-                                                geocodeFoodAreaItems
+                                            final geocodeObjectTypeItems =
+                                                geocode_placeAreaItems
                                                     .where((element) {
                                               return element.get('idx') ==
-                                                  foodAreaObjectTypeItems[0]
+                                                  placeAreaObjectTypeItems[0]
                                                       .get('idx');
                                             }).toList();
-                                            DisplaySelectList itemList = DisplaySelectList(
-                                                name: foodAreaObjectTypeItems[0]
-                                                    .get('name'),
-                                                classification:
-                                                    foodAreaObjectTypeItems[0]
-                                                        .get('classification'),
-                                                address: foodAreaObjectTypeItems[0]
-                                                    .get('address'),
-                                                imageUrl:
-                                                    foodAreaObjectTypeItems[0]
-                                                        .get('url1'),
-                                                idx: foodNameUserItems[index]
-                                                    .get('idx'),
-                                                selectRouteEnable:
-                                                    foodNameUserItems[index].get(
-                                                        'selectRouteEnable'),
-                                                lat: geocodeObjectTypeItems[0]
-                                                    .get('lat'),
-                                                long: geocodeObjectTypeItems[0]
-                                                    .get('long'));
+                                            DisplaySelectList itemList =
+                                                DisplaySelectList(
+                                                    name:
+                                                        placeAreaObjectTypeItems[0]
+                                                            .get('name'),
+                                                    classification:
+                                                        placeAreaObjectTypeItems[0]
+                                                            .get(
+                                                                'classification'),
+                                                    address:
+                                                        placeAreaObjectTypeItems[0]
+                                                            .get('address'),
+                                                    imageUrl:
+                                                        placeAreaObjectTypeItems[0]
+                                                            .get('url1'),
+                                                    idx:
+                                                        placeNameUserItems[index]
+                                                            .get('idx'),
+                                                    // selectRouteEnable:
+                                                    //     placeNameUserItems[index].get(
+                                                    //         'selectRouteEnable'),
+                                                    lat:
+                                                        geocodeObjectTypeItems[0]
+                                                            .get('lat'),
+                                                    long:
+                                                        geocodeObjectTypeItems[0]
+                                                            .get('long'));
 
                                             return ListTile(
                                               leading: SizedBox(
@@ -221,7 +415,8 @@ class _SelectWantToGoState extends State<SelectWantToGo> {
                                                 ],
                                               ),
                                               trailing: //itemList.selectRouteEnable
-                                                  scheduleService.itemsList
+                                                  scheduleService
+                                                          .foodAndPlaceItemsList
                                                           .contains(
                                                               itemList.idx)
                                                       ? Icon(Icons.check_circle,
@@ -234,7 +429,7 @@ class _SelectWantToGoState extends State<SelectWantToGo> {
                                                               Colors.grey[350],
                                                         ),
                                               onTap: () {
-                                                scheduleService.toggleCheckBox(
+                                                scheduleService.TabToggle(
                                                     itemList.idx); // 선택된 리스트 담기
                                               },
                                             );
@@ -248,8 +443,7 @@ class _SelectWantToGoState extends State<SelectWantToGo> {
                         ),
                       ],
                     ),
-                  ),
-                  Text('2'),
+                  ), // 관광지 탭 추가 해야함
                 ],
               ),
             ),
@@ -260,11 +454,11 @@ class _SelectWantToGoState extends State<SelectWantToGo> {
                   SizedBox(
                     height: 10,
                   ),
-                  scheduleService.itemsList.length < 5
+                  scheduleService.foodAndPlaceItemsList.length < 5
                       ? ElevatedButton(
                           onPressed: null,
                           child: Text(
-                              '${5 - scheduleService.itemsList.length}곳을 더 선택해주세요'), //font 적용하기
+                              '${5 - scheduleService.foodAndPlaceItemsList.length}곳을 더 선택해주세요'), //font 적용하기
                           style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(100),

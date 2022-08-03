@@ -38,7 +38,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _determinePosition(); //위치 관련 권한
   }
@@ -64,11 +63,11 @@ class _MyAppState extends State<MyApp> {
 /// are denied the `Future` will return an error.
 Future<Position> _determinePosition() async {
   //모바일 위치 권한 설정
-  bool serviceEnabled;
+  //bool serviceEnabled;
   LocationPermission permission;
 
   // Test if location services are enabled.
-  serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  //serviceEnabled = await Geolocator.isLocationServiceEnabled();
 
   permission = await Geolocator.checkPermission();
   if (permission == LocationPermission.denied) {

@@ -5,19 +5,27 @@ import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ScheduleService extends ChangeNotifier {
-  List<String> itemsList = []; //화면에 출력된 항목 담을 변수
+  List<String> foodAndPlaceItemsList = []; //맛집 탭 화면에 클릭한 항목 담을 변수
+  //List<String> placeItemsList = []; //관광지 탭 화면에 클릭한 항목 담을 변수
+
   //List<int> countingSelect = [1,2,3,]
   //List<DisplaySelectList> checkedList = []; //체크된 항목 담을 변수
 
-  void toggleCheckBox(String idx) {
-    if (itemsList.contains(idx)) {
-      itemsList.remove(idx);
+  void TabToggle(String idx) {
+    if (foodAndPlaceItemsList.contains(idx)) {
+      foodAndPlaceItemsList.remove(idx);
     } else {
-      itemsList.add(idx);
+      foodAndPlaceItemsList.add(idx);
     }
-    //itemList.checkBox = !itemList.checkBox;
+    notifyListeners();
+  }
 
-    // print(checkedList);
+  void toggleCheckBox(String idx) {
+    if (foodAndPlaceItemsList.contains(idx)) {
+      foodAndPlaceItemsList.remove(idx);
+    } else {
+      foodAndPlaceItemsList.add(idx);
+    }
     notifyListeners();
   }
 
@@ -37,7 +45,7 @@ class DisplaySelectList {
   String classification;
   String address;
   String imageUrl;
-  bool selectRouteEnable;
+  bool selectRouteEnable = false;
   String idx;
   String lat;
   String long;
@@ -48,7 +56,7 @@ class DisplaySelectList {
       required this.classification,
       required this.address,
       required this.imageUrl,
-      required this.selectRouteEnable,
+      //required this.selectRouteEnable,
       // required keyWordCheck
       required this.idx,
       required this.lat,
