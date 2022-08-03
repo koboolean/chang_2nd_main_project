@@ -1,3 +1,4 @@
+import 'package:chang_2nd_main_project/screens/place_info.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,8 @@ class FavoriteFoodService extends ChangeNotifier {
       FirebaseFirestore.instance.collection('foodNameUser');
 
   Future<QuerySnapshot> read(String uid) async {
-    throw UnimplementedError(); // return 값 미구현 에러
+    throw FavoriteFoodCollection.where('uid', isEqualTo: uid)
+        .get(); // return 값 미구현 에러
   }
 
   void toggleFavoriteFood(String idx) async {
@@ -36,6 +38,27 @@ class FavoriteFoodService extends ChangeNotifier {
         print("created");
       }
     });
+  }
+
+  void favoriteFoodList(String idx) async {
+    // name을 nameid 로 가져오기
+    // user id 가져오기
+    final User user = FirebaseAuth.instance.currentUser!;
+    final uid = user.uid;
+
+    final tagID = uid;
+    final post_idx = await FirebaseFirestore.instance
+        .collection("foodNameUser")
+        .where('userId', isEqualTo: tagID)
+        .get();
+    final postIdList = post_idx.docs.map((doc) => doc.data()["idx"]).toList();
+
+    final postSnapshot = await FirebaseFirestore.instance
+        .collection("foodArea")
+        .where("idx", whereIn: postIdList)
+        .get();
+
+    final postList = postSnapshot.docs.map((doc) => doc.data()).toList();
   }
 }
 
