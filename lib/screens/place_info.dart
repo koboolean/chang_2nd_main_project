@@ -14,8 +14,9 @@ import '../services/auth_service.dart';
 
 /// 음식점 상세 설명 페이지
 class FoodInfo extends StatefulWidget {
-  final FoodToSend foodtosend;
-  FoodInfo({Key? key, required this.foodtosend}) : super(key: key);
+  var foodtoreceive;
+
+  FoodInfo({Key? key, required this.foodtoreceive}) : super(key: key);
 
   @override
   State<FoodInfo> createState() => _FoodInfoState();
@@ -41,7 +42,7 @@ class _FoodInfoState extends State<FoodInfo> {
               decoration: BoxDecoration(
                 //appabar 배경 이미지
                 image: DecorationImage(
-                    image: NetworkImage(widget.foodtosend.foodUrl1),
+                    image: NetworkImage(widget.foodtoreceive.foodUrl1),
                     fit: BoxFit.cover,
                     //이미지 어두운 필터 씌우기
                     colorFilter: ColorFilter.mode(
@@ -78,7 +79,7 @@ class _FoodInfoState extends State<FoodInfo> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 6.0),
                       child: Text(
-                        widget.foodtosend.foodName,
+                        widget.foodtoreceive.foodName,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
@@ -91,7 +92,7 @@ class _FoodInfoState extends State<FoodInfo> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 6.0),
                       child: Text(
-                        widget.foodtosend.foodAddress,
+                        widget.foodtoreceive.foodAddress,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 14,
@@ -115,7 +116,7 @@ class _FoodInfoState extends State<FoodInfo> {
                             child: Align(
                               alignment: Alignment.center,
                               child: Text(
-                                "#${widget.foodtosend.foodClassification}",
+                                "#${widget.foodtoreceive.foodClassification}",
                                 style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   color: Colors.white,
@@ -179,7 +180,7 @@ class _FoodInfoState extends State<FoodInfo> {
                     ),
                     FittedBox(
                       child: Text(
-                        widget.foodtosend.foodBusinessHours,
+                        widget.foodtoreceive.foodBusinessHours,
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
@@ -209,7 +210,7 @@ class _FoodInfoState extends State<FoodInfo> {
                       height: 25,
                       width: 200,
                       child: Text(
-                        "${widget.foodtosend.foodPrice} 원",
+                        "${widget.foodtoreceive.foodPrice} 원",
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
@@ -239,7 +240,7 @@ class _FoodInfoState extends State<FoodInfo> {
                       height: 25,
                       width: 200,
                       child: Text(
-                        widget.foodtosend.foodServingSize,
+                        widget.foodtoreceive.foodServingSize,
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
@@ -260,7 +261,7 @@ class _FoodInfoState extends State<FoodInfo> {
                   padding: const EdgeInsets.only(
                       left: 18, top: 24, bottom: 16.0, right: 18),
                   child: Text(
-                    widget.foodtosend.foodSubtitle,
+                    widget.foodtoreceive.foodSubtitle,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
@@ -276,7 +277,7 @@ class _FoodInfoState extends State<FoodInfo> {
                       borderRadius: BorderRadius.circular(8.0),
                       child: Image(
                         image: NetworkImage(
-                          widget.foodtosend.foodUrl2,
+                          widget.foodtoreceive.foodUrl2,
                         ),
                         fit: BoxFit.cover,
                       ),
@@ -287,7 +288,7 @@ class _FoodInfoState extends State<FoodInfo> {
                 //음식 설명
                 Padding(
                   padding: const EdgeInsets.all(18.0),
-                  child: Text(widget.foodtosend.foodNote),
+                  child: Text(widget.foodtoreceive.foodNote),
                 ),
               ],
             ),
@@ -299,8 +300,8 @@ class _FoodInfoState extends State<FoodInfo> {
 }
 
 class LodgeInfo extends StatefulWidget {
-  final LodgeToSend lodgetosend;
-  LodgeInfo({Key? key, required this.lodgetosend}) : super(key: key);
+  var lodgetoreceive;
+  LodgeInfo({Key? key, required this.lodgetoreceive}) : super(key: key);
 
   @override
   State<LodgeInfo> createState() => _LodgeInfoState();
@@ -326,7 +327,7 @@ class _LodgeInfoState extends State<LodgeInfo> {
               decoration: BoxDecoration(
                 //appbar 배경 이미지
                 image: DecorationImage(
-                    image: NetworkImage(widget.lodgetosend.lodgeUrl1),
+                    image: NetworkImage(widget.lodgetoreceive.lodgeUrl1),
                     fit: BoxFit.cover,
                     //이미지 어두운 필터 씌우기
                     colorFilter: ColorFilter.mode(
@@ -363,7 +364,7 @@ class _LodgeInfoState extends State<LodgeInfo> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 6.0),
                       child: Text(
-                        widget.lodgetosend.lodgeName,
+                        widget.lodgetoreceive.lodgeName,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
@@ -376,7 +377,7 @@ class _LodgeInfoState extends State<LodgeInfo> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 6.0),
                       child: Text(
-                        widget.lodgetosend.lodgeAddress,
+                        widget.lodgetoreceive.lodgeAddress,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 14,
@@ -400,7 +401,7 @@ class _LodgeInfoState extends State<LodgeInfo> {
                             child: Align(
                               alignment: Alignment.center,
                               child: Text(
-                                "#${widget.lodgetosend.lodgeArea}",
+                                "#${widget.lodgetoreceive.lodgeArea}",
                                 style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   color: Colors.white,
@@ -464,7 +465,7 @@ class _LodgeInfoState extends State<LodgeInfo> {
                     ),
                     FittedBox(
                       child: Text(
-                        widget.lodgetosend.lodgeBusinessHours,
+                        widget.lodgetoreceive.lodgeBusinessHours,
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
@@ -494,7 +495,7 @@ class _LodgeInfoState extends State<LodgeInfo> {
                       height: 25,
                       width: 200,
                       child: Text(
-                        widget.lodgetosend.lodgePhoneNumber,
+                        widget.lodgetoreceive.lodgePhoneNumber,
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
@@ -524,7 +525,7 @@ class _LodgeInfoState extends State<LodgeInfo> {
                       height: 25,
                       width: 200,
                       child: Text(
-                        widget.lodgetosend.lodgePriceType1,
+                        widget.lodgetoreceive.lodgePriceType1,
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
@@ -544,7 +545,7 @@ class _LodgeInfoState extends State<LodgeInfo> {
                   padding: const EdgeInsets.only(
                       left: 18.0, top: 24, bottom: 16.0, right: 18.0),
                   child: Text(
-                    widget.lodgetosend.lodgeSubtitle,
+                    widget.lodgetoreceive.lodgeSubtitle,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
@@ -560,7 +561,7 @@ class _LodgeInfoState extends State<LodgeInfo> {
                       borderRadius: BorderRadius.circular(8.0),
                       child: Image(
                         image: NetworkImage(
-                          widget.lodgetosend.lodgeUrl2,
+                          widget.lodgetoreceive.lodgeUrl2,
                         ),
                         fit: BoxFit.cover,
                       ),
@@ -571,7 +572,7 @@ class _LodgeInfoState extends State<LodgeInfo> {
                 //음식 설명
                 Padding(
                   padding: const EdgeInsets.all(18.0),
-                  child: Text(widget.lodgetosend.lodgeName),
+                  child: Text(widget.lodgetoreceive.lodgeName),
                 ),
               ],
             ),
@@ -583,8 +584,8 @@ class _LodgeInfoState extends State<LodgeInfo> {
 }
 
 class PlaceInfo extends StatefulWidget {
-  final PlaceToSend placetosend;
-  PlaceInfo({Key? key, required this.placetosend}) : super(key: key);
+  var placetoreceive;
+  PlaceInfo({Key? key, required this.placetoreceive}) : super(key: key);
 
   @override
   State<PlaceInfo> createState() => _PlaceInfoState();
@@ -610,7 +611,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
               decoration: BoxDecoration(
                 //appabar 배경 이미지
                 image: DecorationImage(
-                    image: NetworkImage(widget.placetosend.placeUrl1),
+                    image: NetworkImage(widget.placetoreceive.placeUrl1),
                     fit: BoxFit.cover,
                     //이미지 어두운 필터 씌우기
                     colorFilter: ColorFilter.mode(
@@ -647,7 +648,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 6.0),
                       child: Text(
-                        widget.placetosend.placeName,
+                        widget.placetoreceive.placeName,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
@@ -660,7 +661,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 6.0),
                       child: Text(
-                        widget.placetosend.placeAddress,
+                        widget.placetoreceive.placeAddress,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 14,
@@ -684,7 +685,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                             child: Align(
                               alignment: Alignment.center,
                               child: Text(
-                                "#${widget.placetosend.placeClassifiaction}",
+                                "#${widget.placetoreceive.placeClassifiaction}",
                                 style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   color: Colors.white,
@@ -748,7 +749,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                     ),
                     FittedBox(
                       child: Text(
-                        widget.placetosend.placeBusinessHours,
+                        widget.placetoreceive.placeBusinessHours,
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
@@ -776,7 +777,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                     ),
                     FittedBox(
                       child: Text(
-                        widget.placetosend.placePhoneNumber,
+                        widget.placetoreceive.placePhoneNumber,
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
@@ -804,7 +805,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                     ),
                     FittedBox(
                       child: Text(
-                        widget.placetosend.placePrice,
+                        widget.placetoreceive.placePrice,
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
@@ -825,7 +826,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                   padding: const EdgeInsets.only(
                       left: 18.0, top: 24, bottom: 16.0, right: 18.0),
                   child: Text(
-                    widget.placetosend.placeSubtitle,
+                    widget.placetoreceive.placeSubtitle,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
@@ -841,7 +842,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                       borderRadius: BorderRadius.circular(8.0),
                       child: Image(
                         image: NetworkImage(
-                          widget.placetosend.placeUrl2,
+                          widget.placetoreceive.placeUrl2,
                         ),
                         fit: BoxFit.cover,
                       ),
@@ -852,7 +853,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                 //음식 설명
                 Padding(
                   padding: const EdgeInsets.all(18.0),
-                  child: Text(widget.placetosend.placeName),
+                  child: Text(widget.placetoreceive.placeName),
                 ),
               ],
             ),
