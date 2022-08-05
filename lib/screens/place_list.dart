@@ -5,6 +5,7 @@ import 'package:chang_2nd_main_project/screens/place_info.dart';
 import 'package:chang_2nd_main_project/screens/place_list.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:chang_2nd_main_project/services/travel_service.dart';
+import 'package:chang_2nd_main_project/screens/search_page.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -61,9 +62,17 @@ class _PlaceListState extends State<PlaceList> {
                 actions: [
                   Padding(
                     padding: const EdgeInsets.only(right: 15.0),
-                    child: Icon(
-                      Icons.search,
-                      color: Colors.black,
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => MySearch()),
+                        );
+                      },
+                      icon: const Icon(
+                        Icons.search,
+                        color: Colors.black,
+                      ),
                     ),
                   )
                 ],
@@ -155,6 +164,42 @@ class FoodList extends StatefulWidget {
   State<FoodList> createState() => _FoodListState();
 }
 
+//place_info에 송부할 데이터 list 생성
+class FoodToSend {
+  final String foodSubtitle;
+  final String foodAddress;
+  final String foodArea;
+  final String foodBusinessHours;
+  final String foodClassification;
+  final String foodField14;
+  final String foodIdx;
+  final String foodName;
+  final String foodNaverLink;
+  final String foodNote;
+  final String foodPhonenumber;
+  final String foodPrice;
+  final String foodServingSize;
+  final String foodUrl1;
+  final String foodUrl2;
+
+  const FoodToSend(
+      this.foodSubtitle,
+      this.foodAddress,
+      this.foodArea,
+      this.foodBusinessHours,
+      this.foodClassification,
+      this.foodField14,
+      this.foodIdx,
+      this.foodName,
+      this.foodNaverLink,
+      this.foodNote,
+      this.foodPhonenumber,
+      this.foodPrice,
+      this.foodServingSize,
+      this.foodUrl1,
+      this.foodUrl2);
+}
+
 class _FoodListState extends State<FoodList> {
   @override
   Widget build(BuildContext context) {
@@ -162,7 +207,16 @@ class _FoodListState extends State<FoodList> {
     return StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('foodArea').snapshots(),
         builder: (context, snapshot) {
+          //document를 firebase database에서 불러옴
           final documents = snapshot.data?.docs ?? [];
+
+          //foodArea의 index로 number index list 생성
+          List<int> ramdomfoodIndexList =
+              List<int>.generate(documents.length, (index) => index);
+
+          //foodArea index list를 shuffle하여 랜덤 음식점 리스트 호출
+          ramdomfoodIndexList.shuffle();
+
           if (snapshot.connectionState == ConnectionState.waiting) {
             return CircularProgressIndicator();
           }
@@ -177,13 +231,43 @@ class _FoodListState extends State<FoodList> {
                 child: ListView.builder(
                   itemCount: 6,
                   itemBuilder: (context, index) {
-                    //Firestore 변수 설정
-                    final doc = documents[index];
-                    String name = doc.get('name');
-                    String url = doc.get('url');
-                    String address = doc.get('address');
-                    String classification = doc.get('classification');
-                    bool isFavorite = doc.get('isFavorite');
+                    //랜덤 음식점 index 호출하여 음식점 무작위 나열
+                    final doc = documents[ramdomfoodIndexList[index]];
+
+                    //Firestore 인덱스 가져오기
+                    String foodSubtitle = doc.get('Subtitle');
+                    String foodAddress = doc.get('address');
+                    String foodBusinessHours = doc.get('businessHours');
+                    String foodClassification = doc.get('classification');
+                    String foodField14 = doc.get('field14');
+                    String foodIdx = doc.get('idx');
+                    String foodNaverLink = doc.get('naverlink');
+                    String foodNote = doc.get('note');
+                    String foodPhonenumber = doc.get('phoneNumber');
+                    String foodPrice = doc.get('price');
+                    String foodServingSize = doc.get('servingSize');
+                    String foodName = doc.get('name');
+                    String foodUrl1 = doc.get('url1');
+                    String foodUrl2 = doc.get('url2');
+                    String foodArea = doc.get('area');
+
+                    final foodtosend = FoodToSend(
+                        foodSubtitle,
+                        foodAddress,
+                        foodArea,
+                        foodBusinessHours,
+                        foodClassification,
+                        foodField14,
+                        foodIdx,
+                        foodName,
+                        foodNaverLink,
+                        foodNote,
+                        foodPhonenumber,
+                        foodPrice,
+                        foodServingSize,
+                        foodUrl1,
+                        foodUrl2);
+
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -194,20 +278,31 @@ class _FoodListState extends State<FoodList> {
                             Padding(
                               padding: const EdgeInsets.only(
                                   left: 18.0, right: 18.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                  color: Colors.grey,
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => FoodInfo(
+                                              foodtoreceive: foodtosend,
+                                            )),
+                                  );
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                    color: Colors.grey,
 
-                                  //사진 삽입
-                                  image: DecorationImage(
-                                    image: NetworkImage(url),
-                                    fit: BoxFit.cover,
+                                    //사진 삽입
+                                    image: DecorationImage(
+                                      image: NetworkImage(foodUrl1),
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
+                                  width: double.maxFinite,
+                                  height: 142, //실제 높이 142-16 = 126
                                 ),
-                                width: double.maxFinite,
-                                height: 142, //실제 높이 142-16 = 126
                               ),
                             ),
                             // 하트 아이콘
@@ -254,7 +349,7 @@ class _FoodListState extends State<FoodList> {
                                   Padding(
                                     padding: const EdgeInsets.only(right: 8.0),
                                     child: Text(
-                                      "#$classification",
+                                      "#$foodClassification",
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 12,
@@ -280,7 +375,7 @@ class _FoodListState extends State<FoodList> {
                           padding: const EdgeInsets.only(
                               top: 9.0, left: 24.0, bottom: 2.0),
                           child: Text(
-                            name,
+                            foodName,
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
@@ -291,7 +386,7 @@ class _FoodListState extends State<FoodList> {
                           padding: const EdgeInsets.only(
                               top: 2.0, left: 24.0, bottom: 14.0),
                           child: Text(
-                            address,
+                            foodAddress,
                             style: TextStyle(
                               fontSize: 12,
                             ),
@@ -316,6 +411,44 @@ class LodgeList extends StatefulWidget {
   State<LodgeList> createState() => _LodgeListState();
 }
 
+//place_info에 송부할 데이터 list 생성
+class LodgeToSend {
+  final String lodgeBreakFastYn;
+  final String lodgeSubtitle;
+  final String lodgeAddress;
+  final String lodgeArea;
+  final String lodgeBusinessHours;
+  final String lodgeIdx;
+  final String lodgeName;
+  final String lodgeNaverLink;
+  final String lodgePartyYn;
+  final String lodgePhoneNumber;
+  final String lodgePriceType1;
+  final String lodgePriceType2;
+  final String lodgePriceType3;
+  final String lodgeToiletYn;
+  final String lodgeUrl1;
+  final String lodgeUrl2;
+
+  const LodgeToSend(
+      this.lodgeBreakFastYn,
+      this.lodgeSubtitle,
+      this.lodgeAddress,
+      this.lodgeArea,
+      this.lodgeBusinessHours,
+      this.lodgeIdx,
+      this.lodgeName,
+      this.lodgeNaverLink,
+      this.lodgePartyYn,
+      this.lodgePhoneNumber,
+      this.lodgePriceType1,
+      this.lodgePriceType2,
+      this.lodgePriceType3,
+      this.lodgeToiletYn,
+      this.lodgeUrl1,
+      this.lodgeUrl2);
+}
+
 class _LodgeListState extends State<LodgeList> {
   @override
   Widget build(BuildContext context) {
@@ -323,7 +456,15 @@ class _LodgeListState extends State<LodgeList> {
     return StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('lodgeArea').snapshots(),
         builder: (context, snapshot) {
+          //document를 firebase database에서 불러옴
           final documents = snapshot.data?.docs ?? [];
+
+          //lodgeArea의 index로 number index 생성
+          List<int> ramdomlodgeIndexList =
+              List<int>.generate(documents.length, (index) => index);
+          //lodgeArea index list를 shuffle하여 랜덤 음식점 리스트 호출
+          ramdomlodgeIndexList.shuffle();
+
           if (snapshot.connectionState == ConnectionState.waiting) {
             return CircularProgressIndicator();
           }
@@ -338,13 +479,43 @@ class _LodgeListState extends State<LodgeList> {
                 child: ListView.builder(
                   itemCount: 6,
                   itemBuilder: (context, index) {
-                    //Firestore 변수 설정
-                    final doc = documents[index];
-                    String name = doc.get('name');
-                    String url = doc.get('url');
-                    String address = doc.get('address');
-                    String pricetype3 = doc.get('priceType3');
-                    bool isFavorite = doc.get('isFavorite');
+                    final doc = documents[ramdomlodgeIndexList[index]];
+
+                    //Firestore 인덱스 가져오기
+                    String lodgeBreakFastYn = doc.get('BreakfastYn');
+                    String lodgeSubtitle = doc.get('Subtitle');
+                    String lodgeAddress = doc.get('address');
+                    String lodgeArea = doc.get('area');
+                    String lodgeBusinessHours = doc.get('businessHours');
+                    String lodgeIdx = doc.get('idx');
+                    String lodgeName = doc.get('name');
+                    String lodgeNaverLink = doc.get('naverlink');
+                    String lodgePartyYn = doc.get('partyYn');
+                    String lodgePhoneNumber = doc.get('phoneNumber');
+                    String lodgePriceType1 = doc.get('priceType1');
+                    String lodgePriceType2 = doc.get('priceType2');
+                    String lodgePriceType3 = doc.get('priceType3');
+                    String lodgeToiletYn = doc.get('toiletYn');
+                    String lodgeUrl1 = doc.get('url1');
+                    String lodgeUrl2 = doc.get('url2');
+
+                    final lodgetosend = LodgeToSend(
+                        lodgeBreakFastYn,
+                        lodgeSubtitle,
+                        lodgeAddress,
+                        lodgeArea,
+                        lodgeBusinessHours,
+                        lodgeIdx,
+                        lodgeName,
+                        lodgeNaverLink,
+                        lodgePartyYn,
+                        lodgePhoneNumber,
+                        lodgePriceType1,
+                        lodgePriceType2,
+                        lodgePriceType3,
+                        lodgeToiletYn,
+                        lodgeUrl1,
+                        lodgeUrl2);
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -355,20 +526,31 @@ class _LodgeListState extends State<LodgeList> {
                             Padding(
                               padding: const EdgeInsets.only(
                                   left: 18.0, right: 18.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                  color: Colors.grey,
+                              child: GestureDetector(
+                                onTap: (() {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LodgeInfo(
+                                              lodgetoreceive: lodgetosend,
+                                            )),
+                                  );
+                                }),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                    color: Colors.grey,
 
-                                  //사진 삽입
-                                  image: DecorationImage(
-                                    image: NetworkImage(url),
-                                    fit: BoxFit.cover,
+                                    //사진 삽입
+                                    image: DecorationImage(
+                                      image: NetworkImage(lodgeUrl1),
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
+                                  width: double.maxFinite,
+                                  height: 142, //실제 높이 142-16 = 126
                                 ),
-                                width: double.maxFinite,
-                                height: 142, //실제 높이 142-16 = 126
                               ),
                             ),
                             // 하트 아이콘
@@ -415,7 +597,7 @@ class _LodgeListState extends State<LodgeList> {
                                   Padding(
                                     padding: const EdgeInsets.only(right: 8.0),
                                     child: Text(
-                                      "#$pricetype3",
+                                      "#$lodgePriceType3",
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 12,
@@ -441,7 +623,7 @@ class _LodgeListState extends State<LodgeList> {
                           padding: const EdgeInsets.only(
                               top: 9.0, left: 24.0, bottom: 2.0),
                           child: Text(
-                            name,
+                            lodgeName,
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
@@ -452,7 +634,7 @@ class _LodgeListState extends State<LodgeList> {
                           padding: const EdgeInsets.only(
                               top: 2.0, left: 24.0, bottom: 14.0),
                           child: Text(
-                            address,
+                            lodgeAddress,
                             style: TextStyle(
                               fontSize: 12,
                             ),
@@ -477,6 +659,39 @@ class PlacetogoList extends StatefulWidget {
   State<PlacetogoList> createState() => _PlacetogoListState();
 }
 
+class PlaceToSend {
+  final String placeAddress;
+  final String placeArea;
+  final String placeBusinessHours;
+  final String placeClassifiaction;
+  final String placeField13;
+  final String placeIdx;
+  final String placeName;
+  final String placeNaverLink;
+  final String placeNote;
+  final String placePhoneNumber;
+  final String placePrice;
+  final String placeSubtitle;
+  final String placeUrl1;
+  final String placeUrl2;
+
+  const PlaceToSend(
+      this.placeAddress,
+      this.placeArea,
+      this.placeBusinessHours,
+      this.placeClassifiaction,
+      this.placeField13,
+      this.placeIdx,
+      this.placeName,
+      this.placeNaverLink,
+      this.placeNote,
+      this.placePhoneNumber,
+      this.placePrice,
+      this.placeSubtitle,
+      this.placeUrl1,
+      this.placeUrl2);
+}
+
 class _PlacetogoListState extends State<PlacetogoList> {
   @override
   Widget build(BuildContext context) {
@@ -484,7 +699,14 @@ class _PlacetogoListState extends State<PlacetogoList> {
     return StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('placeArea').snapshots(),
         builder: (context, snapshot) {
+          //document를 firebase database에서 불러옴
           final documents = snapshot.data?.docs ?? [];
+
+          //lodgeArea의 index로 number index 생성
+          List<int> ramdomplaceIndexList =
+              List<int>.generate(documents.length, (index) => index);
+          //lodgeArea index list를 shuffle하여 랜덤 음식점 리스트 호출
+          ramdomplaceIndexList.shuffle();
           if (snapshot.connectionState == ConnectionState.waiting) {
             return CircularProgressIndicator();
           }
@@ -499,13 +721,41 @@ class _PlacetogoListState extends State<PlacetogoList> {
                 child: ListView.builder(
                   itemCount: 6,
                   itemBuilder: (context, index) {
-                    //Firestore 변수 설정
-                    final doc = documents[index];
-                    String name = doc.get('name');
-                    String url = doc.get('url');
-                    String address = doc.get('address');
-                    String classification = doc.get('classification');
-                    bool isFavorite = doc.get('isFavorite');
+                    //랜덤 음식점 index 호출하여 음식점 무작위 나열
+                    final doc = documents[ramdomplaceIndexList[index]];
+
+                    //Place data 호출
+                    String placeAddress = doc.get('address');
+                    String placeArea = doc.get('area');
+                    String placeBusinessHours = doc.get('businessHours');
+                    String placeClassifiaction = doc.get('classification');
+                    String placeField13 = doc.get('field13');
+                    String placeIdx = doc.get('idx');
+                    String placeName = doc.get('name');
+                    String placeNaverLink = doc.get('naverlink');
+                    String placeNote = doc.get('note');
+                    String placePhoneNumber = doc.get('phoneNumber');
+                    String placePrice = doc.get('price');
+                    String placeSubtitle = doc.get('subTitle');
+                    String placeUrl1 = doc.get('url1');
+                    String placeUrl2 = doc.get('url2');
+
+                    final placetosend = PlaceToSend(
+                        placeAddress,
+                        placeArea,
+                        placeBusinessHours,
+                        placeClassifiaction,
+                        placeField13,
+                        placeIdx,
+                        placeName,
+                        placeNaverLink,
+                        placeNote,
+                        placePhoneNumber,
+                        placePrice,
+                        placeSubtitle,
+                        placeUrl1,
+                        placeUrl2); //Firestore 변수 설정
+
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -516,20 +766,31 @@ class _PlacetogoListState extends State<PlacetogoList> {
                             Padding(
                               padding: const EdgeInsets.only(
                                   left: 18.0, right: 18.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                  color: Colors.grey,
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => PlaceInfo(
+                                              placetoreceive: placetosend,
+                                            )),
+                                  );
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                    color: Colors.grey,
 
-                                  //사진 삽입
-                                  image: DecorationImage(
-                                    image: NetworkImage(url),
-                                    fit: BoxFit.cover,
+                                    //사진 삽입
+                                    image: DecorationImage(
+                                      image: NetworkImage(placeUrl1),
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
+                                  width: double.maxFinite,
+                                  height: 142, //실제 높이 142-16 = 126
                                 ),
-                                width: double.maxFinite,
-                                height: 142, //실제 높이 142-16 = 126
                               ),
                             ),
                             // 하트 아이콘
@@ -576,7 +837,7 @@ class _PlacetogoListState extends State<PlacetogoList> {
                                   Padding(
                                     padding: const EdgeInsets.only(right: 8.0),
                                     child: Text(
-                                      "#$classification",
+                                      "#$placeArea",
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 12,
@@ -602,7 +863,7 @@ class _PlacetogoListState extends State<PlacetogoList> {
                           padding: const EdgeInsets.only(
                               top: 9.0, left: 24.0, bottom: 2.0),
                           child: Text(
-                            name,
+                            placeName,
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
@@ -613,7 +874,7 @@ class _PlacetogoListState extends State<PlacetogoList> {
                           padding: const EdgeInsets.only(
                               top: 2.0, left: 24.0, bottom: 14.0),
                           child: Text(
-                            address,
+                            placeAddress,
                             style: TextStyle(
                               fontSize: 12,
                             ),
