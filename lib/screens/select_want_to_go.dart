@@ -467,6 +467,8 @@ class _SelectWantToGoState extends State<SelectWantToGo> {
                           ),
                         )
                       : ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              primary: Color.fromRGBO(221, 81, 37, 1)),
                           onPressed: () {
                             Navigator.push(
                               context,
@@ -476,15 +478,7 @@ class _SelectWantToGoState extends State<SelectWantToGo> {
                                       ),
                                   fullscreenDialog: true),
                             );
-                          },
-                          child: Text('확인'),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Color.fromRGBO(221, 81, 37, 1),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(100),
-                            ),
-                            minimumSize: Size(300, 48),
-                          ),
+                          }, child: Text("확인"),
                         ),
                 ],
               ),
