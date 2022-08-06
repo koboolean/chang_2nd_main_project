@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> {
                   color: Color.fromRGBO(221, 81, 37, 1),
                 ),
                 label: '찜한곳'),
-            BottomNavigationBarItem(
+            /*BottomNavigationBarItem(
                 icon: SvgPicture.asset(
                   'assets/images/airplane.svg',
                 ),
@@ -69,7 +69,7 @@ class _HomePageState extends State<HomePage> {
                   'assets/images/airplane.svg',
                   color: Color.fromRGBO(221, 81, 37, 1),
                 ),
-                label: '여행계획'),
+                label: '여행계획'),*/
             BottomNavigationBarItem(
                 icon: SvgPicture.asset(
                   'assets/images/user.svg',
