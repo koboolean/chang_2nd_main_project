@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _children = [
     Place(),
     FavoriteCity(),
-    AddSchedule(),
+    //AddSchedule(),
     MyPage()
   ];
   void _onTap(int index) {
