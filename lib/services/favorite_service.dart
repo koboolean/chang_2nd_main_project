@@ -36,7 +36,11 @@ class FavoriteFoodService extends ChangeNotifier {
         await FirebaseFirestore.instance
             .collection("foodNameUser")
             .doc("${idx}_$uid")
-            .set({"idx": idx, "userId": uid});
+            .set({
+          "idx": idx,
+          "userId": uid,
+          "selectedCheckBox": false,
+        });
         print("created");
       }
     });
@@ -89,7 +93,11 @@ class FavoriteLodgeService extends ChangeNotifier {
         await FirebaseFirestore.instance
             .collection("lodgeNameUser")
             .doc("${idx}_$uid")
-            .set({"idx": idx, "userId": uid});
+            .set({
+          "idx": idx,
+          "userId": uid,
+          "selectedCheckBox": false,
+        });
         print("created");
       }
     });
@@ -142,7 +150,11 @@ class FavoritePlaceService extends ChangeNotifier {
         await FirebaseFirestore.instance
             .collection("placeNameUser")
             .doc("${idx}_$uid")
-            .set({"idx": idx, "userId": uid});
+            .set({
+          "idx": idx,
+          "userId": uid,
+          "selectedCheckBox": false,
+        });
         print("created");
       }
     });
