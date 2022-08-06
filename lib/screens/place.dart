@@ -386,7 +386,7 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => FoodInfo(
-                                            foodtosend: foodtosend,
+                                            foodtoreceive: foodtosend,
                                           )),
                                 );
                               },
@@ -423,7 +423,8 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                                     // data 의 name 보내기, favoriteFoodserivce 추가
                                     FavoriteFoodService favoriteFoodService =
                                         context.read<FavoriteFoodService>();
-                                    //favoriteFoodService.toggleFavoriteFood(idx);
+                                    favoriteFoodService
+                                        .toggleFavoriteFood(foodIdx);
                                   }
                                 },
                                 child: Container(
@@ -647,8 +648,7 @@ class _RecommendLodgeListState extends State<RecommendLodgeList> {
                           children: [
                             Container(
                               width: 159, //실제 너비 = 159-26 = 133
-                              height:
-                                  double.infinity, //실제 사진 높이 = 220 - 8*5 = 180
+                              height: 180, //실제 사진 높이 = 220 - 8*5 = 180
                               decoration: BoxDecoration(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10)),
@@ -667,7 +667,7 @@ class _RecommendLodgeListState extends State<RecommendLodgeList> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => LodgeInfo(
-                                            lodgetosend: lodgetosend,
+                                            lodgetoreceive: lodgetosend,
                                           )),
                                 );
                               }, //
@@ -697,8 +697,16 @@ class _RecommendLodgeListState extends State<RecommendLodgeList> {
                               right: 5,
                               child: InkWell(
                                 onTap: () {
-                                  // TravelService.update(doc.id, !isFavorite);
-                                  // 클릭시 update error..
+                                  User? user =
+                                      FirebaseAuth.instance.currentUser;
+
+                                  if (user != null) {
+                                    // data 의 name 보내기, favoriteFoodserivce 추가
+                                    FavoriteLodgeService favoriteLodgeService =
+                                        context.read<FavoriteLodgeService>();
+                                    favoriteLodgeService
+                                        .toggleFavoriteLodge(lodgeIdx);
+                                  }
                                 },
                                 child: Container(
                                   height: 27,
@@ -934,7 +942,7 @@ class _RecommendPlaceListState extends State<RecommendPlaceList> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => PlaceInfo(
-                                            placetosend: placetosend,
+                                            placetoreceive: placetosend,
                                           )),
                                 );
                               },
@@ -963,8 +971,16 @@ class _RecommendPlaceListState extends State<RecommendPlaceList> {
                               right: 5,
                               child: InkWell(
                                 onTap: () {
-                                  // TravelService.update(doc.id, !isFavorite);
-                                  // 클릭시 update error..
+                                  User? user =
+                                      FirebaseAuth.instance.currentUser;
+
+                                  if (user != null) {
+                                    // data 의 name 보내기, favoritePlaceserivce 추가
+                                    FavoritePlaceService favoritePlaceService =
+                                        context.read<FavoritePlaceService>();
+                                    favoritePlaceService
+                                        .toggleFavoritePlace(placeIdx);
+                                  }
                                 },
                                 child: Container(
                                   height: 27,
