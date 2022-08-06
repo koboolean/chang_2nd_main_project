@@ -51,6 +51,12 @@ class _PlaceListState extends State<PlaceList> {
                 backgroundColor: Colors.white,
                 centerTitle: false,
                 iconTheme: IconThemeData(color: Colors.black),
+                leading: Padding(
+                  padding: const EdgeInsets.only(left: 18.0),
+                  child: BackButton(
+                    color: Colors.black,
+                  ),
+                ),
                 title: const Text(
                   "제주도",
                   style: TextStyle(
@@ -85,6 +91,7 @@ class _PlaceListState extends State<PlaceList> {
                     ),
                     child: Column(
                       children: [
+                        //dropdown 레이아웃
                         Padding(
                           padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                           child: Container(
@@ -108,8 +115,8 @@ class _PlaceListState extends State<PlaceList> {
                           ),
                         ),
                         const TabBar(
-                          indicatorColor: Colors.amber,
-                          labelColor: Colors.amber,
+                          indicatorColor: Color.fromRGBO(221, 81, 37, 1),
+                          labelColor: Color.fromRGBO(221, 81, 37, 1),
                           indicatorWeight: 3,
                           unselectedLabelColor: Colors.black,
                           tabs: [
@@ -199,6 +206,7 @@ class FoodToSend {
       this.foodUrl1,
       this.foodUrl2);
 }
+
 
 class _FoodListState extends State<FoodList> {
   @override
@@ -389,6 +397,7 @@ class _FoodListState extends State<FoodList> {
                             foodAddress,
                             style: TextStyle(
                               fontSize: 12,
+                              color: Colors.grey[700]!,
                             ),
                           ),
                         ),
@@ -637,6 +646,7 @@ class _LodgeListState extends State<LodgeList> {
                             lodgeAddress,
                             style: TextStyle(
                               fontSize: 12,
+                              color: Colors.grey[700]!,
                             ),
                           ),
                         ),
@@ -877,6 +887,7 @@ class _PlacetogoListState extends State<PlacetogoList> {
                             placeAddress,
                             style: TextStyle(
                               fontSize: 12,
+                              color: Colors.grey[700]!,
                             ),
                           ),
                         ),
