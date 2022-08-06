@@ -19,53 +19,98 @@ class _FavoriteCityPageState extends State<FavoriteCity> {
       builder: (context, travelService, child) {
         return Scaffold(
           appBar: AppBar(
+            toolbarHeight: 100,
             elevation: 0,
-            title: Text(
-              "사용자님이 찜한 곳들이에요",
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 17,
-              ),
+            bottomOpacity: 0.0,
+            title: Column(
+              children: [
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "사용자 님이 ",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "찜한 곳들이에요",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24,
+                    ),
+                  ),
+                ),
+              ],
             ),
             backgroundColor: Colors.white,
           ),
           body: SafeArea(
             child: Column(
               children: [
-                Divider(height: 10),
-                Container(
-                  width: double.infinity,
-                  height: 50,
-                  padding: EdgeInsets.all(10),
-                  child: Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => FavoriteList()),
-                          );
-                        },
-                        child: Text("제주도 >"),
-                      ),
-                      Spacer(),
-                      Text("15곳"),
-                    ],
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+                  child: Container(
+                    width: double.infinity,
+                    height: 50,
+                    padding: EdgeInsets.all(10),
+                    child: Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => FavoriteList()),
+                            );
+                          },
+                          child: Text(
+                            "제주도      >",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                        Spacer(),
+                        Text(
+                          "총 15곳",
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey[500],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                Container(
-                  width: double.infinity,
-                  height: 200,
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      color: Colors.blue,
-                      image: DecorationImage(
-                        image: NetworkImage(
-                            'https://api.cdn.visitjeju.net/photomng/imgpath/202110/28/11c3035e-03f9-4b41-9a9d-d21abc399ee0.jpg'),
-                        fit: BoxFit.fill,
-                      )),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(18, 0, 18, 18),
+                  child: Container(
+                    width: double.infinity,
+                    height: 180,
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                          image: NetworkImage(
+                              'https://api.cdn.visitjeju.net/photomng/imgpath/202110/28/11c3035e-03f9-4b41-9a9d-d21abc399ee0.jpg'),
+                          fit: BoxFit.fill,
+                        )),
+                  ),
                 ),
               ],
             ),
