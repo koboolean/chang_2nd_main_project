@@ -1,7 +1,9 @@
 import 'package:chang_2nd_main_project/screens/place_info.dart';
 import 'package:chang_2nd_main_project/screens/place_list.dart';
 import 'package:chang_2nd_main_project/services/auth_service.dart';
+import 'package:chang_2nd_main_project/services/favorite_service.dart';
 import 'package:chang_2nd_main_project/services/travel_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -30,8 +32,9 @@ class _FavoriteListPageState extends State<FavoriteList> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<TravelService>(
-      builder: (context, travelService, child) {
+    return Consumer<FavoriteFoodService>(
+      builder: (context, favoriteFoodService, child) {
+        List<Map<String, dynamic>> _postList = favoriteFoodService.postList;
         return DefaultTabController(
             length: 3,
             child: Scaffold(
@@ -208,20 +211,27 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                           SliverGridDelegateWithFixedCrossAxisCount(
                                               crossAxisCount: 2,
                                               childAspectRatio: 1 / 1.74),
-                                      itemCount: 4,
+                                      itemCount: _postList.length,
                                       itemBuilder: (context, index) {
+                                        final doc = _postList[index];
+                                        String name = doc['name'];
+                                        String url = doc['url1'];
+                                        String address = doc['address'];
+                                        String classification =
+                                            doc['classification'];
+
                                         return Padding(
                                           padding: const EdgeInsets.all(0.0),
                                           child: GestureDetector(
                                             onTap: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        PlaceInfo(
-                                                          sendName: ('소랑드르'),
-                                                        )),
-                                              );
+                                              // Navigator.push(
+                                              //   context,
+                                              //   MaterialPageRoute(
+                                              //       builder: (context) =>
+                                              //           PlaceInfo(
+                                              //             sendName: ('소랑드르'),
+                                              //           )),
+                                              // );
                                             },
                                             child: Container(
                                               margin: EdgeInsets.all(8),
@@ -249,7 +259,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                     child: Stack(
                                                       children: [
                                                         Image.network(
-                                                          'https://middleclass.sg/wp-content/uploads/2022/04/Donuts-at-Cafe-Knotted-Peaches.jpg',
+                                                          url,
                                                           fit: BoxFit.fill,
                                                           height: 220,
                                                           width: 163,
@@ -314,7 +324,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                                     .start,
                                                             children: [
                                                               Text(
-                                                                '이름',
+                                                                name,
                                                                 style:
                                                                     TextStyle(
                                                                   fontSize: 18,
@@ -324,7 +334,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                                 ),
                                                               ),
                                                               Text(
-                                                                '주소',
+                                                                address,
                                                                 style:
                                                                     TextStyle(
                                                                   fontSize: 14,
@@ -337,7 +347,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                                 ),
                                                               ),
                                                               Text(
-                                                                '카페',
+                                                                classification,
                                                                 style:
                                                                     TextStyle(
                                                                   fontSize: 14,

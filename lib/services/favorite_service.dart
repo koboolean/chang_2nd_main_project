@@ -13,6 +13,8 @@ class FavoriteFoodService extends ChangeNotifier {
         .get(); // return 값 미구현 에러
   }
 
+  List<Map<String, dynamic>> postList = [];
+
   void toggleFavoriteFood(String idx) async {
     // name을 nameid 로 가져오기
     // user id 가져오기
@@ -38,13 +40,6 @@ class FavoriteFoodService extends ChangeNotifier {
         print("created");
       }
     });
-  }
-
-  void favoriteFoodList(String idx) async {
-    // name을 nameid 로 가져오기
-    // user id 가져오기
-    final User user = FirebaseAuth.instance.currentUser!;
-    final uid = user.uid;
 
     final tagID = uid;
     final post_idx = await FirebaseFirestore.instance
@@ -58,8 +53,15 @@ class FavoriteFoodService extends ChangeNotifier {
         .where("idx", whereIn: postIdList)
         .get();
 
-    final postList = postSnapshot.docs.map((doc) => doc.data()).toList();
+    postList = postSnapshot.docs.map((doc) => doc.data()).toList();
+    print(postList);
   }
+}
+
+class FavoriteFoodListShow {
+  FavoriteFoodListShow(this.name, this.address);
+  String name;
+  String address;
 }
 
 class FavoriteLodgeService extends ChangeNotifier {
