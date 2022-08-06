@@ -13,7 +13,7 @@ class FavoriteFoodService extends ChangeNotifier {
         .get(); // return 값 미구현 에러
   }
 
-  List<Map<String, dynamic>> postList = [];
+  List<Map<String, dynamic>> postFoodList = [];
 
   void toggleFavoriteFood(String idx) async {
     // name을 nameid 로 가져오기
@@ -53,15 +53,8 @@ class FavoriteFoodService extends ChangeNotifier {
         .where("idx", whereIn: postIdList)
         .get();
 
-    postList = postSnapshot.docs.map((doc) => doc.data()).toList();
-    print(postList);
+    postFoodList = postSnapshot.docs.map((doc) => doc.data()).toList();
   }
-}
-
-class FavoriteFoodListShow {
-  FavoriteFoodListShow(this.name, this.address);
-  String name;
-  String address;
 }
 
 class FavoriteLodgeService extends ChangeNotifier {
@@ -69,8 +62,11 @@ class FavoriteLodgeService extends ChangeNotifier {
       FirebaseFirestore.instance.collection('lodgeNameUser');
 
   Future<QuerySnapshot> read(String uid) async {
-    throw UnimplementedError(); // return 값 미구현 에러
+    throw FavoriteLodgeCollection.where('uid', isEqualTo: uid)
+        .get(); // return 값 미구현 에러
   }
+
+  List<Map<String, dynamic>> postLodgeList = [];
 
   void toggleFavoriteLodge(String idx) async {
     // name을 nameid 로 가져오기
@@ -97,6 +93,20 @@ class FavoriteLodgeService extends ChangeNotifier {
         print("created");
       }
     });
+
+    final tagID = uid;
+    final post_idx = await FirebaseFirestore.instance
+        .collection("lodgeNameUser")
+        .where('userId', isEqualTo: tagID)
+        .get();
+    final postIdList = post_idx.docs.map((doc) => doc.data()["idx"]).toList();
+
+    final postSnapshot = await FirebaseFirestore.instance
+        .collection("lodgeArea")
+        .where("idx", whereIn: postIdList)
+        .get();
+
+    postLodgeList = postSnapshot.docs.map((doc) => doc.data()).toList();
   }
 }
 
@@ -105,8 +115,11 @@ class FavoritePlaceService extends ChangeNotifier {
       FirebaseFirestore.instance.collection('placeNameUser');
 
   Future<QuerySnapshot> read(String uid) async {
-    throw UnimplementedError(); // return 값 미구현 에러
+    throw FavoritePlaceCollection.where('uid', isEqualTo: uid)
+        .get(); // return 값 미구현 에러
   }
+
+  List<Map<String, dynamic>> postPlaceList = [];
 
   void toggleFavoritePlace(String idx) async {
     // name을 nameid 로 가져오기
@@ -129,9 +142,23 @@ class FavoritePlaceService extends ChangeNotifier {
         await FirebaseFirestore.instance
             .collection("placeNameUser")
             .doc("${idx}_$uid")
-            .set({"idx": idx, "userId": uid, "selectRouteEnable": false});
+            .set({"idx": idx, "userId": uid});
         print("created");
       }
     });
+
+    final tagID = uid;
+    final post_idx = await FirebaseFirestore.instance
+        .collection("placeNameUser")
+        .where('userId', isEqualTo: tagID)
+        .get();
+    final postIdList = post_idx.docs.map((doc) => doc.data()["idx"]).toList();
+
+    final postSnapshot = await FirebaseFirestore.instance
+        .collection("placeArea")
+        .where("idx", whereIn: postIdList)
+        .get();
+
+    postPlaceList = postSnapshot.docs.map((doc) => doc.data()).toList();
   }
 }
