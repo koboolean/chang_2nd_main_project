@@ -109,12 +109,20 @@ class _PlaceListState extends State<PlaceList> {
                           child: Container(
                             alignment: Alignment.centerLeft,
                             child: DropdownButton(
+                              elevation: 0,
+                              underline: Container(height: 0),
                               value: _selectedValue,
                               items: _valueList.map(
                                 (value) {
                                   return DropdownMenuItem(
                                     value: value,
-                                    child: Text(value),
+                                    child: Text(
+                                      value,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   );
                                 },
                               ).toList(),
