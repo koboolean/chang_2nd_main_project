@@ -326,6 +326,8 @@ class _FoodInfoState extends State<FoodInfo> {
                 ],
               ),
               onPressed: () async {
+                //음식점 길안내 로직
+                firebaseAnalyticsLog(user.uid, Text('Tmap foodGuide'));
                 final idx = widget.foodtoreceive.foodIdx;
 
                 final geocode = FirebaseFirestore.instance
@@ -509,6 +511,9 @@ class _LodgeInfoState extends State<LodgeInfo> {
                         Spacer(),
                         GestureDetector(
                           onTap: () async {
+                            //숙소 길안내 이벤트
+                            firebaseAnalyticsLog(
+                                user.uid, Text('Tmap lodgeGuide'));
                             final idx = widget.lodgetoreceive.lodgeIdx;
 
                             final geocode = FirebaseFirestore.instance
@@ -857,6 +862,9 @@ class _PlaceInfoState extends State<PlaceInfo> {
                         Spacer(),
                         GestureDetector(
                           onTap: () async {
+                            //식당 길안내 이벤트
+                            firebaseAnalyticsLog(
+                                user.uid, Text('Tmap placeGuide'));
                             final idx = widget.placetoreceive.placeIdx;
 
                             final geocode = FirebaseFirestore.instance
