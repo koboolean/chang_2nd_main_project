@@ -54,9 +54,11 @@ class _FoodInfoState extends State<FoodInfo> {
               Padding(
                 padding: const EdgeInsets.only(right: 8),
                 child: IconButton(
-                  icon: Icon(Icons.ios_share,
+                  icon: Icon(
+                    Icons.ios_share,
                     size: 24,
-                    color: Colors.white,),
+                    color: Colors.white,
+                  ),
                   onPressed: () {
                     print("share Click!!");
                     Share.share(
@@ -345,9 +347,11 @@ class _LodgeInfoState extends State<LodgeInfo> {
               Padding(
                 padding: const EdgeInsets.only(right: 8),
                 child: IconButton(
-                  icon: Icon(Icons.ios_share,
+                  icon: Icon(
+                    Icons.ios_share,
                     size: 24,
-                    color: Colors.white,),
+                    color: Colors.white,
+                  ),
                   onPressed: () {
                     print("share Click!!");
                     Share.share(
@@ -406,7 +410,7 @@ class _LodgeInfoState extends State<LodgeInfo> {
                           child: Container(
                             margin: EdgeInsets.fromLTRB(0, 4, 8, 10),
                             height: 23,
-                            width: 48,
+                            width: 68,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(16),
                               color: Colors.grey[400]!.withOpacity(0.4),
@@ -521,7 +525,7 @@ class _LodgeInfoState extends State<LodgeInfo> {
                 Row(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
+                      padding: const EdgeInsets.only(left: 18.0),
                       child: SizedBox(
                         height: 25,
                         width: 100,
@@ -636,15 +640,17 @@ class _PlaceInfoState extends State<PlaceInfo> {
               Padding(
                 padding: const EdgeInsets.only(right: 8),
                 child: IconButton(
-                    icon: Icon(Icons.ios_share,
-                      size: 24,
-                      color: Colors.white,),
-                    onPressed: () {
-                      print("share Click!!");
-                      Share.share(
-                          widget.placetoreceive.placeAddress,
-                          );
-                      },
+                  icon: Icon(
+                    Icons.ios_share,
+                    size: 24,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    print("share Click!!");
+                    Share.share(
+                      widget.placetoreceive.placeAddress,
+                    );
+                  },
                 ),
               ),
               Padding(
