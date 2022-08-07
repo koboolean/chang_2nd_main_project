@@ -22,34 +22,108 @@ class _MyPageState extends State<MyPage> {
     return Consumer(
       builder: (context, bucketService, child) {
         return Scaffold(
-          /*appBar: AppBar(
-            backgroundColor: Color.fromRGBO(1, 1, 1, 0),
-            elevation: 0,
-            actions: [
-              IconButton(
-                icon: Icon(
-                  Icons.close,
-                  color: Colors.black,
-                ),
-                onPressed: () {
-                  // 로그아웃
-                  context.read<AuthService>().signOut();
-
-                  // 로그인 페이지로 이동
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginPage()),
-                  );
-                },
-              ),
-            ],
-          ),*/
           body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('이메일 : ${user.email}'),
-              Text('사용자 UID : ${user.uid}'),
+              SizedBox(height: 80,),
+              Padding(
+                padding: const EdgeInsets.only(left: 18.0),
+                child: Text("마이페이지",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 24,
+                  ),),
+              ),
+              SizedBox(height: 31,),
+              Column(
+                children: [
+                  Center(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(100),
+                      child: Image.network(user.photoURL.toString(),
+                          width: 158,
+                          height: 158,
+                          fit: BoxFit.fill),
+                    ),
+                  ),
+                  SizedBox(height: 15),
+                  Text('${user.displayName}',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500
+                    ),),
+                  Text('${user.email}',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Color.fromRGBO(128, 128, 128, 1),
+                    ),),
+                ],
+              ),
+              SizedBox(height: 26,),
+              Container(
+                height: 7,
+                decoration: BoxDecoration(
+                  color: Color(0xfff3f3f3),
+                ),
+              ),
+              SizedBox(height: 30,),
+              Padding(
+                padding: const EdgeInsets.only(left: 18.0),
+                child: Column(
+                  children: [
+                    Text("앱 설정",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500
+                      ),),
+                  ],
+                ),
+              ),
+              SizedBox(height: 23,),
+              Padding(
+                padding: const EdgeInsets.only(left:18.0, right: 30.0),
+                child: Row(
+                  children: [
+                    Text("앱 버전", style:
+                    TextStyle(
+                      fontSize: 16,
+                    ),),
+                    Spacer(),
+                    Text("1.0", style: TextStyle(
+                      fontSize: 16,
+                    ),),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left:18.0, right: 18.0),
+                child: Row(
+                  children: [
+                    Text("로그아웃", style:
+                      TextStyle(
+                        fontSize: 16,
+                      ),),
+                    Spacer(),
+                    IconButton(
+                      icon: Icon(
+                        Icons.close,
+                        color: Colors.black,
+                      ),
+                      onPressed: () {
+                        // 로그아웃
+                        context.read<AuthService>().signOut();
+
+                        // 로그인 페이지로 이동
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => LoginPage()),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
         );
