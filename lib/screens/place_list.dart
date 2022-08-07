@@ -20,6 +20,13 @@ class PlaceList extends StatefulWidget {
   State<PlaceList> createState() => _PlaceListState();
 }
 
+//선택한 지역 뿌려주는 String 타입 연산자 생성
+class SendSelectedValue {
+  final String sendSelectedValue;
+
+  const SendSelectedValue(this.sendSelectedValue);
+}
+
 class _PlaceListState extends State<PlaceList> {
   TextEditingController jobController = TextEditingController();
   final _valueList = [
@@ -41,6 +48,9 @@ class _PlaceListState extends State<PlaceList> {
     final user = authService.currentUser()!;
     return Consumer<TravelService>(
       builder: (context, travelService, child) {
+        //보낼 연산자 변수 설정
+        String sendSelectedValue = _selectedValue;
+
         return Scaffold(
           body: DefaultTabController(
             length: 3,
@@ -148,11 +158,17 @@ class _PlaceListState extends State<PlaceList> {
                   ),
                 ),
               ),
-              body: const TabBarView(
+              body: TabBarView(
                 children: [
-                  FoodList(),
-                  LodgeList(),
-                  PlacetogoList(),
+                  FoodList(
+                    sendSelectedValue: _selectedValue,
+                  ),
+                  LodgeList(
+                    sendSelectedValue: _selectedValue,
+                  ),
+                  PlacetogoList(
+                    sendSelectedValue: _selectedValue,
+                  ),
                 ],
               ),
             ),
@@ -165,7 +181,9 @@ class _PlaceListState extends State<PlaceList> {
 
 // 맛집 Body
 class FoodList extends StatefulWidget {
-  const FoodList({Key? key}) : super(key: key);
+  const FoodList({Key? key, required this.sendSelectedValue}) : super(key: key);
+
+  final String sendSelectedValue;
 
   @override
   State<FoodList> createState() => _FoodListState();
@@ -207,13 +225,19 @@ class FoodToSend {
       this.foodUrl2);
 }
 
-
 class _FoodListState extends State<FoodList> {
   @override
   Widget build(BuildContext context) {
     // 전체 Column 구조
     return StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('foodArea').snapshots(),
+        //조건에 맞는 지역만 불러오도록 필터링
+        stream: FirebaseFirestore.instance
+            .collection('foodArea')
+            .where('area',
+                isEqualTo: widget.sendSelectedValue == "전체"
+                    ? null
+                    : widget.sendSelectedValue)
+            .snapshots(),
         builder: (context, snapshot) {
           //document를 firebase database에서 불러옴
           final documents = snapshot.data?.docs ?? [];
@@ -237,7 +261,7 @@ class _FoodListState extends State<FoodList> {
               // 키워드에 따른 음식점 리스트
               Expanded(
                 child: ListView.builder(
-                  itemCount: 6,
+                  itemCount: documents.length,
                   itemBuilder: (context, index) {
                     //랜덤 음식점 index 호출하여 음식점 무작위 나열
                     final doc = documents[ramdomfoodIndexList[index]];
@@ -414,7 +438,10 @@ class _FoodListState extends State<FoodList> {
 
 // 맛집 Body
 class LodgeList extends StatefulWidget {
-  const LodgeList({Key? key}) : super(key: key);
+  const LodgeList({Key? key, required this.sendSelectedValue})
+      : super(key: key);
+
+  final String sendSelectedValue;
 
   @override
   State<LodgeList> createState() => _LodgeListState();
@@ -463,7 +490,13 @@ class _LodgeListState extends State<LodgeList> {
   Widget build(BuildContext context) {
     // 전체 Column 구조
     return StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('lodgeArea').snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection('lodgeArea')
+            .where('area',
+                isEqualTo: widget.sendSelectedValue == "전체"
+                    ? null
+                    : widget.sendSelectedValue)
+            .snapshots(),
         builder: (context, snapshot) {
           //document를 firebase database에서 불러옴
           final documents = snapshot.data?.docs ?? [];
@@ -486,7 +519,7 @@ class _LodgeListState extends State<LodgeList> {
               // 키워드에 따른 음식점 리스트
               Expanded(
                 child: ListView.builder(
-                  itemCount: 6,
+                  itemCount: documents.length,
                   itemBuilder: (context, index) {
                     final doc = documents[ramdomlodgeIndexList[index]];
 
@@ -663,7 +696,10 @@ class _LodgeListState extends State<LodgeList> {
 
 // 맛집 Body
 class PlacetogoList extends StatefulWidget {
-  const PlacetogoList({Key? key}) : super(key: key);
+  const PlacetogoList({Key? key, required this.sendSelectedValue})
+      : super(key: key);
+
+  final String sendSelectedValue;
 
   @override
   State<PlacetogoList> createState() => _PlacetogoListState();
@@ -707,7 +743,13 @@ class _PlacetogoListState extends State<PlacetogoList> {
   Widget build(BuildContext context) {
     // 전체 Column 구조
     return StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('placeArea').snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection('placeArea')
+            .where('area',
+                isEqualTo: widget.sendSelectedValue == "전체"
+                    ? null
+                    : widget.sendSelectedValue)
+            .snapshots(),
         builder: (context, snapshot) {
           //document를 firebase database에서 불러옴
           final documents = snapshot.data?.docs ?? [];
@@ -729,7 +771,7 @@ class _PlacetogoListState extends State<PlacetogoList> {
               // 키워드에 따른 음식점 리스트
               Expanded(
                 child: ListView.builder(
-                  itemCount: 6,
+                  itemCount: documents.length,
                   itemBuilder: (context, index) {
                     //랜덤 음식점 index 호출하여 음식점 무작위 나열
                     final doc = documents[ramdomplaceIndexList[index]];
