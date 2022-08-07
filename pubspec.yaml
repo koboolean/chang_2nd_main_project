@@ -27,6 +27,8 @@ dependencies:
   google_sign_in: ^5.4.0
   flutter_spinkit: ^5.1.0
   share_plus: ^4.0.10
+  yaml: ^3.1.1
+  firebase_analytics: ^9.3.0
 
 dev_dependencies:
   flutter_test:
@@ -40,6 +42,7 @@ flutter:
     - assets/images/
     - assets/fonts/
     - assets/ref/
+    - pubspec.yaml
   fonts:
     - family: SpoqaHanSansNeo
       fonts:

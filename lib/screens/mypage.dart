@@ -1,6 +1,8 @@
 import 'package:chang_2nd_main_project/screens/login.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:yaml/yaml.dart';
 
 import '../services/auth_service.dart';
 
@@ -12,13 +14,22 @@ class MyPage extends StatefulWidget {
   State<MyPage> createState() => _MyPageState();
 }
 
+
 class _MyPageState extends State<MyPage> {
   TextEditingController jobController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
+
     final authService = context.read<AuthService>();
     final user = authService.currentUser()!;
+    final ValueNotifier<String> version = ValueNotifier<String>("1.0"); // ValueNotifier 변수 선언
+
+    rootBundle.loadString("pubspec.yaml").then((yamlValue) {
+      var yaml = loadYaml(yamlValue);
+      version.value = yaml['version'].toString();
+
+    });
+
     return Consumer(
       builder: (context, bucketService, child) {
         return Scaffold(
@@ -90,9 +101,19 @@ class _MyPageState extends State<MyPage> {
                       fontSize: 16,
                     ),),
                     Spacer(),
-                    Text("1.0", style: TextStyle(
-                      fontSize: 16,
-                    ),),
+                    SizedBox(width: 200),
+                    ValueListenableBuilder(
+                      valueListenable: version,
+                      builder: (BuildContext context, String value, Widget? child){
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Text(version.value,
+                                style: TextStyle(fontSize: 16,)),
+                            ],
+                          );
+                      },
+                    ),
                   ],
                 ),
               ),
