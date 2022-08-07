@@ -7,6 +7,7 @@ import 'package:chang_2nd_main_project/screens/place_info.dart';
 import 'package:chang_2nd_main_project/screens/place_list.dart';
 import 'package:chang_2nd_main_project/screens/search_page.dart';
 import 'package:chang_2nd_main_project/services/favorite_service.dart';
+import 'package:chang_2nd_main_project/services/firebase_analytics.dart';
 import 'package:chang_2nd_main_project/services/travel_service.dart';
 import 'package:chang_2nd_main_project/main.dart';
 import 'package:chang_2nd_main_project/widgets/tobeContinue.dart';
@@ -195,6 +196,8 @@ class TravelPlace extends StatefulWidget {
 class _TravelPlaceState extends State<TravelPlace> {
   @override
   Widget build(BuildContext context) {
+    final authService = context.read<AuthService>();
+    final user = authService.currentUser()!;
     return ListView.builder(
       shrinkWrap: true,
       scrollDirection: Axis.horizontal,
@@ -202,6 +205,8 @@ class _TravelPlaceState extends State<TravelPlace> {
       itemBuilder: ((context, index) {
         return InkWell(
           onTap: () {
+            //PlaceList 이동 analytics
+            firebaseScreenViewChanged(user.uid, PlaceList());
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => PlaceList()),
@@ -295,6 +300,8 @@ int foodcommentrandomIndex = Random().nextInt(4);
 class _RecommendFoodListState extends State<RecommendFoodList> {
   @override
   Widget build(BuildContext context) {
+    final authService = context.read<AuthService>();
+    final user = authService.currentUser()!;
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance.collection('foodArea').snapshots(),
       builder: (context, snapshot) {
@@ -401,6 +408,13 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                             ),
                             InkWell(
                               onTap: () {
+                                //FoodInfo이동시 analytics 기록
+                                firebaseScreenViewChanged(
+                                    user.uid,
+                                    FoodInfo(
+                                      foodtoreceive: null,
+                                    ));
+
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -435,6 +449,7 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                               right: 5,
                               child: InkWell(
                                 onTap: () {
+
                                   User? user =
                                       FirebaseAuth.instance.currentUser;
 
@@ -575,6 +590,8 @@ int lodgerandomIndex = Random().nextInt(3);
 class _RecommendLodgeListState extends State<RecommendLodgeList> {
   @override
   Widget build(BuildContext context) {
+    final authService = context.read<AuthService>();
+    final user = authService.currentUser()!;
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance.collection('lodgeArea').snapshots(),
       builder: (context, snapshot) {
@@ -682,6 +699,12 @@ class _RecommendLodgeListState extends State<RecommendLodgeList> {
 
                             InkWell(
                               onTap: () {
+                                //LodgeInfo이동시 analytics 기록
+                                firebaseScreenViewChanged(
+                                    user.uid,
+                                    LodgeInfo(
+                                      lodgetoreceive: null,
+                                    ));
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -852,6 +875,8 @@ int placerandomIndex = Random().nextInt(2);
 class _RecommendPlaceListState extends State<RecommendPlaceList> {
   @override
   Widget build(BuildContext context) {
+    final authService = context.read<AuthService>();
+    final user = authService.currentUser()!;
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance.collection('placeArea').snapshots(),
       builder: (context, snapshot) {
@@ -956,7 +981,13 @@ class _RecommendPlaceListState extends State<RecommendPlaceList> {
                             ),
                             //음영 및 Gradient 효과 layer
                             InkWell(
+                              //PlaceInfo이동시 analytics 기록
                               onTap: () {
+                                firebaseScreenViewChanged(
+                                    user.uid,
+                                    PlaceInfo(
+                                      placetoreceive: null,
+                                    ));
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
