@@ -1,8 +1,13 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 
-/// SignUp Or SignIn
-void signUpAnalyticsLog90(uid) async{
+/// SignUp
+void signUpAnalyticsLog(uid) async{
   await FirebaseAnalytics.instance.logSignUp(signUpMethod: uid);
+}
+
+/// LogIn
+void loginAnalyticsLog(uid) async{
+  await FirebaseAnalytics.instance.logLogin(loginMethod: uid);
 }
 
 /// Item Click Event

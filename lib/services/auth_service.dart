@@ -1,3 +1,4 @@
+import 'package:chang_2nd_main_project/services/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -96,6 +97,10 @@ class AuthService extends ChangeNotifier {
       );
 
       await FirebaseAuth.instance.signInWithCredential(credential);
+
+      // 애널리틱스 로그인 관련사항
+      signUpAnalyticsLog(credential.idToken);
+
 
       onSuccess();
       notifyListeners(); // 로그인 상태 변경 알림

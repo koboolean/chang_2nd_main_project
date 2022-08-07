@@ -3,8 +3,11 @@ import 'package:chang_2nd_main_project/screens/favorite_city.dart';
 import 'package:chang_2nd_main_project/screens/favorite_list.dart';
 import 'package:chang_2nd_main_project/screens/place.dart';
 import 'package:chang_2nd_main_project/screens/mypage.dart';
+import 'package:chang_2nd_main_project/services/auth_service.dart';
+import 'package:chang_2nd_main_project/services/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -30,6 +33,12 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final authService = context.read<AuthService>();
+    final user = authService.currentUser()!;
+
+    /// 로그인 관련 애널리틱스 반영
+    loginAnalyticsLog(user.uid);
+
     return Scaffold(
       extendBody: true,
       body: _children[_currentIndex],
