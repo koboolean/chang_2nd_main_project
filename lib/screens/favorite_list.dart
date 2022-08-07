@@ -115,7 +115,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                           child: TabBarView(
                             children: [
                               //favoriteFoodList 확인
-                              (_postFoodList.length < 1)
+                              (_postFoodList.isEmpty)
                                   ? Center(
                                       child: Column(
                                         mainAxisAlignment:
@@ -439,6 +439,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                                                 FontWeight.normal,
                                                                             color:
                                                                                 Colors.grey[600],
+                                                                                overflow: TextOverflow.ellipsis
                                                                           ),
                                                                         ),
                                                                         Text(
@@ -797,6 +798,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                                                 FontWeight.normal,
                                                                             color:
                                                                                 Colors.grey[600],
+                                                                                  overflow: TextOverflow.ellipsis
                                                                           ),
                                                                         ),
                                                                       ],
@@ -1141,6 +1143,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                                                 FontWeight.normal,
                                                                             color:
                                                                                 Colors.grey[600],
+                                                                                  overflow: TextOverflow.ellipsis
                                                                           ),
                                                                         ),
                                                                       ],
