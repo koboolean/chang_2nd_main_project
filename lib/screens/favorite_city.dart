@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../services/favorite_service.dart';
 import 'favorite_list.dart';
+import 'package:chang_2nd_main_project/services/firebase_analytics.dart';
 
 /// 홈 페이지
 /// 홈페이지
@@ -84,6 +85,9 @@ class _FavoriteCityPageState extends State<FavoriteCity> {
                           children: [
                             GestureDetector(
                               onTap: () {
+                                //favorite 리스트 확인 이벤트 발생
+                                firebaseScreenViewChanged(
+                                    user.uid, FavoriteList());
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -117,6 +121,8 @@ class _FavoriteCityPageState extends State<FavoriteCity> {
                       padding: const EdgeInsets.fromLTRB(18, 0, 18, 18),
                       child: GestureDetector(
                         onTap: () {
+                          //favorite 리스트 확인 이벤트 발생
+                          firebaseScreenViewChanged(user.uid, FavoriteList());
                           Navigator.push(
                             context,
                             MaterialPageRoute(
