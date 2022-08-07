@@ -48,6 +48,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                 length: 3,
                 child: Scaffold(
                   appBar: AppBar(
+                    centerTitle: false,
                     elevation: 0,
                     leading: IconButton(
                       icon: Icon(
@@ -61,6 +62,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                       "제주도",
                       style: TextStyle(
                         color: Colors.black,
+                        fontSize: 17,
                       ),
                     ),
                     backgroundColor: Colors.white,
@@ -276,12 +278,15 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                             ),*/
                                             Padding(
                                               padding:
-                                                  const EdgeInsets.all(15.0),
+                                                  const EdgeInsets.all(10.0),
                                               child: Container(
                                                 alignment: Alignment.centerLeft,
                                                 child: Text(
                                                   '총 ${_postFoodList.length}곳',
                                                   textAlign: TextAlign.left,
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -425,10 +430,14 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                                           style:
                                                                               TextStyle(
                                                                             fontSize:
-                                                                                18,
+                                                                                16,
                                                                             fontWeight:
                                                                                 FontWeight.bold,
                                                                           ),
+                                                                        ),
+                                                                        SizedBox(
+                                                                          height:
+                                                                              2,
                                                                         ),
                                                                         Text(
                                                                           address,
@@ -437,6 +446,10 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                                               fontWeight: FontWeight.normal,
                                                                               color: Colors.grey[600],
                                                                               overflow: TextOverflow.ellipsis),
+                                                                        ),
+                                                                        SizedBox(
+                                                                          height:
+                                                                              2,
                                                                         ),
                                                                         Text(
                                                                           classification,
@@ -629,7 +642,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                             ),*/
                                             Padding(
                                               padding:
-                                                  const EdgeInsets.all(15.0),
+                                                  const EdgeInsets.all(10.0),
                                               child: Container(
                                                 alignment: Alignment.centerLeft,
                                                 child: Text(
@@ -779,10 +792,14 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                                           style:
                                                                               TextStyle(
                                                                             fontSize:
-                                                                                18,
+                                                                                16,
                                                                             fontWeight:
                                                                                 FontWeight.bold,
                                                                           ),
+                                                                        ),
+                                                                        SizedBox(
+                                                                          height:
+                                                                              2,
                                                                         ),
                                                                         Text(
                                                                           address,
@@ -971,7 +988,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                             ),*/
                                             Padding(
                                               padding:
-                                                  const EdgeInsets.all(15.0),
+                                                  const EdgeInsets.all(10.0),
                                               child: Container(
                                                 alignment: Alignment.centerLeft,
                                                 child: Text(
@@ -1119,10 +1136,14 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                                           style:
                                                                               TextStyle(
                                                                             fontSize:
-                                                                                18,
+                                                                                16,
                                                                             fontWeight:
                                                                                 FontWeight.bold,
                                                                           ),
+                                                                        ),
+                                                                        SizedBox(
+                                                                          height:
+                                                                              2,
                                                                         ),
                                                                         Text(
                                                                           address,
