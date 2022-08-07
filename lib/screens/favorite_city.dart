@@ -1,3 +1,4 @@
+import 'package:chang_2nd_main_project/services/auth_service.dart';
 import 'package:chang_2nd_main_project/services/travel_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +16,9 @@ class FavoriteCity extends StatefulWidget {
 class _FavoriteCityPageState extends State<FavoriteCity> {
   @override
   Widget build(BuildContext context) {
+    final authService = context.read<AuthService>();
+    final user = authService.currentUser()!;
+
     return Consumer<TravelService>(
       builder: (context, travelService, child) {
         return Scaffold(
@@ -30,7 +34,7 @@ class _FavoriteCityPageState extends State<FavoriteCity> {
                 Container(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "사용자 님이 ",
+                    "${user.displayName} 님이",
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,

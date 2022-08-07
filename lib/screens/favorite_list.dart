@@ -68,7 +68,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                   body: SafeArea(
                     child: Column(
                       children: [
-                        Padding(
+                        /*Padding(
                           padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                           child: Container(
                             alignment: Alignment.centerLeft,
@@ -95,7 +95,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                               },
                             ),
                           ),
-                        ),
+                        ),*/
                         TabBar(
                           tabs: [
                             Tab(text: '맛집'),
@@ -175,7 +175,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                       child: Expanded(
                                         child: Column(
                                           children: [
-                                            Padding(
+                                            /*Padding(
                                               padding:
                                                   const EdgeInsets.all(4.0),
                                               child: Row(
@@ -272,7 +272,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                   ),
                                                 ],
                                               ),
-                                            ),
+                                            ),*/
                                             Padding(
                                               padding:
                                                   const EdgeInsets.all(15.0),
@@ -533,7 +533,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                       child: Expanded(
                                         child: Column(
                                           children: [
-                                            Padding(
+                                            /*Padding(
                                               padding:
                                                   const EdgeInsets.all(4.0),
                                               child: Row(
@@ -630,7 +630,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                   // ),
                                                 ],
                                               ),
-                                            ),
+                                            ),*/
                                             Padding(
                                               padding:
                                                   const EdgeInsets.all(15.0),
@@ -880,7 +880,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                       child: Expanded(
                                         child: Column(
                                           children: [
-                                            Padding(
+                                            /*Padding(
                                               padding:
                                                   const EdgeInsets.all(4.0),
                                               child: Row(
@@ -977,7 +977,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                   // ),
                                                 ],
                                               ),
-                                            ),
+                                            ),*/
                                             Padding(
                                               padding:
                                                   const EdgeInsets.all(15.0),
