@@ -22,7 +22,7 @@ class _MyPageState extends State<MyPage> {
     return Consumer(
       builder: (context, bucketService, child) {
         return Scaffold(
-          appBar: AppBar(
+          /*appBar: AppBar(
             backgroundColor: Color.fromRGBO(1, 1, 1, 0),
             elevation: 0,
             actions: [
@@ -43,7 +43,7 @@ class _MyPageState extends State<MyPage> {
                 },
               ),
             ],
-          ),
+          ),*/
           body: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,

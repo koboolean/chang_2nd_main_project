@@ -9,6 +9,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../services/auth_service.dart';
 
@@ -52,10 +53,16 @@ class _FoodInfoState extends State<FoodInfo> {
             actions: [
               Padding(
                 padding: const EdgeInsets.only(right: 8),
-                child: Icon(
-                  Icons.ios_share,
-                  color: Colors.white,
-                  size: 24,
+                child: IconButton(
+                  icon: Icon(Icons.ios_share,
+                    size: 24,
+                    color: Colors.white,),
+                  onPressed: () {
+                    print("share Click!!");
+                    Share.share(
+                      widget.foodtoreceive.foodAddress,
+                    );
+                  },
                 ),
               ),
               Padding(
@@ -337,10 +344,16 @@ class _LodgeInfoState extends State<LodgeInfo> {
             actions: [
               Padding(
                 padding: const EdgeInsets.only(right: 8),
-                child: Icon(
-                  Icons.ios_share,
-                  color: Colors.white,
-                  size: 24,
+                child: IconButton(
+                  icon: Icon(Icons.ios_share,
+                    size: 24,
+                    color: Colors.white,),
+                  onPressed: () {
+                    print("share Click!!");
+                    Share.share(
+                      widget.lodgetoreceive.lodgeAddress,
+                    );
+                  },
                 ),
               ),
               Padding(
@@ -598,6 +611,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
   Widget build(BuildContext context) {
     final authService = context.read<AuthService>();
     final user = authService.currentUser()!;
+    final box = context.findRenderObject();
     return Consumer(
       builder: (context, travelService, child) {
         return Scaffold(
@@ -621,10 +635,16 @@ class _PlaceInfoState extends State<PlaceInfo> {
             actions: [
               Padding(
                 padding: const EdgeInsets.only(right: 8),
-                child: Icon(
-                  Icons.ios_share,
-                  color: Colors.white,
-                  size: 24,
+                child: IconButton(
+                    icon: Icon(Icons.ios_share,
+                      size: 24,
+                      color: Colors.white,),
+                    onPressed: () {
+                      print("share Click!!");
+                      Share.share(
+                          widget.placetoreceive.placeAddress,
+                          );
+                      },
                 ),
               ),
               Padding(
