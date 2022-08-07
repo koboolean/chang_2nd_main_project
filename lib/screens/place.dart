@@ -61,7 +61,7 @@ class _PlaceState extends State<Place> {
               ),*/
             ],
             bottom: PreferredSize(
-              preferredSize: const Size.fromHeight(190),
+              preferredSize: const Size.fromHeight(180),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -70,7 +70,7 @@ class _PlaceState extends State<Place> {
                   Padding(
                     padding: const EdgeInsets.only(
                       left: 18.0,
-                      bottom: 8.0,
+                      bottom: 13.0,
                     ),
                     child: Text(
                       "어디로 여행가시나요?",
@@ -84,7 +84,7 @@ class _PlaceState extends State<Place> {
 
                   Padding(
                     padding: const EdgeInsets.only(
-                        left: 18.0, right: 18.0, top: 4.0, bottom: 4.0),
+                        left: 18.0, right: 18.0, top: 0.0, bottom: 18.0),
                     child: CupertinoButton(
                       padding: EdgeInsets.zero,
                       onPressed: () {
@@ -98,11 +98,12 @@ class _PlaceState extends State<Place> {
                         );*/
                       },
                       child: Container(
-                        height: 36,
+                        height: 42,
                         decoration: BoxDecoration(
                           color: Color.fromRGBO(246, 246, 246, 1),
                           border: Border.all(
-                              width: 1.5, color: Color.fromRGBO(246, 246, 246, 1)),
+                              width: 1.5,
+                              color: Color.fromRGBO(246, 246, 246, 1)),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Row(
@@ -119,8 +120,7 @@ class _PlaceState extends State<Place> {
                               ),
                             ),
                             Spacer(),
-                            Icon(Icons.search,
-                                color: Colors.black),
+                            Icon(Icons.search, color: Colors.black),
                             SizedBox(
                               width: 14,
                             )
@@ -130,13 +130,12 @@ class _PlaceState extends State<Place> {
                     ),
                   ),
 
-
                   /// 요즘 인기있는 여행지
                   Padding(
                     padding: const EdgeInsets.only(
-                      top: 8,
+                      top: 0,
                       left: 16,
-                      bottom: 8,
+                      bottom: 14,
                     ),
                     child: Text(
                       "요즘 인기있는 여행지",
