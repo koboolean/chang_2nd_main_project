@@ -659,7 +659,8 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                             onTap: () {}, //제주도 숙소 클릭시 이동
                                             child: Container(
                                               decoration: BoxDecoration(
-                                                  color: Colors.amber[800],
+                                                  color: Color.fromRGBO(
+                                                      221, 81, 37, 1),
                                                   border: Border.all(
                                                     color: Colors.transparent,
                                                   ),
@@ -1054,7 +1055,8 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                             onTap: () {}, //제주도 관광지 클릭시 이동
                                             child: Container(
                                               decoration: BoxDecoration(
-                                                  color: Colors.amber[800],
+                                                  color: Color.fromRGBO(
+                                                      221, 81, 37, 1),
                                                   border: Border.all(
                                                     color: Colors.transparent,
                                                   ),
