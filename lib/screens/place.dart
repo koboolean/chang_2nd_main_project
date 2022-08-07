@@ -41,7 +41,7 @@ class _PlaceState extends State<Place> {
             backgroundColor: Colors.white,
             centerTitle: false,
             actions: [
-              Padding(
+              /*Padding(
                 padding: const EdgeInsets.only(top: 25.0, right: 10),
                 child: IconButton(
                   onPressed: () {
@@ -57,7 +57,7 @@ class _PlaceState extends State<Place> {
                     size: 24,
                   ),
                 ),
-              ),
+              ),*/
             ],
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(190),
