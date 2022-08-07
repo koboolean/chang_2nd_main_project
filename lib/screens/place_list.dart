@@ -3,6 +3,7 @@ import 'package:chang_2nd_main_project/screens/login.dart';
 import 'package:chang_2nd_main_project/screens/notification.dart';
 import 'package:chang_2nd_main_project/screens/place_info.dart';
 import 'package:chang_2nd_main_project/screens/place_list.dart';
+import 'package:chang_2nd_main_project/widgets/tobeContinue.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:chang_2nd_main_project/services/travel_service.dart';
 import 'package:chang_2nd_main_project/screens/search_page.dart';
@@ -80,10 +81,11 @@ class _PlaceListState extends State<PlaceList> {
                     padding: const EdgeInsets.only(right: 15.0),
                     child: IconButton(
                       onPressed: () {
-                        Navigator.push(
+                        showTobeContinue(context);
+                       /* Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => MySearch()),
-                        );
+                        );*/
                       },
                       icon: const Icon(
                         Icons.search,
