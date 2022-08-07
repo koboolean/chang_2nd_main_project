@@ -102,8 +102,8 @@ class _FavoriteListPageState extends State<FavoriteList> {
                             Tab(text: "숙소"),
                             Tab(text: "관광지"),
                           ],
-                          indicatorColor: Colors.amber[800],
-                          labelColor: Colors.amber[800],
+                          indicatorColor: Color.fromRGBO(221, 81, 37, 1),
+                          labelColor: Color.fromRGBO(221, 81, 37, 1),
                           indicatorWeight: 3,
                           unselectedLabelColor: Colors.grey,
                           labelStyle: TextStyle(
@@ -145,7 +145,8 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                             onTap: () {}, //제주도 숙소 클릭시 이동
                                             child: Container(
                                               decoration: BoxDecoration(
-                                                  color: Colors.amber[800],
+                                                  color: Color.fromRGBO(
+                                                      221, 81, 37, 1),
                                                   border: Border.all(
                                                     color: Colors.transparent,
                                                   ),
@@ -353,7 +354,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                                   Image.network(
                                                                     url,
                                                                     fit: BoxFit
-                                                                        .fill,
+                                                                        .cover,
                                                                     height: 220,
                                                                     width: 163,
                                                                   ),
@@ -431,16 +432,11 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                                         ),
                                                                         Text(
                                                                           address,
-                                                                          style:
-                                                                              TextStyle(
-                                                                            fontSize:
-                                                                                14,
-                                                                            fontWeight:
-                                                                                FontWeight.normal,
-                                                                            color:
-                                                                                Colors.grey[600],
-                                                                                overflow: TextOverflow.ellipsis
-                                                                          ),
+                                                                          style: TextStyle(
+                                                                              fontSize: 14,
+                                                                              fontWeight: FontWeight.normal,
+                                                                              color: Colors.grey[600],
+                                                                              overflow: TextOverflow.ellipsis),
                                                                         ),
                                                                         Text(
                                                                           classification,
@@ -712,7 +708,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                                   Image.network(
                                                                     url,
                                                                     fit: BoxFit
-                                                                        .fill,
+                                                                        .cover,
                                                                     height: 220,
                                                                     width: 163,
                                                                   ),
@@ -790,16 +786,11 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                                         ),
                                                                         Text(
                                                                           address,
-                                                                          style:
-                                                                              TextStyle(
-                                                                            fontSize:
-                                                                                14,
-                                                                            fontWeight:
-                                                                                FontWeight.normal,
-                                                                            color:
-                                                                                Colors.grey[600],
-                                                                                  overflow: TextOverflow.ellipsis
-                                                                          ),
+                                                                          style: TextStyle(
+                                                                              fontSize: 14,
+                                                                              fontWeight: FontWeight.normal,
+                                                                              color: Colors.grey[600],
+                                                                              overflow: TextOverflow.ellipsis),
                                                                         ),
                                                                       ],
                                                                     ),
@@ -1057,7 +1048,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                                   Image.network(
                                                                     url,
                                                                     fit: BoxFit
-                                                                        .fill,
+                                                                        .cover,
                                                                     height: 220,
                                                                     width: 163,
                                                                   ),
@@ -1135,16 +1126,11 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                                         ),
                                                                         Text(
                                                                           address,
-                                                                          style:
-                                                                              TextStyle(
-                                                                            fontSize:
-                                                                                14,
-                                                                            fontWeight:
-                                                                                FontWeight.normal,
-                                                                            color:
-                                                                                Colors.grey[600],
-                                                                                  overflow: TextOverflow.ellipsis
-                                                                          ),
+                                                                          style: TextStyle(
+                                                                              fontSize: 14,
+                                                                              fontWeight: FontWeight.normal,
+                                                                              color: Colors.grey[600],
+                                                                              overflow: TextOverflow.ellipsis),
                                                                         ),
                                                                       ],
                                                                     ),
