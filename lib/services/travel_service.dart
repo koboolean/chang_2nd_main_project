@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TravelService extends ChangeNotifier {
   final travelFoodCollection =
@@ -18,4 +19,7 @@ class TravelService extends ChangeNotifier {
     await travelCollection.doc(docId).update({'isFavorite': isFavorite});
     notifyListeners(); // 화면 갱신
   }
+
+  //tmap 앱으로 길 안내하는 url
+
 }

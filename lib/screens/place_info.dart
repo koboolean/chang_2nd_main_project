@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:chang_2nd_main_project/screens/favorite_list.dart';
 import 'package:chang_2nd_main_project/screens/login.dart';
 import 'package:chang_2nd_main_project/screens/notification.dart';
@@ -12,6 +14,7 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../services/auth_service.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// 음식점 상세 설명 페이지
 class FoodInfo extends StatefulWidget {
@@ -30,6 +33,7 @@ class _FoodInfoState extends State<FoodInfo> {
   Widget build(BuildContext context) {
     final authService = context.read<AuthService>();
     final user = authService.currentUser()!;
+
     return Consumer(
       builder: (context, travelService, child) {
         return Scaffold(
@@ -109,7 +113,7 @@ class _FoodInfoState extends State<FoodInfo> {
                       ),
                     ),
 
-                    //해쉬태그 아이콘
+                    //해쉬태그 아이콘 & 길 안내
                     Row(
                       children: [
                         GestureDetector(
@@ -152,6 +156,45 @@ class _FoodInfoState extends State<FoodInfo> {
                                 "",
                                 style: TextStyle(
                                   fontWeight: FontWeight.w500,
+                                  fontSize: 11,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Spacer(),
+                        GestureDetector(
+                          onTap: () async {
+                            final idx = widget.foodtoreceive.foodIdx;
+
+                            final geocode = FirebaseFirestore.instance
+                                .collection('geocode_foodArea')
+                                .where('idx', isEqualTo: idx);
+                            final geoValue = await geocode.get();
+
+                            final latLong = geoValue.docs.toList();
+                            final lat = latLong[0]['lat'];
+                            final long = latLong[0]['long'];
+
+                            final Uri toLaunch = Uri.parse(
+                                'https://apis.openapi.sk.com/tmap/app/routes?appKey=l7xx3644da34d8ad4b5c9b34f5610c111a16&name=${widget.foodtoreceive.foodName}&lon=${long}&lat=${lat}');
+                            _launchInBrowser(toLaunch);
+                          },
+                          child: Container(
+                            margin: EdgeInsets.fromLTRB(0, 4, 8, 10),
+                            height: 43,
+                            width: 68,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16),
+                              color: Colors.red[400]!.withOpacity(0.4),
+                            ),
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                "길 안내",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white,
                                   fontSize: 11,
                                 ),
                               ),
@@ -306,6 +349,19 @@ class _FoodInfoState extends State<FoodInfo> {
       },
     );
   }
+
+  Future<void> _launchInBrowser(Uri url) async {
+    if (await canLaunchUrl(url)) {
+      if (!await launchUrl(
+        url,
+        mode: LaunchMode.externalApplication,
+      )) {
+        throw 'Could not launch $url';
+      }
+    } else {
+      print("Can't launch $url");
+    }
+  }
 }
 
 class LodgeInfo extends StatefulWidget {
@@ -428,6 +484,7 @@ class _LodgeInfoState extends State<LodgeInfo> {
                             ),
                           ),
                         ),
+
                         //두번째 해시태그 아이콘, 필요시 width 지정하여 사용
                         GestureDetector(
                           onTap: () {},
@@ -445,6 +502,45 @@ class _LodgeInfoState extends State<LodgeInfo> {
                                 "",
                                 style: TextStyle(
                                   fontWeight: FontWeight.w500,
+                                  fontSize: 11,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Spacer(),
+                        GestureDetector(
+                          onTap: () async {
+                            final idx = widget.lodgetoreceive.lodgeIdx;
+
+                            final geocode = FirebaseFirestore.instance
+                                .collection('geocode_lodgeArea')
+                                .where('idx', isEqualTo: idx);
+                            final geoValue = await geocode.get();
+
+                            final latLong = geoValue.docs.toList();
+                            final lat = latLong[0]['lat'];
+                            final long = latLong[0]['long'];
+
+                            final Uri toLaunch = Uri.parse(
+                                'https://apis.openapi.sk.com/tmap/app/routes?appKey=l7xx3644da34d8ad4b5c9b34f5610c111a16&name=${widget.lodgetoreceive.lodgeName}&lon=${long}&lat=${lat}');
+                            _launchInBrowser(toLaunch);
+                          },
+                          child: Container(
+                            margin: EdgeInsets.fromLTRB(0, 4, 8, 10),
+                            height: 43,
+                            width: 68,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16),
+                              color: Colors.red[400]!.withOpacity(0.4),
+                            ),
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                "#길 안내",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white,
                                   fontSize: 11,
                                 ),
                               ),
@@ -598,6 +694,19 @@ class _LodgeInfoState extends State<LodgeInfo> {
       },
     );
   }
+
+  Future<void> _launchInBrowser(Uri url) async {
+    if (await canLaunchUrl(url)) {
+      if (!await launchUrl(
+        url,
+        mode: LaunchMode.externalApplication,
+      )) {
+        throw 'Could not launch $url';
+      }
+    } else {
+      print("Can't launch $url");
+    }
+  }
 }
 
 class PlaceInfo extends StatefulWidget {
@@ -738,6 +847,45 @@ class _PlaceInfoState extends State<PlaceInfo> {
                                 "",
                                 style: TextStyle(
                                   fontWeight: FontWeight.w500,
+                                  fontSize: 11,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Spacer(),
+                        GestureDetector(
+                          onTap: () async {
+                            final idx = widget.placetoreceive.placeIdx;
+
+                            final geocode = FirebaseFirestore.instance
+                                .collection('geocode_lodgeArea')
+                                .where('idx', isEqualTo: idx);
+                            final geoValue = await geocode.get();
+
+                            final latLong = geoValue.docs.toList();
+                            final lat = latLong[0]['lat'];
+                            final long = latLong[0]['long'];
+
+                            final Uri toLaunch = Uri.parse(
+                                'https://apis.openapi.sk.com/tmap/app/routes?appKey=l7xx3644da34d8ad4b5c9b34f5610c111a16&name=${widget.placetoreceive.placeName}&lon=${long}&lat=${lat}');
+                            _launchInBrowser(toLaunch);
+                          },
+                          child: Container(
+                            margin: EdgeInsets.fromLTRB(0, 4, 8, 10),
+                            height: 43,
+                            width: 68,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16),
+                              color: Colors.grey[400]!.withOpacity(0.4),
+                            ),
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                "#${widget.placetoreceive.placeClassifiaction}",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white,
                                   fontSize: 11,
                                 ),
                               ),
@@ -887,5 +1035,18 @@ class _PlaceInfoState extends State<PlaceInfo> {
         );
       },
     );
+  }
+
+  Future<void> _launchInBrowser(Uri url) async {
+    if (await canLaunchUrl(url)) {
+      if (!await launchUrl(
+        url,
+        mode: LaunchMode.externalApplication,
+      )) {
+        throw 'Could not launch $url';
+      }
+    } else {
+      print("Can't launch $url");
+    }
   }
 }
