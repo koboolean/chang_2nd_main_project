@@ -1,13 +1,8 @@
-//import 'package:chang_2nd_main_project/screens/place.dart';
 import 'package:chang_2nd_main_project/services/auth_service.dart';
 import 'package:chang_2nd_main_project/services/schedule_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
-// import 'add_schedule.dart';
-// import 'favorite_list.dart';
-// import 'home.dart';
 import 'schedule_complete.dart';
 
 class SelectWantToGo extends StatefulWidget {

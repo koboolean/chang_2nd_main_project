@@ -1,15 +1,5 @@
-import 'package:chang_2nd_main_project/screens/login.dart';
-import 'package:chang_2nd_main_project/screens/main_page.dart';
-import 'package:chang_2nd_main_project/screens/place.dart';
 import 'package:chang_2nd_main_project/screens/place_list.dart';
-
-import 'package:chang_2nd_main_project/services/auth_service.dart';
-import 'package:chang_2nd_main_project/services/schedule_service.dart';
-
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
-import 'package:provider/provider.dart';
 
 class NotificationList extends StatefulWidget {
   const NotificationList({Key? key}) : super(key: key);

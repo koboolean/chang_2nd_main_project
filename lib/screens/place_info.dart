@@ -1,19 +1,10 @@
 import 'dart:async';
 
-import 'package:chang_2nd_main_project/screens/favorite_list.dart';
-import 'package:chang_2nd_main_project/screens/login.dart';
-import 'package:chang_2nd_main_project/screens/notification.dart';
-import 'package:chang_2nd_main_project/screens/place.dart';
-import 'package:chang_2nd_main_project/screens/place_info.dart';
-import 'package:chang_2nd_main_project/screens/place_list.dart';
 import 'package:chang_2nd_main_project/services/firebase_analytics.dart';
-import 'package:chang_2nd_main_project/services/travel_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
-
 import '../services/auth_service.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -760,8 +751,6 @@ class _PlaceInfoState extends State<PlaceInfo> {
                   onPressed: () {
                     //공유 이벤트 발생
                     firebaseAnalyticsLog(user.uid, Share());
-
-                    print("share Click!!");
                     Share.share(
                       widget.placetoreceive.placeAddress,
                     );

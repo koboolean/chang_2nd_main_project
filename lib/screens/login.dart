@@ -2,12 +2,8 @@ import 'dart:io';
 
 import 'package:chang_2nd_main_project/screens/main_page.dart';
 import 'package:chang_2nd_main_project/services/auth_service.dart';
-import 'package:chang_2nd_main_project/services/firebase_analytics.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart' as svg_provider;
 
 /// 로그인 페이지

@@ -1,6 +1,4 @@
-import 'package:chang_2nd_main_project/screens/add_schedule.dart';
 import 'package:chang_2nd_main_project/screens/favorite_city.dart';
-import 'package:chang_2nd_main_project/screens/favorite_list.dart';
 import 'package:chang_2nd_main_project/screens/place.dart';
 import 'package:chang_2nd_main_project/screens/mypage.dart';
 import 'package:chang_2nd_main_project/services/auth_service.dart';

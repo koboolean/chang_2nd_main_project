@@ -1,4 +1,3 @@
-import 'package:chang_2nd_main_project/screens/login.dart';
 import 'package:chang_2nd_main_project/screens/select_want_to_go.dart';
 import 'package:chang_2nd_main_project/widgets/dialog.dart';
 import 'package:chang_2nd_main_project/widgets/recommend_accom.dart';

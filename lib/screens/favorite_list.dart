@@ -1,13 +1,8 @@
 import 'package:chang_2nd_main_project/screens/place_info.dart';
-import 'package:chang_2nd_main_project/screens/place_list.dart';
-import 'package:chang_2nd_main_project/services/auth_service.dart';
 import 'package:chang_2nd_main_project/services/favorite_service.dart';
-import 'package:chang_2nd_main_project/services/travel_service.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'favorite_city.dart';
 
 class FavoriteList extends StatefulWidget {
   const FavoriteList({Key? key}) : super(key: key);
@@ -862,8 +857,6 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                           lodgeToiletYn,
                                                           lodgeUrl1,
                                                           lodgeUrl2);
-
-                                                  print(_postLodgeList);
 
                                                   return Padding(
                                                     padding:

@@ -1,7 +1,6 @@
 import 'dart:convert';
 //import 'dart:io';
 import 'dart:ui';
-import 'dart:async';
 import 'package:chang_2nd_main_project/services/schedule_service.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
