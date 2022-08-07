@@ -95,7 +95,7 @@ class _FavoriteCityPageState extends State<FavoriteCity> {
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.w500,
-                                  fontSize: 18,
+                                  fontSize: 16,
                                 ),
                               ),
                             ),
@@ -115,18 +115,27 @@ class _FavoriteCityPageState extends State<FavoriteCity> {
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(18, 0, 18, 18),
-                      child: Container(
-                        width: double.infinity,
-                        height: 180,
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            color: Colors.blue,
-                            borderRadius: BorderRadius.circular(10),
-                            image: DecorationImage(
-                              image: NetworkImage(
-                                  'https://api.cdn.visitjeju.net/photomng/imgpath/202110/28/11c3035e-03f9-4b41-9a9d-d21abc399ee0.jpg'),
-                              fit: BoxFit.fill,
-                            )),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FavoriteList()),
+                          );
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          height: 180,
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius: BorderRadius.circular(10),
+                              image: DecorationImage(
+                                image: NetworkImage(
+                                    'https://api.cdn.visitjeju.net/photomng/imgpath/202110/28/11c3035e-03f9-4b41-9a9d-d21abc399ee0.jpg'),
+                                fit: BoxFit.fill,
+                              )),
+                        ),
                       ),
                     ),
                   ],

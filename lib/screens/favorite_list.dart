@@ -16,6 +16,114 @@ class FavoriteList extends StatefulWidget {
   State<FavoriteList> createState() => _FavoriteListPageState();
 }
 
+//place_info에 송부할 foodList 데이터 생성
+class FoodToSend {
+  final String foodSubtitle;
+  final String foodAddress;
+  final String foodArea;
+  final String foodBusinessHours;
+  final String foodClassification;
+  final String foodField14;
+  final String foodIdx;
+  final String foodName;
+  final String foodNaverLink;
+  final String foodNote;
+  final String foodPhonenumber;
+  final String foodPrice;
+  final String foodServingSize;
+  final String foodUrl1;
+  final String foodUrl2;
+
+  const FoodToSend(
+      this.foodSubtitle,
+      this.foodAddress,
+      this.foodArea,
+      this.foodBusinessHours,
+      this.foodClassification,
+      this.foodField14,
+      this.foodIdx,
+      this.foodName,
+      this.foodNaverLink,
+      this.foodNote,
+      this.foodPhonenumber,
+      this.foodPrice,
+      this.foodServingSize,
+      this.foodUrl1,
+      this.foodUrl2);
+}
+
+//place_info에 송부할 foodList 데이터 생성
+class LodgeToSend {
+  final String lodgeBreakFastYn;
+  final String lodgeSubtitle;
+  final String lodgeAddress;
+  final String lodgeArea;
+  final String lodgeBusinessHours;
+  final String lodgeIdx;
+  final String lodgeName;
+  final String lodgeNaverLink;
+  final String lodgePartyYn;
+  final String lodgePhoneNumber;
+  final String lodgePriceType1;
+  final String lodgePriceType2;
+  final String lodgePriceType3;
+  final String lodgeToiletYn;
+  final String lodgeUrl1;
+  final String lodgeUrl2;
+
+  const LodgeToSend(
+      this.lodgeBreakFastYn,
+      this.lodgeSubtitle,
+      this.lodgeAddress,
+      this.lodgeArea,
+      this.lodgeBusinessHours,
+      this.lodgeIdx,
+      this.lodgeName,
+      this.lodgeNaverLink,
+      this.lodgePartyYn,
+      this.lodgePhoneNumber,
+      this.lodgePriceType1,
+      this.lodgePriceType2,
+      this.lodgePriceType3,
+      this.lodgeToiletYn,
+      this.lodgeUrl1,
+      this.lodgeUrl2);
+}
+
+//place_info에 송부할 foodList 데이터 생성
+class PlaceToSend {
+  final String placeAddress;
+  final String placeArea;
+  final String placeBusinessHours;
+  final String placeClassifiaction;
+  final String placeField13;
+  final String placeIdx;
+  final String placeName;
+  final String placeNaverLink;
+  final String placeNote;
+  final String placePhoneNumber;
+  final String placePrice;
+  final String placeSubtitle;
+  final String placeUrl1;
+  final String placeUrl2;
+
+  const PlaceToSend(
+      this.placeAddress,
+      this.placeArea,
+      this.placeBusinessHours,
+      this.placeClassifiaction,
+      this.placeField13,
+      this.placeIdx,
+      this.placeName,
+      this.placeNaverLink,
+      this.placeNote,
+      this.placePhoneNumber,
+      this.placePrice,
+      this.placeSubtitle,
+      this.placeUrl1,
+      this.placeUrl2);
+}
+
 class _FavoriteListPageState extends State<FavoriteList> {
   final _valueList = [
     '전체',
@@ -48,6 +156,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                 length: 3,
                 child: Scaffold(
                   appBar: AppBar(
+                    centerTitle: false,
                     elevation: 0,
                     leading: IconButton(
                       icon: Icon(
@@ -61,6 +170,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                       "제주도",
                       style: TextStyle(
                         color: Colors.black,
+                        fontSize: 17,
                       ),
                     ),
                     backgroundColor: Colors.white,
@@ -276,12 +386,15 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                             ),*/
                                             Padding(
                                               padding:
-                                                  const EdgeInsets.all(15.0),
+                                                  const EdgeInsets.all(10.0),
                                               child: Container(
                                                 alignment: Alignment.centerLeft,
                                                 child: Text(
                                                   '총 ${_postFoodList.length}곳',
                                                   textAlign: TextAlign.left,
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -296,12 +409,49 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                 itemBuilder: (context, index) {
                                                   final doc =
                                                       _postFoodList[index];
-                                                  String name = doc['name'];
-                                                  String url = doc['url1'];
-                                                  String address =
+
+                                                  //Firestore 인덱스 가져오기
+                                                  String foodSubtitle =
+                                                      doc['Subtitle'];
+                                                  String foodAddress =
                                                       doc['address'];
-                                                  String classification =
+                                                  String foodBusinessHours =
+                                                      doc['businessHours'];
+                                                  String foodClassification =
                                                       doc['classification'];
+                                                  String foodField14 =
+                                                      doc['field14'];
+                                                  String foodIdx = doc['idx'];
+                                                  String foodNaverLink =
+                                                      doc['naverlink'];
+                                                  String foodNote = doc['note'];
+                                                  String foodPhonenumber =
+                                                      doc['phoneNumber'];
+                                                  String foodPrice =
+                                                      doc['price'];
+                                                  String foodServingSize =
+                                                      doc['servingSize'];
+                                                  String foodName = doc['name'];
+                                                  String foodUrl1 = doc['url1'];
+                                                  String foodUrl2 = doc['url2'];
+                                                  String foodArea = doc['area'];
+
+                                                  final foodtosend = FoodToSend(
+                                                      foodSubtitle,
+                                                      foodAddress,
+                                                      foodArea,
+                                                      foodBusinessHours,
+                                                      foodClassification,
+                                                      foodField14,
+                                                      foodIdx,
+                                                      foodName,
+                                                      foodNaverLink,
+                                                      foodNote,
+                                                      foodPhonenumber,
+                                                      foodPrice,
+                                                      foodServingSize,
+                                                      foodUrl1,
+                                                      foodUrl2);
 
                                                   return Padding(
                                                     padding:
@@ -309,14 +459,16 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                             0.0),
                                                     child: GestureDetector(
                                                       onTap: () {
-                                                        // Navigator.push(
-                                                        //   context,
-                                                        //   MaterialPageRoute(
-                                                        //       builder: (context) =>
-                                                        //           PlaceInfo(
-                                                        //             sendName: ('소랑드르'),
-                                                        //           )),
-                                                        // );
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder:
+                                                                  (context) =>
+                                                                      FoodInfo(
+                                                                        foodtoreceive:
+                                                                            foodtosend,
+                                                                      )),
+                                                        );
                                                       },
                                                       child: Container(
                                                         margin:
@@ -352,7 +504,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                               child: Stack(
                                                                 children: [
                                                                   Image.network(
-                                                                    url,
+                                                                    foodUrl1,
                                                                     fit: BoxFit
                                                                         .cover,
                                                                     height: 220,
@@ -421,25 +573,33 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                                               .start,
                                                                       children: [
                                                                         Text(
-                                                                          name,
+                                                                          foodName,
                                                                           style:
                                                                               TextStyle(
                                                                             fontSize:
-                                                                                18,
+                                                                                16,
                                                                             fontWeight:
                                                                                 FontWeight.bold,
                                                                           ),
                                                                         ),
+                                                                        SizedBox(
+                                                                          height:
+                                                                              2,
+                                                                        ),
                                                                         Text(
-                                                                          address,
+                                                                          foodAddress,
                                                                           style: TextStyle(
                                                                               fontSize: 14,
                                                                               fontWeight: FontWeight.normal,
                                                                               color: Colors.grey[600],
                                                                               overflow: TextOverflow.ellipsis),
                                                                         ),
+                                                                        SizedBox(
+                                                                          height:
+                                                                              2,
+                                                                        ),
                                                                         Text(
-                                                                          classification,
+                                                                          foodClassification,
                                                                           style:
                                                                               TextStyle(
                                                                             fontSize:
@@ -629,7 +789,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                             ),*/
                                             Padding(
                                               padding:
-                                                  const EdgeInsets.all(15.0),
+                                                  const EdgeInsets.all(10.0),
                                               child: Container(
                                                 alignment: Alignment.centerLeft,
                                                 child: Text(
@@ -650,10 +810,57 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                 itemBuilder: (context, index) {
                                                   final doc =
                                                       _postLodgeList[index];
-                                                  String name = doc['name'];
-                                                  String url = doc['url1'];
-                                                  String address =
+
+                                                  String lodgeBreakFastYn =
+                                                      doc['BreakfastYn'];
+                                                  String lodgeSubtitle =
+                                                      doc['Subtitle'];
+                                                  String lodgeAddress =
                                                       doc['address'];
+                                                  String lodgeArea =
+                                                      doc['area'];
+                                                  String lodgeBusinessHours =
+                                                      doc['businessHours'];
+                                                  String lodgeIdx = doc['idx'];
+                                                  String lodgeName =
+                                                      doc['name'];
+                                                  String lodgeNaverLink =
+                                                      doc['naverlink'];
+                                                  String lodgePartyYn =
+                                                      doc['partyYn'];
+                                                  String lodgePhoneNumber =
+                                                      doc['phoneNumber'];
+                                                  String lodgePriceType1 =
+                                                      doc['priceType1'];
+                                                  String lodgePriceType2 =
+                                                      doc['priceType2'];
+                                                  String lodgePriceType3 =
+                                                      doc['priceType3'];
+                                                  String lodgeToiletYn =
+                                                      doc['toiletYn'];
+                                                  String lodgeUrl1 =
+                                                      doc['url1'];
+                                                  String lodgeUrl2 =
+                                                      doc['url2'];
+
+                                                  final lodgetosend =
+                                                      LodgeToSend(
+                                                          lodgeBreakFastYn,
+                                                          lodgeSubtitle,
+                                                          lodgeAddress,
+                                                          lodgeArea,
+                                                          lodgeBusinessHours,
+                                                          lodgeIdx,
+                                                          lodgeName,
+                                                          lodgeNaverLink,
+                                                          lodgePartyYn,
+                                                          lodgePhoneNumber,
+                                                          lodgePriceType1,
+                                                          lodgePriceType2,
+                                                          lodgePriceType3,
+                                                          lodgeToiletYn,
+                                                          lodgeUrl1,
+                                                          lodgeUrl2);
 
                                                   print(_postLodgeList);
 
@@ -663,14 +870,16 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                             0.0),
                                                     child: GestureDetector(
                                                       onTap: () {
-                                                        // Navigator.push(
-                                                        //   context,
-                                                        //   MaterialPageRoute(
-                                                        //       builder: (context) =>
-                                                        //           PlaceInfo(
-                                                        //             sendName: ('소랑드르'),
-                                                        //           )),
-                                                        // );
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder:
+                                                                  (context) =>
+                                                                      LodgeInfo(
+                                                                        lodgetoreceive:
+                                                                            lodgetosend,
+                                                                      )),
+                                                        );
                                                       },
                                                       child: Container(
                                                         margin:
@@ -706,7 +915,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                               child: Stack(
                                                                 children: [
                                                                   Image.network(
-                                                                    url,
+                                                                    lodgeUrl1,
                                                                     fit: BoxFit
                                                                         .cover,
                                                                     height: 220,
@@ -775,17 +984,21 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                                               .start,
                                                                       children: [
                                                                         Text(
-                                                                          name,
+                                                                          lodgeName,
                                                                           style:
                                                                               TextStyle(
                                                                             fontSize:
-                                                                                18,
+                                                                                16,
                                                                             fontWeight:
                                                                                 FontWeight.bold,
                                                                           ),
                                                                         ),
+                                                                        SizedBox(
+                                                                          height:
+                                                                              2,
+                                                                        ),
                                                                         Text(
-                                                                          address,
+                                                                          lodgeAddress,
                                                                           style: TextStyle(
                                                                               fontSize: 14,
                                                                               fontWeight: FontWeight.normal,
@@ -971,7 +1184,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                             ),*/
                                             Padding(
                                               padding:
-                                                  const EdgeInsets.all(15.0),
+                                                  const EdgeInsets.all(10.0),
                                               child: Container(
                                                 alignment: Alignment.centerLeft,
                                                 child: Text(
@@ -992,10 +1205,52 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                 itemBuilder: (context, index) {
                                                   final doc =
                                                       _postPlaceList[index];
-                                                  String name = doc['name'];
-                                                  String url = doc['url1'];
-                                                  String address =
+
+                                                  //Place data 호출
+                                                  String placeAddress =
                                                       doc['address'];
+                                                  String placeArea =
+                                                      doc['area'];
+                                                  String placeBusinessHours =
+                                                      doc['businessHours'];
+                                                  String placeClassifiaction =
+                                                      doc['classification'];
+                                                  String placeField13 =
+                                                      doc['field13'];
+                                                  String placeIdx = doc['idx'];
+                                                  String placeName =
+                                                      doc['name'];
+                                                  String placeNaverLink =
+                                                      doc['naverlink'];
+                                                  String placeNote =
+                                                      doc['note'];
+                                                  String placePhoneNumber =
+                                                      doc['phoneNumber'];
+                                                  String placePrice =
+                                                      doc['price'];
+                                                  String placeSubtitle =
+                                                      doc['subTitle'];
+                                                  String placeUrl1 =
+                                                      doc['url1'];
+                                                  String placeUrl2 =
+                                                      doc['url2'];
+
+                                                  final placetosend =
+                                                      PlaceToSend(
+                                                          placeAddress,
+                                                          placeArea,
+                                                          placeBusinessHours,
+                                                          placeClassifiaction,
+                                                          placeField13,
+                                                          placeIdx,
+                                                          placeName,
+                                                          placeNaverLink,
+                                                          placeNote,
+                                                          placePhoneNumber,
+                                                          placePrice,
+                                                          placeSubtitle,
+                                                          placeUrl1,
+                                                          placeUrl2);
 
                                                   return Padding(
                                                     padding:
@@ -1003,14 +1258,16 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                             0.0),
                                                     child: GestureDetector(
                                                       onTap: () {
-                                                        // Navigator.push(
-                                                        //   context,
-                                                        //   MaterialPageRoute(
-                                                        //       builder: (context) =>
-                                                        //           PlaceInfo(
-                                                        //             sendName: ('소랑드르'),
-                                                        //           )),
-                                                        // );
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder:
+                                                                  (context) =>
+                                                                      PlaceInfo(
+                                                                        placetoreceive:
+                                                                            placetosend,
+                                                                      )),
+                                                        );
                                                       },
                                                       child: Container(
                                                         margin:
@@ -1046,7 +1303,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                               child: Stack(
                                                                 children: [
                                                                   Image.network(
-                                                                    url,
+                                                                    placeUrl1,
                                                                     fit: BoxFit
                                                                         .cover,
                                                                     height: 220,
@@ -1115,17 +1372,21 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                                               .start,
                                                                       children: [
                                                                         Text(
-                                                                          name,
+                                                                          placeName,
                                                                           style:
                                                                               TextStyle(
                                                                             fontSize:
-                                                                                18,
+                                                                                16,
                                                                             fontWeight:
                                                                                 FontWeight.bold,
                                                                           ),
                                                                         ),
+                                                                        SizedBox(
+                                                                          height:
+                                                                              2,
+                                                                        ),
                                                                         Text(
-                                                                          address,
+                                                                          placeAddress,
                                                                           style: TextStyle(
                                                                               fontSize: 14,
                                                                               fontWeight: FontWeight.normal,
