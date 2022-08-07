@@ -5,12 +5,14 @@ import 'package:chang_2nd_main_project/screens/login.dart';
 import 'package:chang_2nd_main_project/screens/notification.dart';
 import 'package:chang_2nd_main_project/screens/place_info.dart';
 import 'package:chang_2nd_main_project/screens/place_list.dart';
+import 'package:chang_2nd_main_project/screens/search_page.dart';
 import 'package:chang_2nd_main_project/services/favorite_service.dart';
 import 'package:chang_2nd_main_project/services/travel_service.dart';
 import 'package:chang_2nd_main_project/main.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -79,37 +81,52 @@ class _PlaceState extends State<Place> {
                     ),
                   ),
 
-                  /// Textfield
                   Padding(
                     padding: const EdgeInsets.only(
                         left: 18.0, right: 18.0, top: 4.0, bottom: 4.0),
-                    child: GestureDetector(
-                      onTap: () {},
-                      child: TextField(
-                        //controller 삽입 필요
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Color.fromRGBO(243, 243, 243, 1),
-                          hintText: "ex.김녕 바당길(바닷길)",
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
-                            borderRadius: BorderRadius.circular(8),
+                    child: CupertinoButton(
+                      padding: EdgeInsets.zero,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MySearch(),
                           ),
-
-                          /// 돋보기 아이콘
-                          suffixIcon: IconButton(
-                            icon: Icon(Icons.search),
-                            onPressed: () {
-                              // 돋보기 아이콘 클릭
-                            },
-                          ),
+                        );
+                      },
+                      child: Container(
+                        height: 36,
+                        decoration: BoxDecoration(
+                          color: Color.fromRGBO(246, 246, 246, 1),
+                          border: Border.all(
+                              width: 1.5, color: Color.fromRGBO(246, 246, 246, 1)),
+                          borderRadius: BorderRadius.circular(12),
                         ),
-                        onSubmitted: (v) {
-                          // 엔터를 누르는 경우
-                        },
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 15.0),
+                              child: Text(
+                                "ex. 김녕 바당길(바닷길)",
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontFamily: 'SpoqaHanSansNeo',
+                                    fontWeight: FontWeight.w500,
+                                    color: Color.fromRGBO(196, 196, 196, 1)),
+                              ),
+                            ),
+                            Spacer(),
+                            Icon(Icons.search,
+                                color: Colors.black),
+                            SizedBox(
+                              width: 14,
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
+
 
                   /// 요즘 인기있는 여행지
                   Padding(
