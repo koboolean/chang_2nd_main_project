@@ -86,7 +86,7 @@ class _FavoriteCityPageState extends State<FavoriteCity> {
                               onTap: () {
                                 //favorite 리스트 확인 이벤트 발생
                                 firebaseScreenViewChanged(
-                                    user.uid, FavoriteList());
+                                    user.uid, "FavoriteList()");
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -121,7 +121,7 @@ class _FavoriteCityPageState extends State<FavoriteCity> {
                       child: GestureDetector(
                         onTap: () {
                           //favorite 리스트 확인 이벤트 발생
-                          firebaseScreenViewChanged(user.uid, FavoriteList());
+                          firebaseScreenViewChanged(user.uid, "FavoriteList()");
                           Navigator.push(
                             context,
                             MaterialPageRoute(

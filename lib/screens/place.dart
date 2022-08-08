@@ -200,7 +200,7 @@ class _TravelPlaceState extends State<TravelPlace> {
         return InkWell(
           onTap: () {
             //PlaceList 이동 analytics
-            firebaseScreenViewChanged(user.uid, PlaceList());
+            firebaseScreenViewChanged(user.uid, "PlaceList()");
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => PlaceList()),
@@ -405,9 +405,7 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                                 //FoodInfo이동시 analytics 기록
                                 firebaseScreenViewChanged(
                                     user.uid,
-                                    FoodInfo(
-                                      foodtoreceive: null,
-                                    ));
+                                    "FoodInfo()");
 
                                 Navigator.push(
                                   context,
@@ -696,9 +694,7 @@ class _RecommendLodgeListState extends State<RecommendLodgeList> {
                                 //LodgeInfo이동시 analytics 기록
                                 firebaseScreenViewChanged(
                                     user.uid,
-                                    LodgeInfo(
-                                      lodgetoreceive: null,
-                                    ));
+                                    "LodgeInfo()");
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -979,9 +975,7 @@ class _RecommendPlaceListState extends State<RecommendPlaceList> {
                               onTap: () {
                                 firebaseScreenViewChanged(
                                     user.uid,
-                                    PlaceInfo(
-                                      placetoreceive: null,
-                                    ));
+                                    "PlaceInfo()");
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(

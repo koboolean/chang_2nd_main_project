@@ -499,48 +499,6 @@ class _LodgeInfoState extends State<LodgeInfo> {
                             ),
                           ),
                         ),
-                        Spacer(),
-                        GestureDetector(
-                          onTap: () async {
-                            //숙소 길안내 이벤트
-                            firebaseAnalyticsLog(
-                                user.uid, Text('Tmap lodgeGuide'));
-                            final idx = widget.lodgetoreceive.lodgeIdx;
-
-                            final geocode = FirebaseFirestore.instance
-                                .collection('geocode_lodgeArea')
-                                .where('idx', isEqualTo: idx);
-                            final geoValue = await geocode.get();
-
-                            final latLong = geoValue.docs.toList();
-                            final lat = latLong[0]['lat'];
-                            final long = latLong[0]['long'];
-
-                            final Uri toLaunch = Uri.parse(
-                                'https://apis.openapi.sk.com/tmap/app/routes?appKey=l7xx3644da34d8ad4b5c9b34f5610c111a16&name=${widget.lodgetoreceive.lodgeName}&lon=${long}&lat=${lat}');
-                            _launchInBrowser(toLaunch);
-                          },
-                          child: Container(
-                            margin: EdgeInsets.fromLTRB(0, 4, 8, 10),
-                            height: 43,
-                            width: 68,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16),
-                              color: Colors.red[400]!.withOpacity(0.4),
-                            ),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "#길 안내",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white,
-                                  fontSize: 11,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
                       ],
                     ),
                   ],
@@ -684,6 +642,39 @@ class _LodgeInfoState extends State<LodgeInfo> {
               ],
             ),
           ),
+          floatingActionButton: FloatingActionButton(
+              backgroundColor: Color.fromRGBO(221, 81, 37, 1),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.turn_slight_right),
+                  Text(
+                    '길안내',
+                    style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  )
+                ],
+              ),
+              onPressed: () async {
+                //음식점 길안내 로직
+                firebaseAnalyticsLog(user.uid, Text('Tmap foodGuide'));
+                final idx = widget.lodgetoreceive.lodgeIdx;
+
+                final geocode = FirebaseFirestore.instance
+                    .collection('geocode_lodgeArea')
+                    .where('idx', isEqualTo: idx);
+                final geoValue = await geocode.get();
+
+                final latLong = geoValue.docs.toList();
+                final lat = latLong[0]['lat'];
+                final long = latLong[0]['long'];
+
+                final Uri toLaunch = Uri.parse(
+                    'https://apis.openapi.sk.com/tmap/app/routes?appKey=l7xx3644da34d8ad4b5c9b34f5610c111a16&name=${widget.lodgetoreceive.lodgeName}&lon=${long}&lat=${lat}');
+                _launchInBrowser(toLaunch);
+              }),
         );
       },
     );
@@ -848,48 +839,6 @@ class _PlaceInfoState extends State<PlaceInfo> {
                             ),
                           ),
                         ),
-                        Spacer(),
-                        GestureDetector(
-                          onTap: () async {
-                            //식당 길안내 이벤트
-                            firebaseAnalyticsLog(
-                                user.uid, Text('Tmap placeGuide'));
-                            final idx = widget.placetoreceive.placeIdx;
-
-                            final geocode = FirebaseFirestore.instance
-                                .collection('geocode_lodgeArea')
-                                .where('idx', isEqualTo: idx);
-                            final geoValue = await geocode.get();
-
-                            final latLong = geoValue.docs.toList();
-                            final lat = latLong[0]['lat'];
-                            final long = latLong[0]['long'];
-
-                            final Uri toLaunch = Uri.parse(
-                                'https://apis.openapi.sk.com/tmap/app/routes?appKey=l7xx3644da34d8ad4b5c9b34f5610c111a16&name=${widget.placetoreceive.placeName}&lon=${long}&lat=${lat}');
-                            _launchInBrowser(toLaunch);
-                          },
-                          child: Container(
-                            margin: EdgeInsets.fromLTRB(0, 4, 8, 10),
-                            height: 43,
-                            width: 68,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16),
-                              color: Colors.grey[400]!.withOpacity(0.4),
-                            ),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "#${widget.placetoreceive.placeClassifiaction}",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white,
-                                  fontSize: 11,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
                       ],
                     ),
                   ],
@@ -1030,6 +979,39 @@ class _PlaceInfoState extends State<PlaceInfo> {
               ],
             ),
           ),
+          floatingActionButton: FloatingActionButton(
+              backgroundColor: Color.fromRGBO(221, 81, 37, 1),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.turn_slight_right),
+                  Text(
+                    '길안내',
+                    style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  )
+                ],
+              ),
+              onPressed: () async {
+                //음식점 길안내 로직
+                firebaseAnalyticsLog(user.uid, Text('Tmap foodGuide'));
+                final idx = widget.placetoreceive.placeIdx;
+
+                final geocode = FirebaseFirestore.instance
+                    .collection('geocode_lodgeArea')
+                    .where('idx', isEqualTo: idx);
+                final geoValue = await geocode.get();
+
+                final latLong = geoValue.docs.toList();
+                final lat = latLong[0]['lat'];
+                final long = latLong[0]['long'];
+
+                final Uri toLaunch = Uri.parse(
+                    'https://apis.openapi.sk.com/tmap/app/routes?appKey=l7xx3644da34d8ad4b5c9b34f5610c111a16&name=${widget.placetoreceive.placeName}&lon=${long}&lat=${lat}');
+                _launchInBrowser(toLaunch);
+              }),
         );
       },
     );
