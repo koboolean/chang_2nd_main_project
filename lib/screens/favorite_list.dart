@@ -220,7 +220,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                           child: TabBarView(
                             children: [
                               //favoriteFoodList 확인
-                              (_postFoodList.isEmpty)
+                              (_postFoodList.length < 1)
                                   ? Center(
                                       child: Column(
                                         mainAxisAlignment:
