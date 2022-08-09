@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
+import '../widgets/searchUndefined.dart';
+
 class MySearch extends StatefulWidget {
   MySearch({Key? key}) : super(key: key);
 
@@ -74,6 +76,12 @@ class _MySearchState extends State<MySearch> with SingleTickerProviderStateMixin
             child: TextField(
               controller: _controller, //textfield 수정연산자
               decoration: InputDecoration(
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Color.fromRGBO(221, 81, 37, 1)),
+                ),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Color.fromRGBO(221, 81, 37, 1)),
+                ),
                 filled: true,
                 fillColor: Color.fromRGBO(243, 243, 243, 1),
                 hintText: "가고 싶은 곳을 검색하세요.",
@@ -81,13 +89,11 @@ class _MySearchState extends State<MySearch> with SingleTickerProviderStateMixin
                   onPressed: _controller.clear,
                   icon: Icon(
                     Icons.cancel_rounded,
+                    color: Color.fromRGBO(221, 81, 37, 1),
                     size: 18,
                   ),
                 ),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
-                  borderRadius: BorderRadius.circular(8),
-                ),
+
               ),
               onChanged: (val) {
                 setState(() {
@@ -99,7 +105,6 @@ class _MySearchState extends State<MySearch> with SingleTickerProviderStateMixin
               },
             ),
           ),
-          //오른쪽 취소 버튼
           actions: [
             SizedBox(
               width: 20,
@@ -123,159 +128,9 @@ class _MySearchState extends State<MySearch> with SingleTickerProviderStateMixin
                 ),
                 Expanded(
                   child: TabBarView(children: [
-                    Center(
-                      child: Column(
-                        mainAxisAlignment : MainAxisAlignment.center,
-                        crossAxisAlignment : CrossAxisAlignment.center,
-                        children: [
-                          FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: SvgPicture.asset(
-                              'assets/images/sad.svg',
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Text(
-                            "아직 찜한 맛집이 없어요",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17,
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          GestureDetector(
-                            onTap: () {}, //제주도 숙소 클릭시 이동
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: Color.fromRGBO(
-                                      221, 81, 37, 1),
-                                  border: Border.all(
-                                    color: Colors.transparent,
-                                  ),
-                                  borderRadius:
-                                  BorderRadius.all(
-                                    Radius.circular(20),
-                                  )),
-                              child: Padding(
-                                padding:
-                                const EdgeInsets.all(8.0),
-                                child: Text(
-                                  "제주도 맛집 구경하기",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 100),
-                        ],
-                      ),
-                    ),
-                    Center(
-                      child: Column(
-                        mainAxisAlignment:MainAxisAlignment.center,
-                        crossAxisAlignment:CrossAxisAlignment.center,
-                        children: [
-                          FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: SvgPicture.asset(
-                              'assets/images/sad.svg',
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Text(
-                            "아직 찜한 맛집이 없어요",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17,
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          GestureDetector(
-                            onTap: () {}, //제주도 숙소 클릭시 이동
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: Color.fromRGBO(
-                                      221, 81, 37, 1),
-                                  border: Border.all(
-                                    color: Colors.transparent,
-                                  ),
-                                  borderRadius:
-                                  BorderRadius.all(
-                                    Radius.circular(20),
-                                  )),
-                              child: Padding(
-                                padding:
-                                const EdgeInsets.all(8.0),
-                                child: Text(
-                                  "제주도 맛집 구경하기",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 100),
-                        ],
-                      ),
-                    ),
-                    Center(
-                      child: Column(
-                        mainAxisAlignment:MainAxisAlignment.center,
-                        crossAxisAlignment:CrossAxisAlignment.center,
-                        children: [
-                          FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: SvgPicture.asset(
-                              'assets/images/sad.svg',
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Text(
-                            "아직 찜한 맛집이 없어요",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17,
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          GestureDetector(
-                            onTap: () {}, //제주도 숙소 클릭시 이동
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: Color.fromRGBO(
-                                      221, 81, 37, 1),
-                                  border: Border.all(
-                                    color: Colors.transparent,
-                                  ),
-                                  borderRadius:
-                                  BorderRadius.all(
-                                    Radius.circular(20),
-                                  )),
-                              child: Padding(
-                                padding:
-                                const EdgeInsets.all(8.0),
-                                child: Text(
-                                  "제주도 맛집 구경하기",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 100),
-                        ],
-                      ),
-                    )
+                    showUndfinedValue(),
+                    showUndfinedValue(),
+                    showUndfinedValue()
                   ],),
                 )
               ]
