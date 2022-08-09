@@ -627,7 +627,7 @@ class _RecommendLodgeListState extends State<RecommendLodgeList> {
                     shrinkWrap: true,
                     physics: ClampingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
-                    itemCount: 6,
+                    itemCount: 10,
                     itemBuilder: (context, index) {
                       final doc = documents[ramdomlodgeIndexList[index]];
 
