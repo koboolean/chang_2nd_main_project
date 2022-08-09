@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:chang_2nd_main_project/screens/place_info.dart';
 import 'package:chang_2nd_main_project/screens/place_list.dart';
+import 'package:chang_2nd_main_project/screens/search_page.dart';
 import 'package:chang_2nd_main_project/services/favorite_service.dart';
 import 'package:chang_2nd_main_project/services/firebase_analytics.dart';
 import 'package:chang_2nd_main_project/services/travel_service.dart';
@@ -83,14 +84,12 @@ class _PlaceState extends State<Place> {
                     child: CupertinoButton(
                       padding: EdgeInsets.zero,
                       onPressed: () {
-                        showTobeContinue(context);
-                        /*Navigator.push(
-
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => MySearch(),
                           ),
-                        );*/
+                        );
                       },
                       child: Container(
                         height: 42,

@@ -58,12 +58,8 @@ class _FoodInfoState extends State<FoodInfo> {
                   onPressed: () {
                     //공유 이벤트 발생
                     firebaseAnalyticsLog(user.uid, "Share()");
-
-                    print("share Click!!");
                     Share.share(
-                      "[SOLT]\n"
-                          + widget.foodtoreceive.foodAddress
-                          + widget.foodtoreceive.foodName,
+                      "[SOLT]\n${user.displayName}님께서 장소를 공유하셨어요\n${widget.foodtoreceive.foodAddress}\n[음식점명 : ${widget.foodtoreceive.foodName}]"
                     );
                   },
                 ),
@@ -402,9 +398,8 @@ class _LodgeInfoState extends State<LodgeInfo> {
                   onPressed: () {
                     //공유 이벤트 발생
                     firebaseAnalyticsLog(user.uid, "Share()");
-                    print("share Click!!");
                     Share.share(
-                      widget.lodgetoreceive.lodgeAddress,
+                      "[SOLT]\n${user.displayName}님께서 장소를 공유하셨어요\n${widget.lodgetoreceive.lodgeAddress}\n[숙소명 :${widget.lodgetoreceive.lodgeName}]"
                     );
                   },
                 ),
@@ -745,7 +740,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                     //공유 이벤트 발생
                     firebaseAnalyticsLog(user.uid, "Share()");
                     Share.share(
-                      widget.placetoreceive.placeAddress,
+                      "[SOLT]\n${user.displayName}님께서 장소를 공유하셨어요\n${widget.placetoreceive.placeAddress}\n[관광지명 :${widget.placetoreceive.placeName}]",
                     );
                   },
                 ),

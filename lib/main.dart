@@ -1,5 +1,5 @@
 import 'package:chang_2nd_main_project/screens/login.dart';
-import 'package:chang_2nd_main_project/screens/main_page.dart';
+import 'package:chang_2nd_main_project/screens/splash.dart';
 import 'package:chang_2nd_main_project/services/auth_service.dart';
 import 'package:chang_2nd_main_project/services/favorite_service.dart';
 import 'package:chang_2nd_main_project/services/schedule_service.dart';
@@ -8,7 +8,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:geolocator/geolocator.dart';
-//import 'package:flutter_svg/flutter_svg.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // main 함수에서 async 사용하기 위함
@@ -52,7 +51,7 @@ class _MyAppState extends State<MyApp> {
           primaryColor: Color.fromRGBO(221, 81, 37, 1),
           backgroundColor: Colors.white,
           iconTheme: IconThemeData(color: Color.fromRGBO(221, 81, 37, 1))),
-      home: user == null ? LoginPage() : HomePage(),
+      home: user == null ? LoginPage() : SplashPage(),
     );
   }
 }
