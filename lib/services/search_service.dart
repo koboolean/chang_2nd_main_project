@@ -6,15 +6,15 @@ class SearchService extends ChangeNotifier {
   final lodgeCollection = FirebaseFirestore.instance.collection('lodgeArea');
   final placeCollection = FirebaseFirestore.instance.collection('placeArea');
 
-  Future<QuerySnapshot> foodRead() async{
+  Future<QuerySnapshot> foodRead(String type) async{
     return foodCollection.get();
   }
 
-  Future<QuerySnapshot> lodgeRead() async{
+  Future<QuerySnapshot> lodgeRead(String type) async{
     return lodgeCollection.get();
   }
 
-  Future<QuerySnapshot> placeRead() async{
+  Future<QuerySnapshot> placeRead(String type) async{
     return placeCollection.get();
   }
 

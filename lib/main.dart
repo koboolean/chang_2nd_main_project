@@ -3,6 +3,7 @@ import 'package:chang_2nd_main_project/screens/splash.dart';
 import 'package:chang_2nd_main_project/services/auth_service.dart';
 import 'package:chang_2nd_main_project/services/favorite_service.dart';
 import 'package:chang_2nd_main_project/services/schedule_service.dart';
+import 'package:chang_2nd_main_project/services/search_service.dart';
 import 'package:chang_2nd_main_project/services/travel_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ void main() async {
         ChangeNotifierProvider(create: (context) => FavoriteFoodService()),
         ChangeNotifierProvider(create: (context) => FavoriteLodgeService()),
         ChangeNotifierProvider(create: (context) => FavoritePlaceService()),
+        ChangeNotifierProvider(create : (context) => SearchService()),
       ],
       child: const MyApp(),
     ),
