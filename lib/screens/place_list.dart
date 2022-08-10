@@ -345,7 +345,7 @@ class _FoodListState extends State<FoodList> {
                               ),
                             ),
                             // 하트 아이콘
-                            Positioned(
+                            /*Positioned(
                               top: 10,
                               right: 30,
                               child: GestureDetector(
@@ -378,7 +378,7 @@ class _FoodListState extends State<FoodList> {
                                   ),
                                 ),
                               ),
-                            ),
+                            ),*/
                             // 해시태그 키워드
                             Positioned(
                               bottom: 10,
@@ -603,7 +603,7 @@ class _LodgeListState extends State<LodgeList> {
                               ),
                             ),
                             // 하트 아이콘
-                            Positioned(
+                            /*Positioned(
                               top: 10,
                               right: 30,
                               child: GestureDetector(
@@ -636,7 +636,7 @@ class _LodgeListState extends State<LodgeList> {
                                   ),
                                 ),
                               ),
-                            ),
+                            ),*/
                             // 해시태그 키워드
                             Positioned(
                               bottom: 10,
@@ -853,7 +853,7 @@ class _PlacetogoListState extends State<PlacetogoList> {
                               ),
                             ),
                             // 하트 아이콘
-                            Positioned(
+                            /*Positioned(
                               top: 10,
                               right: 30,
                               child: GestureDetector(
@@ -886,7 +886,7 @@ class _PlacetogoListState extends State<PlacetogoList> {
                                   ),
                                 ),
                               ),
-                            ),
+                            ),*/
                             // 해시태그 키워드
                             Positioned(
                               bottom: 10,
