@@ -214,10 +214,22 @@ class _MySearchState extends State<MySearch> with SingleTickerProviderStateMixin
                         onTap: () {
                           Navigator.push(
                             context,
+                            type == "palace" ?
                             MaterialPageRoute(
                                 builder: (context) => PlaceInfo(
                                   placetoreceive: data,
-                                )),
+                                )
+                            ) : type == "food" ?
+                            MaterialPageRoute(
+                                builder: (context) => FoodInfo(
+                                  foodtoreceive: data,
+                                )
+                            ) :
+                            MaterialPageRoute(
+                                builder: (context) => LodgeInfo(
+                                  lodgetoreceive: data,
+                                )
+                            )
                           );
                         },
                         child: Container(
