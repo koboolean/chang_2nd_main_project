@@ -241,15 +241,15 @@ class FavoriteListService extends ChangeNotifier{
           postIdList.sublist(i, i + 10 > postIdList.length ? postIdList.length : i + 10));
     }
 
-    final List<Map<String, dynamic>> foodList = [];
+    final List<Map<String, dynamic>> lodgeList = [];
 
     for(var i = 0; i < subList.length; i++){
       var list = await SearchService().lodgeCollection.where('idx', whereIn: subList[i]).get();
       var data = list.docs.map((doc) => doc.data()).toList();
-      foodList.addAll(data);
+      lodgeList.addAll(data);
     }
 
-    return foodList;
+    return lodgeList;
 
   }
 
@@ -263,15 +263,15 @@ class FavoriteListService extends ChangeNotifier{
           postIdList.sublist(i, i + 10 > postIdList.length ? postIdList.length : i + 10));
     }
 
-    final List<Map<String, dynamic>> foodList = [];
+    final List<Map<String, dynamic>> placeList = [];
 
     for(var i = 0; i < subList.length; i++){
       var list = await SearchService().placeCollection.where('idx', whereIn: subList[i]).get();
       var data = list.docs.map((doc) => doc.data()).toList();
-      foodList.addAll(data);
+      placeList.addAll(data);
     }
 
-    return foodList;
+    return placeList;
 
   }
 }
