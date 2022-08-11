@@ -16,6 +16,7 @@ class MyPage extends StatefulWidget {
 
 class _MyPageState extends State<MyPage> {
   TextEditingController jobController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final authService = context.read<AuthService>();

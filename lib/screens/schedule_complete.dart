@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 //import 'dart:io';
 import 'dart:ui';
 import 'package:chang_2nd_main_project/services/schedule_service.dart';
@@ -7,13 +8,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:provider/provider.dart';
+
 //import 'package:webview_flutter/webview_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:webview_flutter_plus/webview_flutter_plus.dart';
 
 class ScheduleComplete extends StatefulWidget {
   ScheduleComplete({super.key, required this.daysTabBar});
+
   final int daysTabBar;
+
   @override
   State<ScheduleComplete> createState() => _ScheduleCompleteState();
 }
@@ -22,6 +26,7 @@ class _ScheduleCompleteState extends State<ScheduleComplete>
     with TickerProviderStateMixin {
   WebViewPlusController? _controller;
   WebViewController? _webViewController;
+
   //Set<JavascriptChannel>? channel;
   late Position position;
   late TabController TabBarController;

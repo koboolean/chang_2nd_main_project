@@ -20,8 +20,8 @@ class FavoriteCity extends StatefulWidget {
 class _FavoriteCityPageState extends State<FavoriteCity> {
   final ValueNotifier<int> count = ValueNotifier<int>(0);
 
-  void selectCnt(uid) async{
-    count.value = await FavoriteService().getFavorite(uid);
+  void selectCnt(uid) async {
+    count.value = await FavoriteListService().getFavorite(uid);
   }
 
   @override
@@ -83,8 +83,7 @@ class _FavoriteCityPageState extends State<FavoriteCity> {
                     GestureDetector(
                       onTap: () {
                         //favorite 리스트 확인 이벤트 발생
-                        firebaseScreenViewChanged(
-                            user.uid, "FavoriteList()");
+                        firebaseScreenViewChanged(user.uid, "FavoriteList()");
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -103,18 +102,18 @@ class _FavoriteCityPageState extends State<FavoriteCity> {
                     Spacer(),
                     ValueListenableBuilder(
                       valueListenable: count,
-                      builder:(BuildContext context, int value, Widget? child) {
+                      builder:
+                          (BuildContext context, int value, Widget? child) {
                         return Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            (count.value == 0) ?
-                            Text("") :
-                            Text('총 ${count.value}곳',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.grey[500],
-                            )
-                            ),
+                            (count.value == 0)
+                                ? Text("")
+                                : Text('총 ${count.value}곳',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.grey[500],
+                                    )),
                           ],
                         );
                       },
@@ -131,8 +130,7 @@ class _FavoriteCityPageState extends State<FavoriteCity> {
                   firebaseScreenViewChanged(user.uid, "FavoriteList()");
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => FavoriteList()),
+                    MaterialPageRoute(builder: (context) => FavoriteList()),
                   );
                 },
                 child: Container(

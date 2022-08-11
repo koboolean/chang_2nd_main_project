@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:chang_2nd_main_project/screens/place_info.dart';
+import 'package:chang_2nd_main_project/services/search_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -177,19 +178,100 @@ class FavoritePlaceService extends ChangeNotifier {
   }
 }
 
-class FavoriteService extends ChangeNotifier{
+class FavoriteListService extends ChangeNotifier{
   final foodCollection = FirebaseFirestore.instance.collection('foodNameUser');
   final lodgeCollection = FirebaseFirestore.instance.collection('lodgeNameUser');
   final placeCollection = FirebaseFirestore.instance.collection('placeNameUser');
 
+  List<String> favFoodList = [];
+  List<String> favLodgeList = [];
+  List<String> favPlaceList = [];
 
   Future<int> getFavorite(String uid) async{
-    var foodList = await foodCollection.where("userId",isEqualTo: uid).get();
-    var lodgeList = await lodgeCollection.where("userId",isEqualTo: uid).get();
-    var placeList = await placeCollection.where("userId",isEqualTo: uid).get();
+   var foodList = await getFood(uid);
+    var lodgeList = await getLodge(uid);
+    var placeList = await getPlace(uid);
 
     var count = foodList.docs.length + lodgeList.docs.length + placeList.docs.length;
 
     return count;
+  }
+
+  Future<QuerySnapshot> getFood(String uid) async{
+    return await foodCollection.where("userId",isEqualTo: uid).get();
+  }
+
+  Future<QuerySnapshot> getLodge(String uid) async{
+    return await lodgeCollection.where("userId",isEqualTo: uid).get();
+  }
+
+  Future<QuerySnapshot> getPlace(String uid) async{
+    return await placeCollection.where("userId",isEqualTo: uid).get();
+  }
+
+  Future<List<Map<String, dynamic>>> getFavoriteFood(String uid) async{
+    final food = await await foodCollection.where("userId",isEqualTo: uid).get();
+    final postIdList = food.docs.map((doc) => doc.data()["idx"]).toList();
+
+    List<List<dynamic>> subList = [];
+    for (var i = 0; i < postIdList.length; i += 10) {
+      subList.add(
+          postIdList.sublist(i, i + 10 > postIdList.length ? postIdList.length : i + 10));
+    }
+
+    final List<Map<String, dynamic>> foodList = [];
+
+    for(var i = 0; i < subList.length; i++){
+      var list = await SearchService().foodCollection.where('idx', whereIn: subList[i]).get();
+      var data = list.docs.map((doc) => doc.data()).toList();
+      foodList.addAll(data);
+    }
+
+    return foodList;
+
+  }
+
+  Future<List<Map<String, dynamic>>> getFavoriteLodge(String uid) async{
+    final food = await await lodgeCollection.where("userId",isEqualTo: uid).get();
+    final postIdList = food.docs.map((doc) => doc.data()["idx"]).toList();
+
+    List<List<dynamic>> subList = [];
+    for (var i = 0; i < postIdList.length; i += 10) {
+      subList.add(
+          postIdList.sublist(i, i + 10 > postIdList.length ? postIdList.length : i + 10));
+    }
+
+    final List<Map<String, dynamic>> foodList = [];
+
+    for(var i = 0; i < subList.length; i++){
+      var list = await SearchService().lodgeCollection.where('idx', whereIn: subList[i]).get();
+      var data = list.docs.map((doc) => doc.data()).toList();
+      foodList.addAll(data);
+    }
+
+    return foodList;
+
+  }
+
+  Future<List<Map<String, dynamic>>> getFavoritePlace(String uid) async{
+    final food = await await placeCollection.where("userId",isEqualTo: uid).get();
+    final postIdList = food.docs.map((doc) => doc.data()["idx"]).toList();
+
+    List<List<dynamic>> subList = [];
+    for (var i = 0; i < postIdList.length; i += 10) {
+      subList.add(
+          postIdList.sublist(i, i + 10 > postIdList.length ? postIdList.length : i + 10));
+    }
+
+    final List<Map<String, dynamic>> foodList = [];
+
+    for(var i = 0; i < subList.length; i++){
+      var list = await SearchService().placeCollection.where('idx', whereIn: subList[i]).get();
+      var data = list.docs.map((doc) => doc.data()).toList();
+      foodList.addAll(data);
+    }
+
+    return foodList;
+
   }
 }

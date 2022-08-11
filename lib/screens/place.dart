@@ -403,8 +403,7 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                               onTap: () {
                                 //FoodInfo이동시 analytics 기록
                                 firebaseScreenViewChanged(
-                                    user.uid,
-                                    "FoodInfo()");
+                                    user.uid, "FoodInfo()");
 
                                 Navigator.push(
                                   context,
@@ -440,7 +439,6 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                               right: 5,
                               child: InkWell(
                                 onTap: () {
-
                                   User? user =
                                       FirebaseAuth.instance.currentUser;
 
@@ -692,8 +690,7 @@ class _RecommendLodgeListState extends State<RecommendLodgeList> {
                               onTap: () {
                                 //LodgeInfo이동시 analytics 기록
                                 firebaseScreenViewChanged(
-                                    user.uid,
-                                    "LodgeInfo()");
+                                    user.uid, "LodgeInfo()");
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -973,8 +970,7 @@ class _RecommendPlaceListState extends State<RecommendPlaceList> {
                               //PlaceInfo이동시 analytics 기록
                               onTap: () {
                                 firebaseScreenViewChanged(
-                                    user.uid,
-                                    "PlaceInfo()");
+                                    user.uid, "PlaceInfo()");
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(

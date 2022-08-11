@@ -23,6 +23,7 @@ class _HomePageState extends State<HomePage> {
     //AddSchedule(),
     MyPage()
   ];
+
   void _onTap(int index) {
     setState(() {
       _currentIndex = index;

@@ -18,9 +18,9 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  googleLogin(authService) async{
+  googleLogin(authService) async {
     authService.loginWithGoogle(
-      onSuccess : (){
+      onSuccess: () {
         // 로그인 성공
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text("로그인 성공"),
@@ -29,8 +29,7 @@ class _LoginPageState extends State<LoginPage> {
         // HomePage로 이동
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(
-              builder: (context) => HomePage()),
+          MaterialPageRoute(builder: (context) => HomePage()),
         );
       },
       onError: (err) {
@@ -42,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  loginService(authService){
+  loginService(authService) {
     // 로그인
     authService.signIn(
       email: "aa@naver.com",
@@ -56,8 +55,7 @@ class _LoginPageState extends State<LoginPage> {
         // HomePage로 이동
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(
-              builder: (context) => HomePage()),
+          MaterialPageRoute(builder: (context) => HomePage()),
         );
       },
       onError: (err) {
@@ -67,7 +65,6 @@ class _LoginPageState extends State<LoginPage> {
         ));
       },
     );
-
   }
 
   @override
@@ -76,78 +73,89 @@ class _LoginPageState extends State<LoginPage> {
       builder: (context, authService, child) {
         final user = authService.currentUser();
         return Scaffold(
-          body: Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image : AssetImage("assets/images/login_title.jpeg"),
-                fit: BoxFit.fitWidth
-              ),
-            ),
-            child: Column(
-              children: [
-                SizedBox(height: MediaQuery.of(context).size.height/2-100,),
-                Column(
-                  children: [
-                    Text('1인 여행의 모든 것',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontFamily: 'SpoqaHanSansNeo',
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    SizedBox(height: 20,),
-                    Image(image: svg_provider.Svg("assets/images/title_logo.svg", size: Size(153,36))),
-                  ],
+            body: Container(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage("assets/images/login_title.jpeg"),
+                      fit: BoxFit.fitWidth),
                 ),
-                Spacer(),
-                Column(
+                child: Column(
                   children: [
-                    MaterialButton(
-                      child: Container(
-                          width: 300,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: AssetImage("assets/images/google_login.png"),
-                                fit: BoxFit.fill),
-                          )
-                      ),
-                      // ),
-                      onPressed: () async{
-                        googleLogin(authService);
-                      },
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height / 2 - 100,
                     ),
-                    SizedBox(height: 12),
-                    Platform.isIOS ?
-                        Column(
-                          children: [
-                            MaterialButton(
-                              child: Container(
-                                width: 300,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage("assets/images/apple_login.png"),
-                                      fit: BoxFit.fill),
-                                ),
-                              ),
-                              // ),
-                              onPressed: () {
-                                loginService(authService);
-                              },
-                            ),
-                            SizedBox(height: 73,)
-                          ],
-                        )
-                        : SizedBox(height: 130,)
-                  ],),
-              ],
-            )
-            )
-        );
+                    Column(
+                      children: [
+                        Text(
+                          '1인 여행의 모든 것',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontFamily: 'SpoqaHanSansNeo',
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Image(
+                            image: svg_provider.Svg(
+                                "assets/images/title_logo.svg",
+                                size: Size(153, 36))),
+                      ],
+                    ),
+                    Spacer(),
+                    Column(
+                      children: [
+                        MaterialButton(
+                          child: Container(
+                              width: 300,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage(
+                                        "assets/images/google_login.png"),
+                                    fit: BoxFit.fill),
+                              )),
+                          // ),
+                          onPressed: () async {
+                            googleLogin(authService);
+                          },
+                        ),
+                        SizedBox(height: 12),
+                        Platform.isIOS
+                            ? Column(
+                                children: [
+                                  MaterialButton(
+                                    child: Container(
+                                      width: 300,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                                "assets/images/apple_login.png"),
+                                            fit: BoxFit.fill),
+                                      ),
+                                    ),
+                                    // ),
+                                    onPressed: () {
+                                      loginService(authService);
+                                    },
+                                  ),
+                                  SizedBox(
+                                    height: 73,
+                                  )
+                                ],
+                              )
+                            : SizedBox(
+                                height: 130,
+                              )
+                      ],
+                    ),
+                  ],
+                )));
       },
     );
   }

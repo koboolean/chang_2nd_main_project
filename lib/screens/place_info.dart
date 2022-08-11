@@ -59,8 +59,7 @@ class _FoodInfoState extends State<FoodInfo> {
                     //공유 이벤트 발생
                     firebaseAnalyticsLog(user.uid, "Share()");
                     Share.share(
-                      "[SOLT]\n${user.displayName}님께서 장소를 공유하셨어요\n${widget.foodtoreceive.foodAddress}\n[음식점명 : ${widget.foodtoreceive.foodName}]"
-                    );
+                        "[SOLT]\n${user.displayName}님께서 장소를 공유하셨어요\n${widget.foodtoreceive.foodAddress}\n[음식점명 : ${widget.foodtoreceive.foodName}]");
                   },
                 ),
               ),
@@ -353,6 +352,7 @@ class _FoodInfoState extends State<FoodInfo> {
 
 class LodgeInfo extends StatefulWidget {
   var lodgetoreceive;
+
   LodgeInfo({Key? key, required this.lodgetoreceive}) : super(key: key);
 
   @override
@@ -399,8 +399,7 @@ class _LodgeInfoState extends State<LodgeInfo> {
                     //공유 이벤트 발생
                     firebaseAnalyticsLog(user.uid, "Share()");
                     Share.share(
-                      "[SOLT]\n${user.displayName}님께서 장소를 공유하셨어요\n${widget.lodgetoreceive.lodgeAddress}\n[숙소명 :${widget.lodgetoreceive.lodgeName}]"
-                    );
+                        "[SOLT]\n${user.displayName}님께서 장소를 공유하셨어요\n${widget.lodgetoreceive.lodgeAddress}\n[숙소명 :${widget.lodgetoreceive.lodgeName}]");
                   },
                 ),
               ),
@@ -693,6 +692,7 @@ class _LodgeInfoState extends State<LodgeInfo> {
 
 class PlaceInfo extends StatefulWidget {
   var placetoreceive;
+
   PlaceInfo({Key? key, required this.placetoreceive}) : super(key: key);
 
   @override

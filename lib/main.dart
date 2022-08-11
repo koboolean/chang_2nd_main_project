@@ -22,6 +22,7 @@ void main() async {
         ChangeNotifierProvider(create: (context) => FavoriteFoodService()),
         ChangeNotifierProvider(create: (context) => FavoriteLodgeService()),
         ChangeNotifierProvider(create: (context) => FavoritePlaceService()),
+        ChangeNotifierProvider(create: (context) => FavoriteListService()),
         ChangeNotifierProvider(create : (context) => SearchService()),
       ],
       child: const MyApp(),
