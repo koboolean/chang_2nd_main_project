@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:chang_2nd_main_project/screens/place_info.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -172,5 +174,22 @@ class FavoritePlaceService extends ChangeNotifier {
         .get();
 
     postPlaceList = postSnapshot.docs.map((doc) => doc.data()).toList();
+  }
+}
+
+class FavoriteService extends ChangeNotifier{
+  final foodCollection = FirebaseFirestore.instance.collection('foodNameUser');
+  final lodgeCollection = FirebaseFirestore.instance.collection('lodgeNameUser');
+  final placeCollection = FirebaseFirestore.instance.collection('placeNameUser');
+
+
+  Future<int> getFavorite(String uid) async{
+    var foodList = await foodCollection.where("userId",isEqualTo: uid).get();
+    var lodgeList = await lodgeCollection.where("userId",isEqualTo: uid).get();
+    var placeList = await placeCollection.where("userId",isEqualTo: uid).get();
+
+    var count = foodList.docs.length + lodgeList.docs.length + placeList.docs.length;
+
+    return count;
   }
 }

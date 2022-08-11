@@ -1,6 +1,3 @@
-import 'dart:developer';
-import 'dart:ffi';
-
 import 'package:chang_2nd_main_project/model/foodInfo.dart';
 import 'package:chang_2nd_main_project/model/lodgeInfo.dart';
 import 'package:chang_2nd_main_project/model/placeInfo.dart';
@@ -20,16 +17,12 @@ class MySearch extends StatefulWidget {
 }
 
 class _MySearchState extends State<MySearch> with SingleTickerProviderStateMixin{
-  var _context;
-
-
-  //검색 리스트 확인 부분 입력
+   //검색 리스트 확인 부분 입력
   String type = "";
 
-  //검색연산자 입력
   String name = "";
   final _controller = TextEditingController();
-  late TabController _tabController;
+  //late TabController _tabController;
 
   final List<Tab> myTabs = <Tab>[
     Tab(text: '맛집'),
@@ -82,7 +75,7 @@ class _MySearchState extends State<MySearch> with SingleTickerProviderStateMixin
       for(var doc in docs){
         var selNm = doc.get("name");
         if(selNm.toString().contains(name)) {
-          final send;
+          final Object send;
           if(type == "food"){
             String foodSubtitle = doc.get('Subtitle');
             String foodAddress = doc.get('address');
@@ -212,10 +205,8 @@ class _MySearchState extends State<MySearch> with SingleTickerProviderStateMixin
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                //Stack 구조
                 Stack(
                   children: [
-                    //사진 박스
                     Padding(
                       padding: const EdgeInsets.only(
                           left: 18.0, right: 18.0),
@@ -386,7 +377,7 @@ class _MySearchState extends State<MySearch> with SingleTickerProviderStateMixin
                       child: Consumer<SearchService>(
                           builder: (context, searchService, child){
                             return FutureBuilder<QuerySnapshot>(
-                              future: searchService.foodRead(type),
+                              future: searchService.foodRead(),
                               builder: (context, snapshot) {
                                 final docs = snapshot.data?.docs ?? []; // 문서들 가져오기
                                 if (docs.isEmpty) {
@@ -406,7 +397,7 @@ class _MySearchState extends State<MySearch> with SingleTickerProviderStateMixin
                       child: Consumer<SearchService>(
                           builder: (context, searchService, child){
                             return FutureBuilder<QuerySnapshot>(
-                              future: searchService.lodgeRead(type),
+                              future: searchService.lodgeRead(),
                               builder: (context, snapshot) {
                                 final docs = snapshot.data?.docs ?? []; // 문서들 가져오기
                                 if (docs.isEmpty) {
@@ -426,7 +417,7 @@ class _MySearchState extends State<MySearch> with SingleTickerProviderStateMixin
                       child: Consumer<SearchService>(
                           builder: (context, searchService, child){
                             return FutureBuilder<QuerySnapshot>(
-                              future: searchService.placeRead(type),
+                              future: searchService.placeRead(),
                               builder: (context, snapshot) {
                                 final docs = snapshot.data?.docs ?? []; // 문서들 가져오기
                                 if (docs.isEmpty) {
