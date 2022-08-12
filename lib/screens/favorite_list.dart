@@ -1,4 +1,5 @@
 import 'package:chang_2nd_main_project/screens/place_info.dart';
+import 'package:chang_2nd_main_project/screens/place_list.dart';
 import 'package:chang_2nd_main_project/services/auth_service.dart';
 import 'package:chang_2nd_main_project/services/favorite_service.dart';
 import 'package:flutter/material.dart';
@@ -237,7 +238,14 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                         ),
                                         SizedBox(height: 10),
                                         GestureDetector(
-                                          onTap: () {}, //제주도 숙소 클릭시 이동
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PlaceList()),
+                                            );
+                                          }, //제주도 숙소 클릭시 이동
                                           child: Container(
                                             decoration: BoxDecoration(
                                                 color: Color.fromRGBO(
@@ -543,7 +551,14 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                         ),
                                         SizedBox(height: 10),
                                         GestureDetector(
-                                          onTap: () {}, //제주도 숙소 클릭시 이동
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PlaceList()),
+                                            );
+                                          }, //제주도 숙소 클릭시 이동
                                           child: Container(
                                             decoration: BoxDecoration(
                                                 color: Color.fromRGBO(
@@ -834,7 +849,14 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                         ),
                                         SizedBox(height: 10),
                                         GestureDetector(
-                                          onTap: () {}, //제주도 관광지 클릭시 이동
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PlaceList()),
+                                            );
+                                          }, //제주도 관광지 클릭시 이동
                                           child: Container(
                                             decoration: BoxDecoration(
                                                 color: Color.fromRGBO(
