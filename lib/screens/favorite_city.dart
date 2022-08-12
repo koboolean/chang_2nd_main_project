@@ -57,7 +57,7 @@ class _FavoriteCityPageState extends State<FavoriteCity> {
             Container(
               alignment: Alignment.centerLeft,
               child: Text(
-                "     찜한 곳들이에요",
+                "찜한 곳들이에요",
                 style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
