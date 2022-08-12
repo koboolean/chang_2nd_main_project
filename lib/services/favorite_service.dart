@@ -18,6 +18,26 @@ class FavoriteFoodService extends ChangeNotifier {
 
   List<Map<String, dynamic>> postFoodList = [];
 
+  void newFoodFavoriteToggle(String uid, String docId) async {
+    var foodAreaCollection = FirebaseFirestore.instance
+        .collection('foodArea')
+        .doc(docId)
+        .collection('user');
+
+    foodAreaCollection.doc(uid).get().then((doc) async {
+      if (doc.exists) {
+        await foodAreaCollection.doc(uid).delete();
+        print("deleted 성공");
+        //return false;
+      } else {
+        await foodAreaCollection.doc(uid).set({
+          "userId": uid,
+        });
+        print("created 성공");
+      }
+    });
+  }
+
   void toggleFavoriteFood(String idx) async {
     // name을 nameid 로 가져오기
     // user id 가져오기
@@ -178,100 +198,112 @@ class FavoritePlaceService extends ChangeNotifier {
   }
 }
 
-class FavoriteListService extends ChangeNotifier{
+class FavoriteListService extends ChangeNotifier {
   final foodCollection = FirebaseFirestore.instance.collection('foodNameUser');
-  final lodgeCollection = FirebaseFirestore.instance.collection('lodgeNameUser');
-  final placeCollection = FirebaseFirestore.instance.collection('placeNameUser');
+  final lodgeCollection =
+      FirebaseFirestore.instance.collection('lodgeNameUser');
+  final placeCollection =
+      FirebaseFirestore.instance.collection('placeNameUser');
 
   List<String> favFoodList = [];
   List<String> favLodgeList = [];
   List<String> favPlaceList = [];
 
-  Future<int> getFavorite(String uid) async{
-   var foodList = await getFood(uid);
+  Future<int> getFavorite(String uid) async {
+    var foodList = await getFood(uid);
     var lodgeList = await getLodge(uid);
     var placeList = await getPlace(uid);
 
-    var count = foodList.docs.length + lodgeList.docs.length + placeList.docs.length;
+    var count =
+        foodList.docs.length + lodgeList.docs.length + placeList.docs.length;
 
     return count;
   }
 
-  Future<QuerySnapshot> getFood(String uid) async{
-    return await foodCollection.where("userId",isEqualTo: uid).get();
+  Future<QuerySnapshot> getFood(String uid) async {
+    return await foodCollection.where("userId", isEqualTo: uid).get();
   }
 
-  Future<QuerySnapshot> getLodge(String uid) async{
-    return await lodgeCollection.where("userId",isEqualTo: uid).get();
+  Future<QuerySnapshot> getLodge(String uid) async {
+    return await lodgeCollection.where("userId", isEqualTo: uid).get();
   }
 
-  Future<QuerySnapshot> getPlace(String uid) async{
-    return await placeCollection.where("userId",isEqualTo: uid).get();
+  Future<QuerySnapshot> getPlace(String uid) async {
+    return await placeCollection.where("userId", isEqualTo: uid).get();
   }
 
-  Future<List<Map<String, dynamic>>> getFavoriteFood(String uid) async{
-    final food = await await foodCollection.where("userId",isEqualTo: uid).get();
+  Future<List<Map<String, dynamic>>> getFavoriteFood(String uid) async {
+    final food =
+        await await foodCollection.where("userId", isEqualTo: uid).get();
     final postIdList = food.docs.map((doc) => doc.data()["idx"]).toList();
 
     List<List<dynamic>> subList = [];
     for (var i = 0; i < postIdList.length; i += 10) {
-      subList.add(
-          postIdList.sublist(i, i + 10 > postIdList.length ? postIdList.length : i + 10));
+      subList.add(postIdList.sublist(
+          i, i + 10 > postIdList.length ? postIdList.length : i + 10));
     }
 
     final List<Map<String, dynamic>> foodList = [];
 
-    for(var i = 0; i < subList.length; i++){
-      var list = await SearchService().foodCollection.where('idx', whereIn: subList[i]).get();
+    for (var i = 0; i < subList.length; i++) {
+      var list = await SearchService()
+          .foodCollection
+          .where('idx', whereIn: subList[i])
+          .get();
       var data = list.docs.map((doc) => doc.data()).toList();
       foodList.addAll(data);
     }
 
     return foodList;
-
   }
 
-  Future<List<Map<String, dynamic>>> getFavoriteLodge(String uid) async{
-    final food = await await lodgeCollection.where("userId",isEqualTo: uid).get();
+  Future<List<Map<String, dynamic>>> getFavoriteLodge(String uid) async {
+    final food =
+        await await lodgeCollection.where("userId", isEqualTo: uid).get();
     final postIdList = food.docs.map((doc) => doc.data()["idx"]).toList();
 
     List<List<dynamic>> subList = [];
     for (var i = 0; i < postIdList.length; i += 10) {
-      subList.add(
-          postIdList.sublist(i, i + 10 > postIdList.length ? postIdList.length : i + 10));
+      subList.add(postIdList.sublist(
+          i, i + 10 > postIdList.length ? postIdList.length : i + 10));
     }
 
     final List<Map<String, dynamic>> lodgeList = [];
 
-    for(var i = 0; i < subList.length; i++){
-      var list = await SearchService().lodgeCollection.where('idx', whereIn: subList[i]).get();
+    for (var i = 0; i < subList.length; i++) {
+      var list = await SearchService()
+          .lodgeCollection
+          .where('idx', whereIn: subList[i])
+          .get();
       var data = list.docs.map((doc) => doc.data()).toList();
       lodgeList.addAll(data);
     }
 
     return lodgeList;
-
   }
 
-  Future<List<Map<String, dynamic>>> getFavoritePlace(String uid) async{
-    final food = await await placeCollection.where("userId",isEqualTo: uid).get();
+  Future<List<Map<String, dynamic>>> getFavoritePlace(String uid) async {
+    final food =
+        await await placeCollection.where("userId", isEqualTo: uid).get();
     final postIdList = food.docs.map((doc) => doc.data()["idx"]).toList();
 
     List<List<dynamic>> subList = [];
     for (var i = 0; i < postIdList.length; i += 10) {
-      subList.add(
-          postIdList.sublist(i, i + 10 > postIdList.length ? postIdList.length : i + 10));
+      subList.add(postIdList.sublist(
+          i, i + 10 > postIdList.length ? postIdList.length : i + 10));
     }
 
     final List<Map<String, dynamic>> placeList = [];
 
-    for(var i = 0; i < subList.length; i++){
-      var list = await SearchService().placeCollection.where('idx', whereIn: subList[i]).get();
+    for (var i = 0; i < subList.length; i++) {
+      var list = await SearchService()
+          .placeCollection
+          .where('idx', whereIn: subList[i])
+          .get();
       var data = list.docs.map((doc) => doc.data()).toList();
       placeList.addAll(data);
     }
 
     return placeList;
-
   }
 }
