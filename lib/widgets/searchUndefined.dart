@@ -11,6 +11,8 @@ Center showUndfinedValue(){
           fit: BoxFit.scaleDown,
           child: SvgPicture.asset(
             'assets/images/sad.svg',
+            height: 50,
+            width: 50,
           ),
         ),
         SizedBox(height: 10),
