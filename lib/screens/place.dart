@@ -360,6 +360,7 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                       String foodUrl1 = doc.get('url1');
                       String foodUrl2 = doc.get('url2');
                       String foodArea = doc.get('area');
+                      String docId = doc.id;
 
                       final foodtosend = FoodToSend(
                           foodSubtitle,
@@ -448,6 +449,8 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                                         context.read<FavoriteFoodService>();
                                     favoriteFoodService
                                         .toggleFavoriteFood(foodIdx);
+                                    favoriteFoodService.newFoodFavoriteToggle(
+                                        user.uid, docId);
                                   }
                                 },
                                 child: Container(
