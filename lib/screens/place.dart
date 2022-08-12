@@ -387,7 +387,7 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                           children: [
                             Container(
                               width: 159, //실제 너비 = 159-26 = 133
-                              height: double.infinity, //실제 사진 높이 = 220 - 8*5
+                              height: 220, //실제 사진 높이 = 220 - 8*5
                               decoration: BoxDecoration(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10)),
@@ -415,7 +415,7 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                               },
                               child: Container(
                                 width: 159,
-                                height: double.infinity, //실제 사진 높이 = 220 - 8*5
+                                height: 220, //실제 사진 높이 = 220 - 8*5
                                 decoration: BoxDecoration(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10)),
@@ -451,6 +451,7 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                                   }
                                 },
                                 child: Container(
+                                  constraints: BoxConstraints(),
                                   height: 27,
                                   width: 27,
                                   decoration: BoxDecoration(
@@ -469,10 +470,14 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
 //                                         )
 //                                       :
                                       Container(
+                                    width: 27,
+                                    height: 27,
                                     child: FittedBox(
                                       fit: BoxFit.scaleDown,
                                       child: SvgPicture.asset(
                                         'assets/images/heartFalse.svg',
+                                        width: 27,
+                                        height: 27,
                                       ),
                                     ),
                                   ),
@@ -673,7 +678,7 @@ class _RecommendLodgeListState extends State<RecommendLodgeList> {
                           children: [
                             Container(
                               width: 159, //실제 너비 = 159-26 = 133
-                              height: 180, //실제 사진 높이 = 220 - 8*5 = 180
+                              height: 220, //실제 사진 높이 = 220 - 8*5 = 180
                               decoration: BoxDecoration(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10)),
@@ -701,7 +706,7 @@ class _RecommendLodgeListState extends State<RecommendLodgeList> {
                               }, //
                               child: Container(
                                 width: 159,
-                                height: double.infinity, //실제 사진 높이 = 220 - 8*5
+                                height: 220, //실제 사진 높이 = 220 - 8*5
                                 decoration: BoxDecoration(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10)),
@@ -755,10 +760,14 @@ class _RecommendLodgeListState extends State<RecommendLodgeList> {
 //                                         )
 //                                       :
                                       Container(
+                                    width: 27,
+                                    height: 27,
                                     child: FittedBox(
                                       fit: BoxFit.scaleDown,
                                       child: SvgPicture.asset(
                                         'assets/images/heartFalse.svg',
+                                        width: 27,
+                                        height: 27,
                                       ),
                                     ),
                                   ),
@@ -952,8 +961,7 @@ class _RecommendPlaceListState extends State<RecommendPlaceList> {
                           children: [
                             Container(
                               width: 159, //실제 너비 = 159-26 = 133
-                              height:
-                                  double.infinity, //실제 사진 높이 = 220 - 8*5 = 180
+                              height: 220, //실제 사진 높이 = 220 - 8*5 = 180
                               decoration: BoxDecoration(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10)),
@@ -981,7 +989,7 @@ class _RecommendPlaceListState extends State<RecommendPlaceList> {
                               },
                               child: Container(
                                 width: 159,
-                                height: double.infinity, //실제 사진 높이 = 220 - 8*5
+                                height: 220, //실제 사진 높이 = 220 - 8*5
                                 decoration: BoxDecoration(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10)),
@@ -1016,6 +1024,7 @@ class _RecommendPlaceListState extends State<RecommendPlaceList> {
                                   }
                                 },
                                 child: Container(
+                                  constraints: BoxConstraints(),
                                   height: 27,
                                   width: 27,
                                   decoration: BoxDecoration(
@@ -1038,6 +1047,8 @@ class _RecommendPlaceListState extends State<RecommendPlaceList> {
                                       fit: BoxFit.scaleDown,
                                       child: SvgPicture.asset(
                                         'assets/images/heartFalse.svg',
+                                        width: 27,
+                                        height: 27,
                                       ),
                                     ),
                                   ),
