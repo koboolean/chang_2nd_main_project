@@ -221,6 +221,8 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                             fit: BoxFit.scaleDown,
                                             child: SvgPicture.asset(
                                               'assets/images/sad.svg',
+                                              width: 50,
+                                              height: 50,
                                             ),
                                           ),
                                         ),
@@ -525,6 +527,8 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                             fit: BoxFit.scaleDown,
                                             child: SvgPicture.asset(
                                               'assets/images/sad.svg',
+                                              width: 50,
+                                              height: 50,
                                             ),
                                           ),
                                         ),
@@ -814,6 +818,8 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                             fit: BoxFit.scaleDown,
                                             child: SvgPicture.asset(
                                               'assets/images/sad.svg',
+                                              width: 50,
+                                              height: 50,
                                             ),
                                           ),
                                         ),
