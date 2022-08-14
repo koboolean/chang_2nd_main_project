@@ -87,6 +87,25 @@ class FavoriteFoodService extends ChangeNotifier {
 class FavoriteLodgeService extends ChangeNotifier {
   final FavoriteLodgeCollection =
       FirebaseFirestore.instance.collection('lodgeNameUser');
+  void newLodgeFavoriteToggle(String uid, String docId) async {
+    var lodgeAreaCollection = FirebaseFirestore.instance
+        .collection('lodgeArea')
+        .doc(docId)
+        .collection('user');
+
+    lodgeAreaCollection.doc(uid).get().then((doc) async {
+      if (doc.exists) {
+        await lodgeAreaCollection.doc(uid).delete();
+        print("deleted lodge 성공");
+        //return false;
+      } else {
+        await lodgeAreaCollection.doc(uid).set({
+          "userId": uid,
+        });
+        print("created lodge 성공");
+      }
+    });
+  }
 
   Future<QuerySnapshot> read(String uid) async {
     throw FavoriteLodgeCollection.where('uid', isEqualTo: uid)
@@ -144,6 +163,26 @@ class FavoriteLodgeService extends ChangeNotifier {
 class FavoritePlaceService extends ChangeNotifier {
   final FavoritePlaceCollection =
       FirebaseFirestore.instance.collection('placeNameUser');
+
+  void newPlaceFavoriteToggle(String uid, String docId) async {
+    var placeAreaCollection = FirebaseFirestore.instance
+        .collection('placeArea')
+        .doc(docId)
+        .collection('user');
+
+    placeAreaCollection.doc(uid).get().then((doc) async {
+      if (doc.exists) {
+        await placeAreaCollection.doc(uid).delete();
+        print("deleted place user 성공");
+        //return false;
+      } else {
+        await placeAreaCollection.doc(uid).set({
+          "userId": uid,
+        });
+        print("created place user 성공");
+      }
+    });
+  }
 
   Future<QuerySnapshot> read(String uid) async {
     throw FavoritePlaceCollection.where('uid', isEqualTo: uid)

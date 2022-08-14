@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:chang_2nd_main_project/screens/place_info.dart';
 import 'package:chang_2nd_main_project/screens/place_list.dart';
 import 'package:chang_2nd_main_project/screens/search_page.dart';
+import 'package:chang_2nd_main_project/services/favorite_button.dart';
 import 'package:chang_2nd_main_project/services/favorite_service.dart';
 import 'package:chang_2nd_main_project/services/firebase_analytics.dart';
 import 'package:chang_2nd_main_project/services/travel_service.dart';
@@ -360,7 +361,7 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                       String foodUrl1 = doc.get('url1');
                       String foodUrl2 = doc.get('url2');
                       String foodArea = doc.get('area');
-                      String docId = doc.id;
+                      String foodDocId = doc.id;
 
                       final foodtosend = FoodToSend(
                           foodSubtitle,
@@ -418,20 +419,22 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                                 width: 159,
                                 height: 220, //실제 사진 높이 = 220 - 8*5
                                 decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                    color: Colors.white,
-                                    gradient: LinearGradient(
-                                        begin: FractionalOffset.topCenter,
-                                        end: FractionalOffset.bottomCenter,
-                                        colors: [
-                                          Colors.grey.withOpacity(0.0),
-                                          Colors.black.withOpacity(0.6),
-                                        ],
-                                        stops: [
-                                          0.0,
-                                          0.8,
-                                        ])),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                  color: Colors.white,
+                                  gradient: LinearGradient(
+                                    begin: FractionalOffset.topCenter,
+                                    end: FractionalOffset.bottomCenter,
+                                    colors: [
+                                      Colors.grey.withOpacity(0.0),
+                                      Colors.black.withOpacity(0.6),
+                                    ],
+                                    stops: [
+                                      0.0,
+                                      0.8,
+                                    ],
+                                  ),
+                                ),
                               ),
                             ),
 
@@ -447,10 +450,18 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                                     // data 의 name 보내기, favoriteFoodserivce 추가
                                     FavoriteFoodService favoriteFoodService =
                                         context.read<FavoriteFoodService>();
+
+                                    //(하트 on&off) 컬랙션 경로 : foodNameUser/doc/필드
+                                    //favorite_list페이지에 사용될 db
                                     favoriteFoodService
                                         .toggleFavoriteFood(foodIdx);
+                                    //(하트 on&off) 컬랙션 경로 : foodArea/doc/user/uid필드 db와 연결된 로직
                                     favoriteFoodService.newFoodFavoriteToggle(
-                                        user.uid, docId);
+                                        user.uid, foodDocId);
+                                    //하트 on&off ( 내부 로직 / db연결x db와 별개로 동작 )
+                                    context
+                                        .read<FavoriteButton>()
+                                        .favoriteFoodButton(foodIdx);
                                   }
                                 },
                                 child: Container(
@@ -461,28 +472,31 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                                     color: Colors.black.withOpacity(0.3),
                                     borderRadius: BorderRadius.circular(100),
                                   ),
-                                  child:
-//                                   (isFavorite)
-//                                       ? Container(
-//                                           child: FittedBox(
-//                                             fit: BoxFit.scaleDown,
-//                                             child: SvgPicture.asset(
-//                                               'assets/images/hearTrue.svg',
-//                                             ),
-//                                           ),
-//                                         )
-//                                       :
-                                      Container(
-                                    width: 27,
-                                    height: 27,
-                                    child: FittedBox(
-                                      fit: BoxFit.scaleDown,
-                                      child: SvgPicture.asset(
-                                        'assets/images/heartFalse.svg',
+                                  child: Consumer<FavoriteButton>(
+                                    builder: (context, favoriteButton, child) {
+                                      var favoriteFoodList =
+                                          favoriteButton.favoriteFoodList;
+
+                                      return Container(
                                         width: 27,
                                         height: 27,
-                                      ),
-                                    ),
+                                        child: FittedBox(
+                                          fit: BoxFit.scaleDown,
+                                          child:
+                                              favoriteFoodList.contains(foodIdx)
+                                                  ? SvgPicture.asset(
+                                                      'assets/images/hearTrue.svg',
+                                                      width: 27,
+                                                      height: 27,
+                                                    )
+                                                  : SvgPicture.asset(
+                                                      'assets/images/heartFalse.svg',
+                                                      width: 27,
+                                                      height: 27,
+                                                    ),
+                                        ),
+                                      );
+                                    },
                                   ),
                                 ),
                               ),
@@ -653,6 +667,7 @@ class _RecommendLodgeListState extends State<RecommendLodgeList> {
                       String lodgeToiletYn = doc.get('toiletYn');
                       String lodgeUrl1 = doc.get('url1');
                       String lodgeUrl2 = doc.get('url2');
+                      String lodgeDocId = doc.id;
 
                       final lodgetosend = LodgeToSend(
                           lodgeBreakFastYn,
@@ -740,41 +755,54 @@ class _RecommendLodgeListState extends State<RecommendLodgeList> {
                                     // data 의 name 보내기, favoriteFoodserivce 추가
                                     FavoriteLodgeService favoriteLodgeService =
                                         context.read<FavoriteLodgeService>();
+
+                                    //(하트 on&off) 컬랙션 경로 : lodgeNameUser/doc/필드
+                                    //favorite_list페이지에 사용될 db
                                     favoriteLodgeService
                                         .toggleFavoriteLodge(lodgeIdx);
+                                    //(하트 on&off) 컬랙션 경로 : foodArea/doc/user/uid필드 db와 연결된 로직
+                                    favoriteLodgeService.newLodgeFavoriteToggle(
+                                        user.uid, lodgeDocId);
+                                    //하트 on&off ( 내부 로직 / db연결x db와 별개로 동작 )
+                                    context
+                                        .read<FavoriteButton>()
+                                        .favoriteLodgeButton(lodgeIdx);
                                   }
                                 },
                                 child: Container(
-                                  height: 27,
-                                  width: 27,
-                                  decoration: BoxDecoration(
-                                    color: Colors.black.withOpacity(0.3),
-                                    borderRadius: BorderRadius.circular(100),
-                                  ),
-                                  child:
-//                                   (isFavorite)
-//                                       ? Container(
-//                                           child: FittedBox(
-//                                             fit: BoxFit.scaleDown,
-//                                             child: SvgPicture.asset(
-//                                               'assets/images/hearTrue.svg',
-//                                             ),
-//                                           ),
-//                                         )
-//                                       :
-                                      Container(
-                                    width: 27,
                                     height: 27,
-                                    child: FittedBox(
-                                      fit: BoxFit.scaleDown,
-                                      child: SvgPicture.asset(
-                                        'assets/images/heartFalse.svg',
-                                        width: 27,
-                                        height: 27,
-                                      ),
+                                    width: 27,
+                                    decoration: BoxDecoration(
+                                      color: Colors.black.withOpacity(0.3),
+                                      borderRadius: BorderRadius.circular(100),
                                     ),
-                                  ),
-                                ),
+                                    child: Consumer<FavoriteButton>(
+                                      builder:
+                                          (context, favoriteButton, child) {
+                                        var favoriteLodgeList =
+                                            favoriteButton.favoriteLodgeList;
+
+                                        return Container(
+                                          width: 27,
+                                          height: 27,
+                                          child: FittedBox(
+                                            fit: BoxFit.scaleDown,
+                                            child: favoriteLodgeList
+                                                    .contains(lodgeIdx)
+                                                ? SvgPicture.asset(
+                                                    'assets/images/hearTrue.svg',
+                                                    width: 27,
+                                                    height: 27,
+                                                  )
+                                                : SvgPicture.asset(
+                                                    'assets/images/heartFalse.svg',
+                                                    width: 27,
+                                                    height: 27,
+                                                  ),
+                                          ),
+                                        );
+                                      },
+                                    )),
                               ),
                             ),
                             //맛집 이름
@@ -938,6 +966,7 @@ class _RecommendPlaceListState extends State<RecommendPlaceList> {
                       String placeSubtitle = doc.get('subTitle');
                       String placeUrl1 = doc.get('url1');
                       String placeUrl2 = doc.get('url2');
+                      String placeDocId = doc.id;
 
                       final placetosend = PlaceToSend(
                           placeAddress,
@@ -994,20 +1023,22 @@ class _RecommendPlaceListState extends State<RecommendPlaceList> {
                                 width: 159,
                                 height: 220, //실제 사진 높이 = 220 - 8*5
                                 decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                    color: Colors.white,
-                                    gradient: LinearGradient(
-                                        begin: FractionalOffset.topCenter,
-                                        end: FractionalOffset.bottomCenter,
-                                        colors: [
-                                          Colors.grey.withOpacity(0.0),
-                                          Colors.black.withOpacity(0.6),
-                                        ],
-                                        stops: [
-                                          0.0,
-                                          0.8,
-                                        ])),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                  color: Colors.white,
+                                  gradient: LinearGradient(
+                                    begin: FractionalOffset.topCenter,
+                                    end: FractionalOffset.bottomCenter,
+                                    colors: [
+                                      Colors.grey.withOpacity(0.0),
+                                      Colors.black.withOpacity(0.6),
+                                    ],
+                                    stops: [
+                                      0.0,
+                                      0.8,
+                                    ],
+                                  ),
+                                ),
                               ),
                             ),
                             Positioned(
@@ -1022,8 +1053,17 @@ class _RecommendPlaceListState extends State<RecommendPlaceList> {
                                     // data 의 name 보내기, favoritePlaceserivce 추가
                                     FavoritePlaceService favoritePlaceService =
                                         context.read<FavoritePlaceService>();
+                                    //(하트 on&off) 컬랙션 경로 : placeNameUser/doc/필드
+                                    //favorite_list페이지에 사용될 db
                                     favoritePlaceService
                                         .toggleFavoritePlace(placeIdx);
+                                    //(하트 on&off) 컬랙션 경로 : placeArea/doc/user/uid필드 db와 연결된 로직
+                                    favoritePlaceService.newPlaceFavoriteToggle(
+                                        user.uid, placeDocId);
+                                    //하트 on&off ( 내부 로직 / db연결x db와 별개로 동작 )
+                                    context
+                                        .read<FavoriteButton>()
+                                        .favoritePlaceButton(placeIdx);
                                   }
                                 },
                                 child: Container(
@@ -1034,26 +1074,31 @@ class _RecommendPlaceListState extends State<RecommendPlaceList> {
                                     color: Colors.black.withOpacity(0.3),
                                     borderRadius: BorderRadius.circular(100),
                                   ),
-                                  child:
-//                                   (isFavorite)
-//                                       ? Container(
-//                                           child: FittedBox(
-//                                             fit: BoxFit.scaleDown,
-//                                             child: SvgPicture.asset(
-//                                               'assets/images/hearTrue.svg',
-//                                             ),
-//                                           ),
-//                                         )
-//                                       :
-                                      Container(
-                                    child: FittedBox(
-                                      fit: BoxFit.scaleDown,
-                                      child: SvgPicture.asset(
-                                        'assets/images/heartFalse.svg',
+                                  child: Consumer<FavoriteButton>(
+                                    builder: (context, favoriteButton, child) {
+                                      var favoritePlaceList =
+                                          favoriteButton.favoritePlaceList;
+                                      print(favoritePlaceList);
+                                      return Container(
                                         width: 27,
                                         height: 27,
-                                      ),
-                                    ),
+                                        child: FittedBox(
+                                          fit: BoxFit.scaleDown,
+                                          child: favoritePlaceList
+                                                  .contains(placeIdx)
+                                              ? SvgPicture.asset(
+                                                  'assets/images/hearTrue.svg',
+                                                  width: 27,
+                                                  height: 27,
+                                                )
+                                              : SvgPicture.asset(
+                                                  'assets/images/heartFalse.svg',
+                                                  width: 27,
+                                                  height: 27,
+                                                ),
+                                        ),
+                                      );
+                                    },
                                   ),
                                 ),
                               ),

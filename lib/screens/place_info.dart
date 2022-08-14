@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:chang_2nd_main_project/services/favorite_button.dart';
 import 'package:chang_2nd_main_project/services/firebase_analytics.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import '../services/auth_service.dart';
@@ -63,13 +65,31 @@ class _FoodInfoState extends State<FoodInfo> {
                   },
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(right: 16.0),
-                child: Icon(
-                  Icons.favorite_border,
-                  color: Colors.white,
-                  size: 24,
-                ),
+              Consumer<FavoriteButton>(
+                builder: (context, favoriteButton, child) {
+                  var favoriteFoodList = favoriteButton.favoriteFoodList;
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 16.0),
+                    child: IconButton(
+                      onPressed: () {
+                        favoriteButton
+                            .favoriteFoodButton(widget.foodtoreceive.foodIdx);
+                      },
+                      icon: favoriteFoodList
+                              .contains(widget.foodtoreceive.foodIdx)
+                          ? SvgPicture.asset(
+                              'assets/images/hearTrue.svg',
+                              width: 27,
+                              height: 27,
+                            )
+                          : SvgPicture.asset(
+                              'assets/images/heartFalse.svg',
+                              width: 27,
+                              height: 27,
+                            ),
+                    ),
+                  );
+                },
               ),
             ],
             // Appbar 하단 음식점 정보
@@ -183,12 +203,14 @@ class _FoodInfoState extends State<FoodInfo> {
                         ),
                       ),
                     ),
-                    FittedBox(
-                      child: Text(
-                        widget.foodtoreceive.foodBusinessHours,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
+                    Expanded(
+                      child: FittedBox(
+                        child: Text(
+                          widget.foodtoreceive.foodBusinessHours,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                     ),
@@ -405,10 +427,31 @@ class _LodgeInfoState extends State<LodgeInfo> {
               ),
               Padding(
                 padding: const EdgeInsets.only(right: 16.0),
-                child: Icon(
-                  Icons.favorite_border,
-                  color: Colors.white,
-                  size: 24,
+                child: Consumer<FavoriteButton>(
+                  builder: (context, favoriteButton, child) {
+                    var favoriteLodgeList = favoriteButton.favoriteLodgeList;
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 16.0),
+                      child: IconButton(
+                        onPressed: () {
+                          favoriteButton.favoriteLodgeButton(
+                              widget.lodgetoreceive.lodgeIdx);
+                        },
+                        icon: favoriteLodgeList
+                                .contains(widget.lodgetoreceive.lodgeIdx)
+                            ? SvgPicture.asset(
+                                'assets/images/hearTrue.svg',
+                                width: 27,
+                                height: 27,
+                              )
+                            : SvgPicture.asset(
+                                'assets/images/heartFalse.svg',
+                                width: 27,
+                                height: 27,
+                              ),
+                      ),
+                    );
+                  },
                 ),
               ),
             ],
@@ -745,13 +788,31 @@ class _PlaceInfoState extends State<PlaceInfo> {
                   },
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(right: 16.0),
-                child: Icon(
-                  Icons.favorite_border,
-                  color: Colors.white,
-                  size: 24,
-                ),
+              Consumer<FavoriteButton>(
+                builder: (context, favoriteButton, child) {
+                  var favoritePlaceList = favoriteButton.favoritePlaceList;
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 16.0),
+                    child: IconButton(
+                      onPressed: () {
+                        favoriteButton.favoritePlaceButton(
+                            widget.placetoreceive.placeIdx);
+                      },
+                      icon: favoritePlaceList
+                              .contains(widget.placetoreceive.placeIdx)
+                          ? SvgPicture.asset(
+                              'assets/images/hearTrue.svg',
+                              width: 27,
+                              height: 27,
+                            )
+                          : SvgPicture.asset(
+                              'assets/images/heartFalse.svg',
+                              width: 27,
+                              height: 27,
+                            ),
+                    ),
+                  );
+                },
               ),
             ],
             // Appbar 하단 음식점 정보

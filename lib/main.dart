@@ -1,6 +1,7 @@
 import 'package:chang_2nd_main_project/screens/login.dart';
 import 'package:chang_2nd_main_project/screens/splash.dart';
 import 'package:chang_2nd_main_project/services/auth_service.dart';
+import 'package:chang_2nd_main_project/services/favorite_button.dart';
 import 'package:chang_2nd_main_project/services/favorite_service.dart';
 import 'package:chang_2nd_main_project/services/schedule_service.dart';
 import 'package:chang_2nd_main_project/services/search_service.dart';
@@ -23,7 +24,8 @@ void main() async {
         ChangeNotifierProvider(create: (context) => FavoriteLodgeService()),
         ChangeNotifierProvider(create: (context) => FavoritePlaceService()),
         ChangeNotifierProvider(create: (context) => FavoriteListService()),
-        ChangeNotifierProvider(create : (context) => SearchService()),
+        ChangeNotifierProvider(create: (context) => SearchService()),
+        ChangeNotifierProvider(create: (context) => FavoriteButton()),
       ],
       child: const MyApp(),
     ),

@@ -422,17 +422,6 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                                             BorderRadius.circular(100),
                                                                       ),
                                                                       child:
-                                                                          // (isPressed) ? Icon(
-                                                                          // Icons.favorite_border,
-                                                                          // color: Colors.white,
-                                                                          // size: 24,
-                                                                          // ),
-                                                                          // :
-                                                                          // Icon(
-                                                                          // Icons.favorite,
-                                                                          // color: Colors.red,
-                                                                          // size: 24,
-                                                                          // ),
                                                                           Icon(
                                                                         Icons
                                                                             .favorite_border,
@@ -736,17 +725,6 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                                             BorderRadius.circular(100),
                                                                       ),
                                                                       child:
-                                                                          // (isPressed) ? Icon(
-                                                                          // Icons.favorite_border,
-                                                                          // color: Colors.white,
-                                                                          // size: 24,
-                                                                          // ),
-                                                                          // :
-                                                                          // Icon(
-                                                                          // Icons.favorite,
-                                                                          // color: Colors.red,
-                                                                          // size: 24,
-                                                                          // ),
                                                                           Icon(
                                                                         Icons
                                                                             .favorite_border,
@@ -1028,17 +1006,6 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                                             BorderRadius.circular(100),
                                                                       ),
                                                                       child:
-                                                                          // (isPressed) ? Icon(
-                                                                          // Icons.favorite_border,
-                                                                          // color: Colors.white,
-                                                                          // size: 24,
-                                                                          // ),
-                                                                          // :
-                                                                          // Icon(
-                                                                          // Icons.favorite,
-                                                                          // color: Colors.red,
-                                                                          // size: 24,
-                                                                          // ),
                                                                           Icon(
                                                                         Icons
                                                                             .favorite_border,
