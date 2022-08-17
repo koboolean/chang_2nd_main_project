@@ -421,7 +421,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                                         borderRadius:
                                                                             BorderRadius.circular(100),
                                                                       ),
-                                                                      child:
+                                                                      /*child:
                                                                           Icon(
                                                                         Icons
                                                                             .favorite_border,
@@ -429,7 +429,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                                             .white,
                                                                         size:
                                                                             24,
-                                                                      ),
+                                                                      ),*/
                                                                     ),
                                                                   ),
                                                                 ),
@@ -724,7 +724,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                                         borderRadius:
                                                                             BorderRadius.circular(100),
                                                                       ),
-                                                                      child:
+                                                                      /*child:
                                                                           Icon(
                                                                         Icons
                                                                             .favorite_border,
@@ -732,7 +732,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                                             .white,
                                                                         size:
                                                                             24,
-                                                                      ),
+                                                                      ),*/
                                                                     ),
                                                                   ),
                                                                 ),
@@ -1005,7 +1005,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                                         borderRadius:
                                                                             BorderRadius.circular(100),
                                                                       ),
-                                                                      child:
+                                                                      /*child:
                                                                           Icon(
                                                                         Icons
                                                                             .favorite_border,
@@ -1013,7 +1013,7 @@ class _FavoriteListPageState extends State<FavoriteList> {
                                                                             .white,
                                                                         size:
                                                                             24,
-                                                                      ),
+                                                                      ),*/
                                                                     ),
                                                                   ),
                                                                 ),
