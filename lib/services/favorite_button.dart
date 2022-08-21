@@ -38,11 +38,9 @@ class FavoriteButton extends ChangeNotifier {
     if (favoritePlaceList.contains(idx)) {
       favoritePlaceList.remove(idx);
       favoritePlaceBool = !favoritePlaceBool;
-      print('Place 테스트 off');
       notifyListeners();
     } else {
       favoritePlaceList.add(idx);
-      print('Place 테스트 on');
 
       notifyListeners();
     }

@@ -27,13 +27,11 @@ class FavoriteFoodService extends ChangeNotifier {
     foodAreaCollection.doc(uid).get().then((doc) async {
       if (doc.exists) {
         await foodAreaCollection.doc(uid).delete();
-        print("deleted 성공");
         //return false;
       } else {
         await foodAreaCollection.doc(uid).set({
           "userId": uid,
         });
-        print("created 성공");
       }
     });
   }
@@ -96,13 +94,11 @@ class FavoriteLodgeService extends ChangeNotifier {
     lodgeAreaCollection.doc(uid).get().then((doc) async {
       if (doc.exists) {
         await lodgeAreaCollection.doc(uid).delete();
-        print("deleted lodge 성공");
         //return false;
       } else {
         await lodgeAreaCollection.doc(uid).set({
           "userId": uid,
         });
-        print("created lodge 성공");
       }
     });
   }
@@ -173,13 +169,11 @@ class FavoritePlaceService extends ChangeNotifier {
     placeAreaCollection.doc(uid).get().then((doc) async {
       if (doc.exists) {
         await placeAreaCollection.doc(uid).delete();
-        print("deleted place user 성공");
         //return false;
       } else {
         await placeAreaCollection.doc(uid).set({
           "userId": uid,
         });
-        print("created place user 성공");
       }
     });
   }
