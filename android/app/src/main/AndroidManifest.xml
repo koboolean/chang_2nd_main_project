@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" /> <!-- background fine location -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
    <application
-        android:label="chang_2nd_main_project"
+        android:label="SOLT"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true">
