@@ -70,7 +70,7 @@ class _FoodInfoState extends State<FoodInfo> {
                   var favoriteFoodList = favoriteButton.favoriteFoodList;
                   return Padding(
                     padding: const EdgeInsets.only(right: 16.0),
-                    child: IconButton(
+                    /*child: IconButton(
                       onPressed: () {
                         favoriteButton
                             .favoriteFoodButton(widget.foodtoreceive.foodIdx);
@@ -87,7 +87,7 @@ class _FoodInfoState extends State<FoodInfo> {
                               width: 27,
                               height: 27,
                             ),
-                    ),
+                    ),*/
                   );
                 },
               ),
@@ -432,7 +432,7 @@ class _LodgeInfoState extends State<LodgeInfo> {
                     var favoriteLodgeList = favoriteButton.favoriteLodgeList;
                     return Padding(
                       padding: const EdgeInsets.only(right: 16.0),
-                      child: IconButton(
+                      /*child: IconButton(
                         onPressed: () {
                           favoriteButton.favoriteLodgeButton(
                               widget.lodgetoreceive.lodgeIdx);
@@ -449,7 +449,7 @@ class _LodgeInfoState extends State<LodgeInfo> {
                                 width: 27,
                                 height: 27,
                               ),
-                      ),
+                      ),*/
                     );
                   },
                 ),
@@ -793,7 +793,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                   var favoritePlaceList = favoriteButton.favoritePlaceList;
                   return Padding(
                     padding: const EdgeInsets.only(right: 16.0),
-                    child: IconButton(
+                    /*child: IconButton(
                       onPressed: () {
                         favoriteButton.favoritePlaceButton(
                             widget.placetoreceive.placeIdx);
@@ -810,7 +810,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                               width: 27,
                               height: 27,
                             ),
-                    ),
+                    ),*/
                   );
                 },
               ),

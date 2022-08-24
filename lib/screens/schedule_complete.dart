@@ -10,7 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 //import 'package:webview_flutter/webview_flutter.dart';
-import 'package:geolocator/geolocator.dart';
+//import 'package:geolocator/geolocator.dart';
 import 'package:webview_flutter_plus/webview_flutter_plus.dart';
 
 class ScheduleComplete extends StatefulWidget {
@@ -28,7 +28,7 @@ class _ScheduleCompleteState extends State<ScheduleComplete>
   WebViewController? _webViewController;
 
   //Set<JavascriptChannel>? channel;
-  late Position position;
+  //late Position position;
   late TabController TabBarController;
 
   @override
@@ -131,10 +131,10 @@ class _ScheduleCompleteState extends State<ScheduleComplete>
                                       controller.webViewController;
                                 },
                                 onPageFinished: (url) async {
-                                  position =
-                                      await Geolocator.getCurrentPosition(
+                                  /*osition =
+                                     *//* await Geolocator.getCurrentPosition(
                                           desiredAccuracy:
-                                              LocationAccuracy.high);
+                                              LocationAccuracy.high);*//*
                                   _webViewController?.runJavascript(
                                       'currentLocation(' +
                                           position.latitude.toString() +
@@ -142,7 +142,7 @@ class _ScheduleCompleteState extends State<ScheduleComplete>
                                           position.longitude
                                               .toString()
                                               .replaceAll("-", "") +
-                                          ')');
+                                          ')');*/
                                 },
                                 javascriptChannels: <JavascriptChannel>{
                                   JavascriptChannel(

@@ -35,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
       onError: (err) {
         // 에러 발생
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("로그인이 실패하였습니다."),
+          content: Text("로그인이 실패하였습니다." + err.toString()),
         ));
       },
     );
@@ -125,19 +125,14 @@ class _LoginPageState extends State<LoginPage> {
                           },
                         ),
                         SizedBox(height: 12),
-                        Platform.isIOS
+                        /*Platform.isIOS
                             ? Column(
                                 children: [
                                   MaterialButton(
                                     child: Container(
                                       width: 300,
                                       height: 50,
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                            image: AssetImage(
-                                                "assets/images/apple_login.png"),
-                                            fit: BoxFit.fill),
-                                      ),
+                                      child: Text("로그인"),
                                     ),
                                     // ),
                                     onPressed: () {
@@ -151,7 +146,10 @@ class _LoginPageState extends State<LoginPage> {
                               )
                             : SizedBox(
                                 height: 130,
-                              )
+                              )*/
+                        SizedBox(
+                          height: 130,
+                        )
                       ],
                     ),
                   ],
