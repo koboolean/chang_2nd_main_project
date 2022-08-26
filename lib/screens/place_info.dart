@@ -2,13 +2,17 @@ import 'dart:async';
 
 import 'package:chang_2nd_main_project/services/favorite_button.dart';
 import 'package:chang_2nd_main_project/services/firebase_analytics.dart';
+import 'package:chang_2nd_main_project/services/travel_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import '../services/auth_service.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:intl/intl.dart';
+import 'package:localization/localization.dart';
 
 /// 음식점 상세 설명 페이지
 class FoodInfo extends StatefulWidget {
@@ -182,143 +186,168 @@ class _FoodInfoState extends State<FoodInfo> {
             ),
           ),
           //Body
-          body: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 19),
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 18.0),
-                      child: SizedBox(
-                        height: 25,
-                        width: 100,
-                        child: Text(
-                          "영업 시간",
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
+
+          body: Consumer<TravelService>(
+            builder: (context, travelService, child) {
+              String dummybreaktime_LO =
+                  '브레이크타임 : 14:00 - 17:30 \n 라스트오더 : 13:00, 20:00';
+              String dummyDate =
+                  '일 11:00 ~ 21:00 ,월 11:00 ~ 21:00 ,화 11:00 ~ 21:00 ,수 11:00 ~ 21:00  ,목 11:00 ~ 21:00  ,금 11:00 ~ 21:00  ,토 11:00 ~ 21:00 ';
+              List<String> businessHours = dummyDate.split(',');
+              String reDummyDate = dummyDate.replaceAll(',', '\n');
+              String currentDate =
+                  DateFormat('E', 'ko').format(DateTime.now()); //현재 요일
+              // print(reDummyDate);
+              final todate = businessHours
+                  .indexWhere((element) => element.startsWith(currentDate));
+              final maxLines = travelService.isReadMore
+                  ? 1
+                  : '\n'.allMatches(reDummyDate).length + 4;
+              final overFlow = travelService.isReadMore
+                  ? TextOverflow.visible
+                  : TextOverflow.ellipsis;
+              // final overFlow =
+              //     isReadMore ?  TextOverflow.visible : TextOverflow.ellipsis;
+              var isReadMore = travelService.isReadMore;
+              return ListView(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      travelService.readMoreButton();
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 18.0, top: 18),
+                      child: Row(
+                        children: [
+                          Text(
+                            '영업 시간  ' +
+                                businessHours[todate] +
+                                '\n' +
+                                reDummyDate +
+                                '\n' +
+                                dummybreaktime_LO,
+                            maxLines: maxLines,
+                            overflow: overFlow,
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          Spacer(),
+                          Icon(isReadMore
+                              ? Icons.keyboard_arrow_down
+                              : Icons.keyboard_arrow_up),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Divider(
+                    thickness: 2,
+                  ),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 18.0),
+                        child: SizedBox(
+                          height: 25,
+                          width: 100,
+                          child: Text(
+                            "주요 메뉴 가격",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Expanded(
-                      child: FittedBox(
+                      SizedBox(
+                        height: 25,
+                        width: 200,
                         child: Text(
-                          widget.foodtoreceive.foodBusinessHours,
+                          "${widget.foodtoreceive.foodPrice} 원",
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 6),
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 18.0),
-                      child: SizedBox(
-                        height: 25,
-                        width: 100,
-                        child: Text(
-                          "주요 메뉴 가격",
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
+                    ],
+                  ),
+                  Divider(
+                    thickness: 2,
+                  ),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 18.0),
+                        child: SizedBox(
+                          height: 25,
+                          width: 100,
+                          child: Text(
+                            "1인분 주문",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 25,
-                      width: 200,
-                      child: Text(
-                        "${widget.foodtoreceive.foodPrice} 원",
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 6),
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 18.0),
-                      child: SizedBox(
+                      SizedBox(
                         height: 25,
-                        width: 100,
+                        width: 200,
                         child: Text(
-                          "1인분 주문",
+                          widget.foodtoreceive.foodServingSize,
                           style: TextStyle(
                             fontSize: 14,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 25,
-                      width: 200,
-                      child: Text(
-                        widget.foodtoreceive.foodServingSize,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 15),
-                // 중간 회색 바
-                Container(
-                  height: 7,
-                  decoration: BoxDecoration(
-                    color: Color.fromRGBO(243, 243, 243, 1),
+                    ],
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 18, top: 24, bottom: 16.0, right: 18),
-                  child: Text(
-                    widget.foodtoreceive.foodSubtitle,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                  SizedBox(height: 15),
+                  // 중간 회색 바
+                  Container(
+                    height: 7,
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(243, 243, 243, 1),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 18.0, right: 18.0),
-                  child: Container(
-                    width: double.infinity,
-                    height: 216,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8.0),
-                      child: Image(
-                        image: NetworkImage(
-                          widget.foodtoreceive.foodUrl2,
-                        ),
-                        fit: BoxFit.cover,
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 18, top: 24, bottom: 16.0, right: 18),
+                    child: Text(
+                      widget.foodtoreceive.foodSubtitle,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
                       ),
                     ),
                   ),
-                ),
-
-                //음식 설명
-                Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: Text(widget.foodtoreceive.foodNote),
-                ),
-              ],
-            ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 18.0, right: 18.0),
+                    child: Container(
+                      width: double.infinity,
+                      height: 216,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
+                        child: Image(
+                          image: NetworkImage(
+                            widget.foodtoreceive.foodUrl2,
+                          ),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+                  //음식 설명
+                  Padding(
+                    padding: const EdgeInsets.all(18.0),
+                    child: Text(widget.foodtoreceive.foodNote),
+                  ),
+                ],
+              );
+            },
           ),
           floatingActionButton: FloatingActionButton(
               backgroundColor: Color.fromRGBO(221, 81, 37, 1),

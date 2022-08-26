@@ -8,6 +8,7 @@ import 'package:chang_2nd_main_project/services/search_service.dart';
 import 'package:chang_2nd_main_project/services/travel_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 //import 'package:geolocator/geolocator.dart';
 
@@ -50,6 +51,18 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     final user = context.read<AuthService>().currentUser();
     return MaterialApp(
+      ////////////////// 날짜 한글번역 설정 ///////////////
+      localizationsDelegates: const [
+        // delegate from flutter_localization
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        // delegate from localization package.
+        // LocalJsonLocalization.delegate,
+      ],
+      supportedLocales: const [Locale('ko', 'KR')],
+      locale: const Locale('ko'),
+      ////////////////////////////////////////////////////
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           fontFamily: 'SpoqaHanSansNeo',

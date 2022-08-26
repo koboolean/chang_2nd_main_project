@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TravelService extends ChangeNotifier {
+  bool isReadMore = true;
   final travelFoodCollection =
       FirebaseFirestore.instance.collection('foodArea');
   final travelLodgeCollection =
@@ -20,6 +21,9 @@ class TravelService extends ChangeNotifier {
     notifyListeners(); // 화면 갱신
   }
 
+  void readMoreButton() {
+    isReadMore = !isReadMore;
+    notifyListeners();
+  }
   //tmap 앱으로 길 안내하는 url
-
 }
