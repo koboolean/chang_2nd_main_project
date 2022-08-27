@@ -196,6 +196,9 @@ class FoodList extends StatefulWidget {
   State<FoodList> createState() => _FoodListState();
 }
 
+//선택한 음식점 분류 기본값 전체로 정의
+var _selectedFoodClassification = "전체";
+
 //place_info에 송부할 데이터 list 생성
 class FoodToSend {
   final String foodSubtitle;
@@ -235,6 +238,8 @@ class FoodToSend {
 class _FoodListState extends State<FoodList> {
   @override
   Widget build(BuildContext context) {
+    //선택한 음식점 아이콘 정의
+    String sendFoodClass = _selectedFoodClassification;
     // 전체 Column 구조
     return StreamBuilder<QuerySnapshot>(
         //조건에 맞는 지역만 불러오도록 필터링
@@ -244,6 +249,8 @@ class _FoodListState extends State<FoodList> {
                 isEqualTo: widget.sendSelectedValue == "전체"
                     ? null
                     : widget.sendSelectedValue)
+            .where('classification',
+                isEqualTo: sendFoodClass == "전체" ? null : sendFoodClass)
             .snapshots(),
         builder: (context, snapshot) {
           //document를 firebase database에서 불러옴
@@ -264,7 +271,225 @@ class _FoodListState extends State<FoodList> {
           }
           return Column(
             children: [
-              SizedBox(height: 19),
+              SizedBox(height: 13),
+              Padding(
+                padding: const EdgeInsets.only(left: 18.0),
+                child: Container(
+                  height: 32,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _selectedFoodClassification = "전체";
+                          });
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 10.0),
+                          child: Container(
+                            height: 32,
+                            width: 66,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                  width: 1,
+                                  color: Colors.grey[500]!,
+                                ),
+                                borderRadius: BorderRadius.circular(16),
+                                color: _selectedFoodClassification == "전체"
+                                    ? Color.fromRGBO(221, 81, 37, 1)
+                                    : Colors.white),
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                "전체",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _selectedFoodClassification = "한식";
+                          });
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 10.0),
+                          child: Container(
+                            height: 32,
+                            width: 66,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                  width: 1,
+                                  color: Colors.grey[500]!,
+                                ),
+                                borderRadius: BorderRadius.circular(16),
+                                color: Colors.white),
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                "한식",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _selectedFoodClassification = "양식";
+                          });
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 10.0),
+                          child: Container(
+                            height: 32,
+                            width: 66,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                  width: 1,
+                                  color: Colors.grey[500]!,
+                                ),
+                                borderRadius: BorderRadius.circular(16),
+                                color: Colors.white),
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                "양식",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {});
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 10.0),
+                          child: Container(
+                            height: 32,
+                            width: 66,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                  width: 1,
+                                  color: Colors.grey[500]!,
+                                ),
+                                borderRadius: BorderRadius.circular(16),
+                                color: Colors.white),
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                "일식",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {});
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 10.0),
+                          child: Container(
+                            height: 32,
+                            width: 66,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                  width: 1,
+                                  color: Colors.grey[500]!,
+                                ),
+                                borderRadius: BorderRadius.circular(16),
+                                color: Colors.white),
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                "중식",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {});
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 6.0),
+                          child: Container(
+                            height: 32,
+                            width: 66,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                  width: 1,
+                                  color: Colors.grey[500]!,
+                                ),
+                                borderRadius: BorderRadius.circular(16),
+                                color: Colors.white),
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                "카페",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {});
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 10.0),
+                          child: Container(
+                            height: 32,
+                            width: 66,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                  width: 1,
+                                  color: Colors.grey[500]!,
+                                ),
+                                borderRadius: BorderRadius.circular(16),
+                                color: Colors.white),
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                "기타",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              SizedBox(height: 16),
+
               // 키워드에 따른 음식점 리스트
               Expanded(
                 child: ListView.builder(
