@@ -62,7 +62,6 @@ class _MyAppState extends State<MyApp> {
       ],
       supportedLocales: const [Locale('ko', 'KR')],
       locale: const Locale('ko'),
-      ////////////////////////////////////////////////////
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           fontFamily: 'SpoqaHanSansNeo',
@@ -75,7 +74,7 @@ class _MyAppState extends State<MyApp> {
 }
 
 
-Future<Position> _determinePosition() async {
+/*Future<Position> _determinePosition() async {
   //모바일 위치 권한 설정
   //bool serviceEnabled;
   LocationPermission permission;
@@ -96,4 +95,4 @@ Future<Position> _determinePosition() async {
 
   return await Geolocator.getCurrentPosition(
       desiredAccuracy: LocationAccuracy.high);
-}
+}*/
