@@ -127,8 +127,12 @@ class _LoginPageState extends State<LoginPage> {
                                     child: Container(
                                       width: 300,
                                       height: 50,
-                                      child: Text("로그인"),
-                                    ),
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                              image: AssetImage(
+                                                  "assets/images/apple_login.png"),
+                                              fit: BoxFit.fill),
+                                        )),
                                     // ),
                                     onPressed: () {
                                       login(authService, "ios");
