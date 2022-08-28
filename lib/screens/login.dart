@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  loginService(authService) {
+  iosLogin(authService) {
     // 로그인
     authService.signIn(
       email: "aa@naver.com",
@@ -125,7 +125,7 @@ class _LoginPageState extends State<LoginPage> {
                           },
                         ),
                         SizedBox(height: 12),
-                        /*Platform.isIOS
+                        Platform.isIOS
                             ? Column(
                                 children: [
                                   MaterialButton(
@@ -136,7 +136,7 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                     // ),
                                     onPressed: () {
-                                      loginService(authService);
+                                      iosLogin(authService);
                                     },
                                   ),
                                   SizedBox(
@@ -146,10 +146,7 @@ class _LoginPageState extends State<LoginPage> {
                               )
                             : SizedBox(
                                 height: 130,
-                              )*/
-                        SizedBox(
-                          height: 130,
-                        )
+                              )
                       ],
                     ),
                   ],
