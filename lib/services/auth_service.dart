@@ -2,6 +2,7 @@ import 'package:chang_2nd_main_project/services/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class AuthService extends ChangeNotifier {
   User? currentUser() {
@@ -110,6 +111,33 @@ class AuthService extends ChangeNotifier {
     }catch(e) {
       onError(e.toString());
     }
+  }
 
+  Future loginWithIos({required Function() onSuccess,required Function(String err) onError}) async {
+    // 로그인
+    try {
+      final appleCredential = await SignInWithApple.getAppleIDCredential(
+        scopes: [
+          AppleIDAuthorizationScopes.email,
+          AppleIDAuthorizationScopes.fullName,
+        ],
+      );
+
+      final oauthCredential = OAuthProvider("apple.com").credential(
+        idToken: appleCredential.identityToken,
+        accessToken: appleCredential.authorizationCode,
+      );
+
+      final authResult = await FirebaseAuth.instance.signInWithCredential(oauthCredential);
+
+      signUpAnalyticsLog(oauthCredential.idToken);
+
+      onSuccess();
+
+      return Future<void>.value();
+    } catch(error) {
+      onError(error.toString());
+      return Future<void>.value();
+    }
   }
 }

@@ -18,7 +18,8 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  googleLogin(authService) async {
+  login(authService, type) async {
+    type == "google" ?
     authService.loginWithGoogle(
       onSuccess: () {
         // 로그인 성공
@@ -38,14 +39,8 @@ class _LoginPageState extends State<LoginPage> {
           content: Text("로그인이 실패하였습니다." + err.toString()),
         ));
       },
-    );
-  }
-
-  iosLogin(authService) {
-    // 로그인
-    authService.signIn(
-      email: "aa@naver.com",
-      password: "123123",
+    ):
+    authService.loginWithIos(
       onSuccess: () {
         // 로그인 성공
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -61,7 +56,7 @@ class _LoginPageState extends State<LoginPage> {
       onError: (err) {
         // 에러 발생
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(err),
+          content: Text("로그인이 실패하였습니다." + err.toString()),
         ));
       },
     );
@@ -121,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
                               )),
                           // ),
                           onPressed: () async {
-                            googleLogin(authService);
+                            login(authService, "google");
                           },
                         ),
                         SizedBox(height: 12),
@@ -136,7 +131,7 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                     // ),
                                     onPressed: () {
-                                      iosLogin(authService);
+                                      login(authService, "ios");
                                     },
                                   ),
                                   SizedBox(
