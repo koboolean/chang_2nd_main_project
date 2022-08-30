@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "60983427158-7bo7bgscaikj75qgdmc7gk8hdtesr7e0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.koboolean.chang_2nd_main_project",
+            "certificate_hash": "2742b69e2d3ec3e8d8452834e9e0044e5191c3e1"
+          }
+        },
+        {
           "client_id": "60983427158-95u6l4ahuvvis1uj7rjo0qru34grn024.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

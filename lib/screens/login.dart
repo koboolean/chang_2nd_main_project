@@ -18,7 +18,8 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  googleLogin(authService) async {
+  login(authService, type) async {
+    type == "google" ?
     authService.loginWithGoogle(
       onSuccess: () {
         // 로그인 성공
@@ -38,14 +39,8 @@ class _LoginPageState extends State<LoginPage> {
           content: Text("로그인이 실패하였습니다." + err.toString()),
         ));
       },
-    );
-  }
-
-  loginService(authService) {
-    // 로그인
-    authService.signIn(
-      email: "aa@naver.com",
-      password: "123123",
+    ):
+    authService.loginWithIos(
       onSuccess: () {
         // 로그인 성공
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -61,7 +56,7 @@ class _LoginPageState extends State<LoginPage> {
       onError: (err) {
         // 에러 발생
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(err),
+          content: Text("로그인이 실패하였습니다." + err.toString()),
         ));
       },
     );
@@ -121,22 +116,26 @@ class _LoginPageState extends State<LoginPage> {
                               )),
                           // ),
                           onPressed: () async {
-                            googleLogin(authService);
+                            login(authService, "google");
                           },
                         ),
                         SizedBox(height: 12),
-                        /*Platform.isIOS
+                        Platform.isIOS
                             ? Column(
                                 children: [
                                   MaterialButton(
                                     child: Container(
                                       width: 300,
                                       height: 50,
-                                      child: Text("로그인"),
-                                    ),
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                              image: AssetImage(
+                                                  "assets/images/apple_login.png"),
+                                              fit: BoxFit.fill),
+                                        )),
                                     // ),
                                     onPressed: () {
-                                      loginService(authService);
+                                      login(authService, "ios");
                                     },
                                   ),
                                   SizedBox(
@@ -146,10 +145,7 @@ class _LoginPageState extends State<LoginPage> {
                               )
                             : SizedBox(
                                 height: 130,
-                              )*/
-                        SizedBox(
-                          height: 130,
-                        )
+                              )
                       ],
                     ),
                   ],
