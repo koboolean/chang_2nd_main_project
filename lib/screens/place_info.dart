@@ -26,6 +26,13 @@ class FoodInfo extends StatefulWidget {
 
 class _FoodInfoState extends State<FoodInfo> {
   TextEditingController jobController = TextEditingController();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    //readmore 버튼 초기화
+    context.read<TravelService>().isReadMore = true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -189,163 +196,144 @@ class _FoodInfoState extends State<FoodInfo> {
 
           body: Consumer<TravelService>(
             builder: (context, travelService, child) {
-              String dummybreaktime_LO =
-                  '브레이크타임 : 14:00 - 17:30 \n 라스트오더 : 13:00, 20:00';
-              String dummyDate =
-                  '일 11:00 ~ 21:00 ,월 11:00 ~ 21:00 ,화 11:00 ~ 21:00 ,수 11:00 ~ 21:00  ,목 11:00 ~ 21:00  ,금 11:00 ~ 21:00  ,토 11:00 ~ 21:00 ';
-              List<String> businessHours = dummyDate.split(',');
-              String reDummyDate = dummyDate.replaceAll(',', '\n');
-              String currentDate =
-                  DateFormat('E', 'ko').format(DateTime.now()); //현재 요일
-              // print(reDummyDate);
-              final todate = businessHours
-                  .indexWhere((element) => element.startsWith(currentDate));
-              final maxLines = travelService.isReadMore
-                  ? 1
-                  : '\n'.allMatches(reDummyDate).length + 4;
-              final overFlow = travelService.isReadMore
-                  ? TextOverflow.visible
-                  : TextOverflow.ellipsis;
-              // final overFlow =
-              //     isReadMore ?  TextOverflow.visible : TextOverflow.ellipsis;
-              var isReadMore = travelService.isReadMore;
-              return ListView(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      travelService.readMoreButton();
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 18.0, top: 18),
-                      child: Row(
-                        children: [
-                          Text(
-                            '영업 시간  ' +
-                                businessHours[todate] +
-                                '\n' +
-                                reDummyDate +
-                                '\n' +
-                                dummybreaktime_LO,
-                            maxLines: maxLines,
-                            overflow: overFlow,
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
+              return FutureBuilder<QuerySnapshot>(
+                future: travelService
+                    .businessHourData(widget.foodtoreceive.foodIdx),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    var hourDocs = snapshot.data?.docs ?? [];
+                    var hours = hourDocs[0].get('businessHours').toString();
+                    var breakTime = hourDocs[0].get('breaktime_LO').toString();
+                    List<String> businessHours = hours.split(',');
+                    String lineNumbering = hours.replaceAll(',', '\n');
+                    String currentDate = DateFormat('E', 'ko')
+                        .format(DateTime.now())
+                        .toString(); //현재 요일
+
+                    final todate = businessHours.indexWhere(
+                        (element) => element.startsWith(currentDate));
+                    final maxLines = travelService.isReadMore
+                        ? 1
+                        : '\n'.allMatches(lineNumbering).length + 4;
+                    final overFlow = travelService.isReadMore
+                        ? TextOverflow.visible
+                        : TextOverflow.ellipsis;
+                    var isReadMore = travelService.isReadMore;
+                    return ListView(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            travelService.readMoreButton();
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 18.0, top: 18),
+                            child: Row(
+                              children: [
+                                Text(
+                                  '영업 시간  ' +
+                                      businessHours[todate] +
+                                      '\n' +
+                                      lineNumbering +
+                                      '\n' +
+                                      breakTime,
+                                  maxLines: maxLines,
+                                  overflow: overFlow,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                Spacer(),
+                                Icon(isReadMore
+                                    ? Icons.keyboard_arrow_down
+                                    : Icons.keyboard_arrow_up),
+                              ],
                             ),
                           ),
-                          Spacer(),
-                          Icon(isReadMore
-                              ? Icons.keyboard_arrow_down
-                              : Icons.keyboard_arrow_up),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Divider(
-                    thickness: 2,
-                  ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 18.0),
-                        child: SizedBox(
-                          height: 25,
-                          width: 100,
+                        ),
+                        Divider(
+                          thickness: 2,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 18),
+                          child: SizedBox(
+                            height: 50,
+                            width: 200,
+                            child: Text(
+                              "주요 메뉴 가격 \n" + widget.foodtoreceive.foodPrice,
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Divider(
+                          thickness: 2,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 18.0),
+                          child: SizedBox(
+                            height: 25,
+                            width: 100,
+                            child: Text(
+                              "1인분 주문" + widget.foodtoreceive.foodServingSize,
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 15),
+                        // 중간 회색 바
+                        Container(
+                          height: 7,
+                          decoration: BoxDecoration(
+                            color: Color.fromRGBO(243, 243, 243, 1),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 18, top: 24, bottom: 16.0, right: 18),
                           child: Text(
-                            "주요 메뉴 가격",
+                            widget.foodtoreceive.foodSubtitle,
                             style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 25,
-                        width: 200,
-                        child: Text(
-                          "${widget.foodtoreceive.foodPrice} 원",
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Divider(
-                    thickness: 2,
-                  ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 18.0),
-                        child: SizedBox(
-                          height: 25,
-                          width: 100,
-                          child: Text(
-                            "1인분 주문",
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(left: 18.0, right: 18.0),
+                          child: Container(
+                            width: double.infinity,
+                            height: 216,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image(
+                                image: NetworkImage(
+                                  widget.foodtoreceive.foodUrl2,
+                                ),
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 25,
-                        width: 200,
-                        child: Text(
-                          widget.foodtoreceive.foodServingSize,
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                          ),
+                        //음식 설명
+                        Padding(
+                          padding: const EdgeInsets.all(18.0),
+                          child: Text(widget.foodtoreceive.foodNote),
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 15),
-                  // 중간 회색 바
-                  Container(
-                    height: 7,
-                    decoration: BoxDecoration(
-                      color: Color.fromRGBO(243, 243, 243, 1),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: 18, top: 24, bottom: 16.0, right: 18),
-                    child: Text(
-                      widget.foodtoreceive.foodSubtitle,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 18.0, right: 18.0),
-                    child: Container(
-                      width: double.infinity,
-                      height: 216,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8.0),
-                        child: Image(
-                          image: NetworkImage(
-                            widget.foodtoreceive.foodUrl2,
-                          ),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                  ),
-                  //음식 설명
-                  Padding(
-                    padding: const EdgeInsets.all(18.0),
-                    child: Text(widget.foodtoreceive.foodNote),
-                  ),
-                ],
+                      ],
+                    );
+                  } else {
+                    return Center(
+                      child: Container(),
+                    );
+                  }
+                },
               );
             },
           ),

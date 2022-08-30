@@ -25,5 +25,9 @@ class TravelService extends ChangeNotifier {
     isReadMore = !isReadMore;
     notifyListeners();
   }
+
+  Future<QuerySnapshot> businessHourData(String foodidx) async {
+    return await travelCollection.where('idx', isEqualTo: foodidx).get();
+  }
   //tmap 앱으로 길 안내하는 url
 }
