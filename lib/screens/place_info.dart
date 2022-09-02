@@ -76,32 +76,32 @@ class _FoodInfoState extends State<FoodInfo> {
                   },
                 ),
               ),
-              Consumer<FavoriteButton>(
-                builder: (context, favoriteButton, child) {
-                  var favoriteFoodList = favoriteButton.favoriteFoodList;
-                  return Padding(
-                    padding: const EdgeInsets.only(right: 16.0),
-                    /*child: IconButton(
-                      onPressed: () {
-                        favoriteButton
-                            .favoriteFoodButton(widget.foodtoreceive.foodIdx);
-                      },
-                      icon: favoriteFoodList
-                              .contains(widget.foodtoreceive.foodIdx)
-                          ? SvgPicture.asset(
-                              'assets/images/hearTrue.svg',
-                              width: 27,
-                              height: 27,
-                            )
-                          : SvgPicture.asset(
-                              'assets/images/heartFalse.svg',
-                              width: 27,
-                              height: 27,
-                            ),
-                    ),*/
-                  );
-                },
-              ),
+              // Consumer<FavoriteButton>(
+              //   builder: (context, favoriteButton, child) {
+              //     var favoriteFoodList = favoriteButton.favoriteFoodList;
+              //     return Padding(
+              //       padding: const EdgeInsets.only(right: 16.0),
+              //       /*child: IconButton(
+              //         onPressed: () {
+              //           favoriteButton
+              //               .favoriteFoodButton(widget.foodtoreceive.foodIdx);
+              //         },
+              //         icon: favoriteFoodList
+              //                 .contains(widget.foodtoreceive.foodIdx)
+              //             ? SvgPicture.asset(
+              //                 'assets/images/hearTrue.svg',
+              //                 width: 27,
+              //                 height: 27,
+              //               )
+              //             : SvgPicture.asset(
+              //                 'assets/images/heartFalse.svg',
+              //                 width: 27,
+              //                 height: 27,
+              //               ),
+              //       ),*/
+              //     );
+              //   },
+              // ),
             ],
             // Appbar 하단 음식점 정보
             bottom: PreferredSize(
@@ -193,7 +193,6 @@ class _FoodInfoState extends State<FoodInfo> {
             ),
           ),
           //Body
-
           body: Consumer<TravelService>(
             builder: (context, travelService, child) {
               return FutureBuilder<QuerySnapshot>(
@@ -219,114 +218,151 @@ class _FoodInfoState extends State<FoodInfo> {
                         ? TextOverflow.visible
                         : TextOverflow.ellipsis;
                     var isReadMore = travelService.isReadMore;
-                    return ListView(
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            travelService.readMoreButton();
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 18.0, top: 18),
-                            child: Row(
+                    return SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // SizedBox(height: 19),
+                          ListTile(
+                            dense: true, // 리스트타일에서 수직 밀도를 맞춤
+                            onTap: () {
+                              travelService.readMoreButton();
+                            },
+                            leading: Text(
+                              "영업 시간",
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            title: Row(
                               children: [
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width - 317,
+                                ),
                                 Text(
-                                  '영업 시간  ' +
-                                      businessHours[todate] +
-                                      '\n' +
-                                      lineNumbering +
-                                      '\n' +
-                                      breakTime,
+                                  businessHours[todate],
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            trailing: Icon(isReadMore
+                                ? Icons.keyboard_arrow_down
+                                : Icons.keyboard_arrow_up),
+                          ),
+                          if (!isReadMore)
+                            Row(
+                              children: [
+                                SizedBox(
+                                    width: MediaQuery.of(context).size.width -
+                                        230),
+                                Text(
+                                  lineNumbering + '\n' + breakTime,
                                   maxLines: maxLines,
                                   overflow: overFlow,
                                   style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      height: 1.5),
+                                ),
+                              ],
+                            ),
+                          ListTile(
+                            dense: true, // 리스트타일에서 수직 밀도를 맞춤
+                            leading: Text(
+                              "주요 메뉴 가격",
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            title: Row(
+                              children: [
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width - 345,
+                                ),
+                                Text(
+                                  widget.foodtoreceive.foodPrice,
+                                  style: TextStyle(
                                     fontSize: 14,
-                                    fontWeight: FontWeight.w600,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                 ),
-                                Spacer(),
-                                Icon(isReadMore
-                                    ? Icons.keyboard_arrow_down
-                                    : Icons.keyboard_arrow_up),
                               ],
                             ),
                           ),
-                        ),
-                        Divider(
-                          thickness: 2,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 18),
-                          child: SizedBox(
-                            height: 50,
-                            width: 200,
-                            child: Text(
-                              "주요 메뉴 가격 \n" + widget.foodtoreceive.foodPrice,
+                          ListTile(
+                            dense: true, // 리스트타일에서 수직 밀도를 맞춤
+                            leading: Text(
+                              "1인분 주문",
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
-                          ),
-                        ),
-                        Divider(
-                          thickness: 2,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 18.0),
-                          child: SizedBox(
-                            height: 25,
-                            width: 100,
-                            child: Text(
-                              "1인분 주문" + widget.foodtoreceive.foodServingSize,
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 15),
-                        // 중간 회색 바
-                        Container(
-                          height: 7,
-                          decoration: BoxDecoration(
-                            color: Color.fromRGBO(243, 243, 243, 1),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 18, top: 24, bottom: 16.0, right: 18),
-                          child: Text(
-                            widget.foodtoreceive.foodSubtitle,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(left: 18.0, right: 18.0),
-                          child: Container(
-                            width: double.infinity,
-                            height: 216,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(8.0),
-                              child: Image(
-                                image: NetworkImage(
-                                  widget.foodtoreceive.foodUrl2,
+                            title: Row(
+                              children: [
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width - 325,
                                 ),
-                                fit: BoxFit.cover,
+                                Text(
+                                  widget.foodtoreceive.foodServingSize,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          Container(
+                            height: 7,
+                            decoration: BoxDecoration(
+                              color: Color.fromRGBO(243, 243, 243, 1),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 18, top: 24, bottom: 16.0, right: 18),
+                            child: Text(
+                              widget.foodtoreceive.foodSubtitle,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
                               ),
                             ),
                           ),
-                        ),
-                        //음식 설명
-                        Padding(
-                          padding: const EdgeInsets.all(18.0),
-                          child: Text(widget.foodtoreceive.foodNote),
-                        ),
-                      ],
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(left: 18.0, right: 18.0),
+                            child: Container(
+                              width: double.infinity,
+                              height: 216,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(8.0),
+                                child: Image(
+                                  image: NetworkImage(
+                                    widget.foodtoreceive.foodUrl2,
+                                  ),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                          ),
+                          //음식 설명
+                          Padding(
+                            padding: const EdgeInsets.all(18.0),
+                            child: Text(widget.foodtoreceive.foodNote),
+                          ),
+                        ],
+                      ),
                     );
                   } else {
                     return Center(
@@ -442,35 +478,35 @@ class _LodgeInfoState extends State<LodgeInfo> {
                   },
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(right: 16.0),
-                child: Consumer<FavoriteButton>(
-                  builder: (context, favoriteButton, child) {
-                    var favoriteLodgeList = favoriteButton.favoriteLodgeList;
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 16.0),
-                      /*child: IconButton(
-                        onPressed: () {
-                          favoriteButton.favoriteLodgeButton(
-                              widget.lodgetoreceive.lodgeIdx);
-                        },
-                        icon: favoriteLodgeList
-                                .contains(widget.lodgetoreceive.lodgeIdx)
-                            ? SvgPicture.asset(
-                                'assets/images/hearTrue.svg',
-                                width: 27,
-                                height: 27,
-                              )
-                            : SvgPicture.asset(
-                                'assets/images/heartFalse.svg',
-                                width: 27,
-                                height: 27,
-                              ),
-                      ),*/
-                    );
-                  },
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.only(right: 16.0),
+              //   child: Consumer<FavoriteButton>(
+              //     builder: (context, favoriteButton, child) {
+              //       var favoriteLodgeList = favoriteButton.favoriteLodgeList;
+              //       return Padding(
+              //         padding: const EdgeInsets.only(right: 16.0),
+              //         /*child: IconButton(
+              //           onPressed: () {
+              //             favoriteButton.favoriteLodgeButton(
+              //                 widget.lodgetoreceive.lodgeIdx);
+              //           },
+              //           icon: favoriteLodgeList
+              //                   .contains(widget.lodgetoreceive.lodgeIdx)
+              //               ? SvgPicture.asset(
+              //                   'assets/images/hearTrue.svg',
+              //                   width: 27,
+              //                   height: 27,
+              //                 )
+              //               : SvgPicture.asset(
+              //                   'assets/images/heartFalse.svg',
+              //                   width: 27,
+              //                   height: 27,
+              //                 ),
+              //         ),*/
+              //       );
+              //     },
+              //   ),
+              // ),
             ],
             // Appbar 하단 음식점 정보
             bottom: PreferredSize(
@@ -805,32 +841,32 @@ class _PlaceInfoState extends State<PlaceInfo> {
                   },
                 ),
               ),
-              Consumer<FavoriteButton>(
-                builder: (context, favoriteButton, child) {
-                  var favoritePlaceList = favoriteButton.favoritePlaceList;
-                  return Padding(
-                    padding: const EdgeInsets.only(right: 16.0),
-                    /*child: IconButton(
-                      onPressed: () {
-                        favoriteButton.favoritePlaceButton(
-                            widget.placetoreceive.placeIdx);
-                      },
-                      icon: favoritePlaceList
-                              .contains(widget.placetoreceive.placeIdx)
-                          ? SvgPicture.asset(
-                              'assets/images/hearTrue.svg',
-                              width: 27,
-                              height: 27,
-                            )
-                          : SvgPicture.asset(
-                              'assets/images/heartFalse.svg',
-                              width: 27,
-                              height: 27,
-                            ),
-                    ),*/
-                  );
-                },
-              ),
+              // Consumer<FavoriteButton>(
+              //   builder: (context, favoriteButton, child) {
+              //     var favoritePlaceList = favoriteButton.favoritePlaceList;
+              //     return Padding(
+              //       padding: const EdgeInsets.only(right: 16.0),
+              //       /*child: IconButton(
+              //         onPressed: () {
+              //           favoriteButton.favoritePlaceButton(
+              //               widget.placetoreceive.placeIdx);
+              //         },
+              //         icon: favoritePlaceList
+              //                 .contains(widget.placetoreceive.placeIdx)
+              //             ? SvgPicture.asset(
+              //                 'assets/images/hearTrue.svg',
+              //                 width: 27,
+              //                 height: 27,
+              //               )
+              //             : SvgPicture.asset(
+              //                 'assets/images/heartFalse.svg',
+              //                 width: 27,
+              //                 height: 27,
+              //               ),
+              //       ),*/
+              //     );
+              //   },
+              // ),
             ],
             // Appbar 하단 음식점 정보
             bottom: PreferredSize(
