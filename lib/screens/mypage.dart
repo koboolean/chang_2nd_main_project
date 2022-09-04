@@ -57,13 +57,16 @@ class _MyPageState extends State<MyPage> {
                   Center(
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(100),
-                      child: Image.network(user.photoURL.toString(),
+                      child:  (user.displayName == null) ?
+                      Icon(Icons.account_circle, size: 158,
+                            color: Colors.grey,):
+                      Image.network(user.photoURL.toString(),
                           width: 158, height: 158, fit: BoxFit.fill),
                     ),
                   ),
                   SizedBox(height: 15),
                   Text(
-                    '${user.displayName}',
+                    (user.displayName != null) ? '${user.displayName}' :"IOS사용자",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                   ),
                   Text(

@@ -43,7 +43,7 @@ class _FavoriteCityPageState extends State<FavoriteCity> {
             Container(
               alignment: Alignment.centerLeft,
               child: Text(
-                "${user.displayName} 님이",
+                (user.displayName != null) ? "${user.displayName} 님이": "사용자 님이",
                 style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
