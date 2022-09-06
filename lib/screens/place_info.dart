@@ -65,6 +65,10 @@ class _FoodInfoState extends State<FoodInfo> {
                         Colors.black.withOpacity(0.5), BlendMode.darken)),
               ),
             ),
+            leading: IconButton(
+              onPressed: () => Navigator.pop(context),
+              icon: Icon(Icons.arrow_back_ios),
+            ),
             actions: [
               Padding(
                 padding: const EdgeInsets.only(right: 8),
@@ -278,6 +282,7 @@ class _FoodInfoState extends State<FoodInfo> {
                               ],
                             ),
                           ListTile(
+                            // isThreeLine: true,
                             dense: true, // 리스트타일에서 수직 밀도를 맞춤
                             leading: Text(
                               "주요 메뉴 가격",

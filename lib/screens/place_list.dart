@@ -1,3 +1,4 @@
+// import 'package:chang_2nd_main_project/screens/favorite_list.dart';
 import 'package:chang_2nd_main_project/screens/place_info.dart';
 import 'package:chang_2nd_main_project/screens/search_page.dart';
 import 'package:chang_2nd_main_project/widgets/tobeContinue.dart';
@@ -8,6 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../services/auth_service.dart';
+import 'package:chang_2nd_main_project/model/foodToSend.dart';
+import 'package:chang_2nd_main_project/model/lodgeToSend.dart';
+import 'package:chang_2nd_main_project/model/placeToSend.dart';
 
 /// 홈페이지
 class PlaceList extends StatefulWidget {
@@ -20,7 +24,6 @@ class PlaceList extends StatefulWidget {
 //선택한 지역 뿌려주는 String 타입 연산자 생성
 class SendSelectedValue {
   final String sendSelectedValue;
-
   const SendSelectedValue(this.sendSelectedValue);
 }
 
@@ -47,7 +50,6 @@ class _PlaceListState extends State<PlaceList> {
       builder: (context, travelService, child) {
         //보낼 연산자 변수 설정
         String sendSelectedValue = _selectedValue;
-
         return Scaffold(
           body: DefaultTabController(
             length: 3,
@@ -186,7 +188,7 @@ class _PlaceListState extends State<PlaceList> {
   }
 }
 
-// 맛집 Body
+// 맛집 tabBody
 class FoodList extends StatefulWidget {
   const FoodList({Key? key, required this.sendSelectedValue}) : super(key: key);
 
@@ -199,510 +201,453 @@ class FoodList extends StatefulWidget {
 //선택한 음식점 분류 기본값 전체로 정의
 var _selectedFoodClassification = "전체";
 
-//place_info에 송부할 데이터 list 생성
-class FoodToSend {
-  final String foodSubtitle;
-  final String foodAddress;
-  final String foodArea;
-  final String foodBusinessHours;
-  final String foodClassification;
-  final String foodField14;
-  final String foodIdx;
-  final String foodName;
-  final String foodNaverLink;
-  final String foodNote;
-  final String foodPhonenumber;
-  final String foodPrice;
-  final String foodServingSize;
-  final String foodUrl1;
-  final String foodUrl2;
-
-  const FoodToSend(
-      this.foodSubtitle,
-      this.foodAddress,
-      this.foodArea,
-      this.foodBusinessHours,
-      this.foodClassification,
-      this.foodField14,
-      this.foodIdx,
-      this.foodName,
-      this.foodNaverLink,
-      this.foodNote,
-      this.foodPhonenumber,
-      this.foodPrice,
-      this.foodServingSize,
-      this.foodUrl1,
-      this.foodUrl2);
-}
-
 class _FoodListState extends State<FoodList> {
   @override
   Widget build(BuildContext context) {
     //선택한 음식점 아이콘 정의
     String sendFoodClass = _selectedFoodClassification;
     // 전체 Column 구조
-    return StreamBuilder<QuerySnapshot>(
-        //조건에 맞는 지역만 불러오도록 필터링
-        stream: FirebaseFirestore.instance
-            .collection('foodArea')
-            .where('area',
-                isEqualTo: widget.sendSelectedValue == "전체"
-                    ? null
-                    : widget.sendSelectedValue)
-            .where('classification',
-                isEqualTo: sendFoodClass == "전체" ? null : sendFoodClass)
-            .snapshots(),
-        builder: (context, snapshot) {
-          //document를 firebase database에서 불러옴
-          final documents = snapshot.data?.docs ?? [];
+    return Consumer<TravelService>(
+      builder: (context, travelService, child) {
+        return StreamBuilder<QuerySnapshot>(
+          //조건에 맞는 지역만 불러오도록 필터링
+          stream: travelService.filtering(
+              'foodArea', widget.sendSelectedValue, sendFoodClass),
+          builder: (context, snapshot) {
+            //document를 firebase database에서 불러옴
+            final documents = snapshot.data?.docs ?? [];
 
-          //foodArea의 index로 number index list 생성
-          List<int> ramdomfoodIndexList =
-              List<int>.generate(documents.length, (index) => index);
+            //foodArea의 index로 number index list 생성
+            List<int> ramdomfoodIndexList =
+                List<int>.generate(documents.length, (index) => index);
 
-          //foodArea index list를 shuffle하여 랜덤 음식점 리스트 호출
-          ramdomfoodIndexList.shuffle();
+            //foodArea index list를 shuffle하여 랜덤 음식점 리스트 호출
+            ramdomfoodIndexList.shuffle();
 
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
-          }
-          if (snapshot.hasError) {
-            return Text('Error loading data: ${snapshot.error!}');
-          }
-          return Column(
-            children: [
-              SizedBox(height: 13),
-              Padding(
-                padding: const EdgeInsets.only(left: 18.0),
-                child: Container(
-                  height: 32,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _selectedFoodClassification = "전체";
-                          });
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 10.0),
-                          child: Container(
-                            height: 32,
-                            width: 66,
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                  width: 1,
-                                  color: Colors.grey[500]!,
-                                ),
-                                borderRadius: BorderRadius.circular(16),
-                                color: _selectedFoodClassification == "전체"
-                                    ? Color.fromRGBO(221, 81, 37, 1)
-                                    : Colors.white),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "전체",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: _selectedFoodClassification == "전체"
-                                        ? Colors.white
-                                        : Colors.black),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _selectedFoodClassification = "한식";
-                          });
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 10.0),
-                          child: Container(
-                            height: 32,
-                            width: 66,
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                  width: 1,
-                                  color: Colors.grey[500]!,
-                                ),
-                                borderRadius: BorderRadius.circular(16),
-                                color: _selectedFoodClassification == "한식"
-                                    ? Color.fromRGBO(221, 81, 37, 1)
-                                    : Colors.white),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "한식",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: _selectedFoodClassification == "한식"
-                                        ? Colors.white
-                                        : Colors.black),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _selectedFoodClassification = "양식";
-                          });
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 10.0),
-                          child: Container(
-                            height: 32,
-                            width: 66,
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                  width: 1,
-                                  color: Colors.grey[500]!,
-                                ),
-                                borderRadius: BorderRadius.circular(16),
-                                color: _selectedFoodClassification == "양식"
-                                    ? Color.fromRGBO(221, 81, 37, 1)
-                                    : Colors.white),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "양식",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: _selectedFoodClassification == "양식"
-                                        ? Colors.white
-                                        : Colors.black),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _selectedFoodClassification = "일식";
-                          });
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 10.0),
-                          child: Container(
-                            height: 32,
-                            width: 66,
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                  width: 1,
-                                  color: Colors.grey[500]!,
-                                ),
-                                borderRadius: BorderRadius.circular(16),
-                                color: _selectedFoodClassification == "일식"
-                                    ? Color.fromRGBO(221, 81, 37, 1)
-                                    : Colors.white),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "일식",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: _selectedFoodClassification == "일식"
-                                        ? Colors.white
-                                        : Colors.black),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _selectedFoodClassification = "중식";
-                          });
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 10.0),
-                          child: Container(
-                            height: 32,
-                            width: 66,
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                  width: 1,
-                                  color: Colors.grey[500]!,
-                                ),
-                                borderRadius: BorderRadius.circular(16),
-                                color: _selectedFoodClassification == "중식"
-                                    ? Color.fromRGBO(221, 81, 37, 1)
-                                    : Colors.white),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "중식",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: _selectedFoodClassification == "중식"
-                                        ? Colors.white
-                                        : Colors.black),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _selectedFoodClassification = "카페";
-                          });
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 10.0),
-                          child: Container(
-                            height: 32,
-                            width: 66,
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                  width: 1,
-                                  color: Colors.grey[500]!,
-                                ),
-                                borderRadius: BorderRadius.circular(16),
-                                color: _selectedFoodClassification == "카페"
-                                    ? Color.fromRGBO(221, 81, 37, 1)
-                                    : Colors.white),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "카페",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: _selectedFoodClassification == "카페"
-                                        ? Colors.white
-                                        : Colors.black),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _selectedFoodClassification = "기타";
-                          });
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 10.0),
-                          child: Container(
-                            height: 32,
-                            width: 66,
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                  width: 1,
-                                  color: Colors.grey[500]!,
-                                ),
-                                borderRadius: BorderRadius.circular(16),
-                                color: _selectedFoodClassification == "기타"
-                                    ? Color.fromRGBO(221, 81, 37, 1)
-                                    : Colors.white),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "기타",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: _selectedFoodClassification == "기타"
-                                        ? Colors.white
-                                        : Colors.black),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-
-              SizedBox(height: 16),
-
-              // 키워드에 따른 음식점 리스트
-              Expanded(
-                child: ListView.builder(
-                  itemCount: documents.length,
-                  itemBuilder: (context, index) {
-                    //랜덤 음식점 index 호출하여 음식점 무작위 나열
-                    final doc = documents[ramdomfoodIndexList[index]];
-
-                    //Firestore 인덱스 가져오기
-                    String foodSubtitle = doc.get('Subtitle');
-                    String foodAddress = doc.get('address');
-                    String foodBusinessHours = doc.get('businessHours');
-                    String foodClassification = doc.get('classification');
-                    String foodField14 = doc.get('field14');
-                    String foodIdx = doc.get('idx');
-                    String foodNaverLink = doc.get('naverlink');
-                    String foodNote = doc.get('note');
-                    String foodPhonenumber = doc.get('phoneNumber');
-                    String foodPrice = doc.get('price');
-                    String foodServingSize = doc.get('servingSize');
-                    String foodName = doc.get('name');
-                    String foodUrl1 = doc.get('url1');
-                    String foodUrl2 = doc.get('url2');
-                    String foodArea = doc.get('area');
-
-                    final foodtosend = FoodToSend(
-                        foodSubtitle,
-                        foodAddress,
-                        foodArea,
-                        foodBusinessHours,
-                        foodClassification,
-                        foodField14,
-                        foodIdx,
-                        foodName,
-                        foodNaverLink,
-                        foodNote,
-                        foodPhonenumber,
-                        foodPrice,
-                        foodServingSize,
-                        foodUrl1,
-                        foodUrl2);
-
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Text('Error loading data: ${snapshot.error!}');
+            }
+            return Column(
+              children: [
+                SizedBox(height: 13),
+                Padding(
+                  padding: const EdgeInsets.only(left: 18.0),
+                  child: Container(
+                    height: 32,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
                       children: [
-                        //Stack 구조
-                        Stack(
-                          children: [
-                            //사진 박스
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 18.0, right: 18.0),
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => FoodInfo(
-                                              foodtoreceive: foodtosend,
-                                            )),
-                                  );
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                    color: Colors.grey,
-
-                                    //사진 삽입
-                                    image: DecorationImage(
-                                      image: NetworkImage(foodUrl1),
-                                      fit: BoxFit.cover,
-                                    ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selectedFoodClassification = "전체";
+                            });
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 10.0),
+                            child: Container(
+                              height: 32,
+                              width: 66,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                    width: 1,
+                                    color: Colors.grey[500]!,
                                   ),
-                                  width: double.maxFinite,
-                                  height: 142, //실제 높이 142-16 = 126
+                                  borderRadius: BorderRadius.circular(16),
+                                  color: _selectedFoodClassification == "전체"
+                                      ? Color.fromRGBO(221, 81, 37, 1)
+                                      : Colors.white),
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "전체",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color: _selectedFoodClassification == "전체"
+                                          ? Colors.white
+                                          : Colors.black),
                                 ),
                               ),
-                            ),
-                            // 하트 아이콘
-                            /*Positioned(
-                              top: 10,
-                              right: 30,
-                              child: GestureDetector(
-                                onTap: () {
-                                  // setState(() => isPressed = !isPressed);
-                                },
-                                child: Container(
-                                  height: 30,
-                                  width: 30,
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey[700]!.withOpacity(0.2),
-                                    borderRadius: BorderRadius.circular(100),
-                                  ),
-                                  child:
-                                      // (isPressed) ? Icon(
-                                      // Icons.favorite_border,
-                                      // color: Colors.white,
-                                      // size: 24,
-                                      // ),
-                                      // :
-                                      // Icon(
-                                      // Icons.favorite,
-                                      // color: Colors.red,
-                                      // size: 24,
-                                      // ),
-                                      Icon(
-                                    Icons.favorite_border,
-                                    color: Colors.white,
-                                    size: 24,
-                                  ),
-                                ),
-                              ),
-                            ),*/
-                            // 해시태그 키워드
-                            Positioned(
-                              bottom: 10,
-                              left: 28,
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8.0),
-                                    child: Text(
-                                      "#$foodClassification",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                        shadows: [
-                                          BoxShadow(
-                                            color: Color(0x9e000000),
-                                            offset: Offset(0, 2),
-                                            blurRadius: 2,
-                                            spreadRadius: 0,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              top: 9.0, left: 24.0, bottom: 2.0),
-                          child: Text(
-                            foodName,
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              top: 2.0, left: 24.0, bottom: 14.0),
-                          child: Text(
-                            foodAddress,
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey[700]!,
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selectedFoodClassification = "한식";
+                            });
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 10.0),
+                            child: Container(
+                              height: 32,
+                              width: 66,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                    width: 1,
+                                    color: Colors.grey[500]!,
+                                  ),
+                                  borderRadius: BorderRadius.circular(16),
+                                  color: _selectedFoodClassification == "한식"
+                                      ? Color.fromRGBO(221, 81, 37, 1)
+                                      : Colors.white),
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "한식",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color: _selectedFoodClassification == "한식"
+                                          ? Colors.white
+                                          : Colors.black),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selectedFoodClassification = "양식";
+                            });
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 10.0),
+                            child: Container(
+                              height: 32,
+                              width: 66,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                    width: 1,
+                                    color: Colors.grey[500]!,
+                                  ),
+                                  borderRadius: BorderRadius.circular(16),
+                                  color: _selectedFoodClassification == "양식"
+                                      ? Color.fromRGBO(221, 81, 37, 1)
+                                      : Colors.white),
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "양식",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color: _selectedFoodClassification == "양식"
+                                          ? Colors.white
+                                          : Colors.black),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selectedFoodClassification = "일식";
+                            });
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 10.0),
+                            child: Container(
+                              height: 32,
+                              width: 66,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                    width: 1,
+                                    color: Colors.grey[500]!,
+                                  ),
+                                  borderRadius: BorderRadius.circular(16),
+                                  color: _selectedFoodClassification == "일식"
+                                      ? Color.fromRGBO(221, 81, 37, 1)
+                                      : Colors.white),
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "일식",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color: _selectedFoodClassification == "일식"
+                                          ? Colors.white
+                                          : Colors.black),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selectedFoodClassification = "중식";
+                            });
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 10.0),
+                            child: Container(
+                              height: 32,
+                              width: 66,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                    width: 1,
+                                    color: Colors.grey[500]!,
+                                  ),
+                                  borderRadius: BorderRadius.circular(16),
+                                  color: _selectedFoodClassification == "중식"
+                                      ? Color.fromRGBO(221, 81, 37, 1)
+                                      : Colors.white),
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "중식",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color: _selectedFoodClassification == "중식"
+                                          ? Colors.white
+                                          : Colors.black),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selectedFoodClassification = "카페";
+                            });
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 10.0),
+                            child: Container(
+                              height: 32,
+                              width: 66,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                    width: 1,
+                                    color: Colors.grey[500]!,
+                                  ),
+                                  borderRadius: BorderRadius.circular(16),
+                                  color: _selectedFoodClassification == "카페"
+                                      ? Color.fromRGBO(221, 81, 37, 1)
+                                      : Colors.white),
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "카페",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color: _selectedFoodClassification == "카페"
+                                          ? Colors.white
+                                          : Colors.black),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selectedFoodClassification = "기타";
+                            });
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 10.0),
+                            child: Container(
+                              height: 32,
+                              width: 66,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                    width: 1,
+                                    color: Colors.grey[500]!,
+                                  ),
+                                  borderRadius: BorderRadius.circular(16),
+                                  color: _selectedFoodClassification == "기타"
+                                      ? Color.fromRGBO(221, 81, 37, 1)
+                                      : Colors.white),
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "기타",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color: _selectedFoodClassification == "기타"
+                                          ? Colors.white
+                                          : Colors.black),
+                                ),
+                              ),
                             ),
                           ),
                         ),
                       ],
-                    );
-                  },
+                    ),
+                  ),
                 ),
-              ),
-            ],
-          );
-        });
+
+                SizedBox(height: 16),
+
+                // 키워드에 따른 음식점 리스트
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: documents.length,
+                    itemBuilder: (context, index) {
+                      //랜덤 음식점 index 호출하여 음식점 무작위 나열
+                      final doc = documents[ramdomfoodIndexList[index]];
+                      FoodToSend foodtosend = FoodToSend(
+                          foodSubtitle: doc.get('Subtitle'),
+                          foodAddress: doc.get('address'),
+                          foodBusinessHours: doc.get('businessHours'),
+                          foodClassification: doc.get('classification'),
+                          foodField14: doc.get('field14'),
+                          foodIdx: doc.get('idx'),
+                          foodName: doc.get('name'),
+                          foodNaverLink: doc.get('naverlink'),
+                          foodNote: doc.get('note'),
+                          foodPhonenumber: doc.get('phoneNumber'),
+                          foodPrice: doc.get('price'),
+                          foodServingSize: doc.get('servingSize'),
+                          foodUrl1: doc.get('url1'),
+                          foodUrl2: doc.get('url2'));
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          //Stack 구조
+                          Stack(
+                            children: [
+                              //사진 박스
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 18.0, right: 18.0),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => FoodInfo(
+                                                foodtoreceive: foodtosend,
+                                              )),
+                                    );
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(10)),
+                                      color: Colors.grey,
+
+                                      //사진 삽입
+                                      image: DecorationImage(
+                                        image:
+                                            NetworkImage(foodtosend.foodUrl1!),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    width: double.maxFinite,
+                                    height: 142, //실제 높이 142-16 = 126
+                                  ),
+                                ),
+                              ),
+                              // 하트 아이콘
+                              /*Positioned(
+                                top: 10,
+                                right: 30,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    // setState(() => isPressed = !isPressed);
+                                  },
+                                  child: Container(
+                                    height: 30,
+                                    width: 30,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[700]!.withOpacity(0.2),
+                                      borderRadius: BorderRadius.circular(100),
+                                    ),
+                                    child:
+                                        // (isPressed) ? Icon(
+                                        // Icons.favorite_border,
+                                        // color: Colors.white,
+                                        // size: 24,
+                                        // ),
+                                        // :
+                                        // Icon(
+                                        // Icons.favorite,
+                                        // color: Colors.red,
+                                        // size: 24,
+                                        // ),
+                                        Icon(
+                                      Icons.favorite_border,
+                                      color: Colors.white,
+                                      size: 24,
+                                    ),
+                                  ),
+                                ),
+                              ),*/
+                              // 해시태그 키워드
+                              Positioned(
+                                bottom: 10,
+                                left: 28,
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(right: 8.0),
+                                      child: Text(
+                                        "#${foodtosend.foodClassification}",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          shadows: [
+                                            BoxShadow(
+                                              color: Color(0x9e000000),
+                                              offset: Offset(0, 2),
+                                              blurRadius: 2,
+                                              spreadRadius: 0,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 9.0, left: 24.0, bottom: 2.0),
+                            child: Text(
+                              foodtosend.foodName!,
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 2.0, left: 24.0, bottom: 14.0),
+                            child: Text(
+                              foodtosend.foodAddress!,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey[700]!,
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
   }
 }
 
-// 맛집 Body
+// 숙소 tabBody
 class LodgeList extends StatefulWidget {
   const LodgeList({Key? key, required this.sendSelectedValue})
       : super(key: key);
@@ -716,372 +661,317 @@ class LodgeList extends StatefulWidget {
 //lodge classification 변수 지정
 var _selectedLodgeClassification = "전체";
 
-//place_info에 송부할 데이터 list 생성
-class LodgeToSend {
-  final String lodgeBreakFastYn;
-  final String lodgeSubtitle;
-  final String lodgeAddress;
-  final String lodgeArea;
-  final String lodgeBusinessHours;
-  final String lodgeIdx;
-  final String lodgeName;
-  final String lodgeNaverLink;
-  final String lodgePartyYn;
-  final String lodgePhoneNumber;
-  final String lodgePriceType1;
-  final String lodgePriceType2;
-  final String lodgePriceType3;
-  final String lodgeToiletYn;
-  final String lodgeUrl1;
-  final String lodgeUrl2;
-
-  const LodgeToSend(
-      this.lodgeBreakFastYn,
-      this.lodgeSubtitle,
-      this.lodgeAddress,
-      this.lodgeArea,
-      this.lodgeBusinessHours,
-      this.lodgeIdx,
-      this.lodgeName,
-      this.lodgeNaverLink,
-      this.lodgePartyYn,
-      this.lodgePhoneNumber,
-      this.lodgePriceType1,
-      this.lodgePriceType2,
-      this.lodgePriceType3,
-      this.lodgeToiletYn,
-      this.lodgeUrl1,
-      this.lodgeUrl2);
-}
-
 class _LodgeListState extends State<LodgeList> {
   @override
   Widget build(BuildContext context) {
     //숙소 Classification 변수 지정
     String sendLodgeClass = _selectedLodgeClassification;
     // 전체 Column 구조
-    return StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance
-            .collection('lodgeArea')
-            .where('area',
-                isEqualTo: widget.sendSelectedValue == "전체"
-                    ? null
-                    : widget.sendSelectedValue)
-            .where('classification',
-                isEqualTo: sendLodgeClass == "전체" ? null : sendLodgeClass)
-            .snapshots(),
-        builder: (context, snapshot) {
-          //document를 firebase database에서 불러옴
-          final documents = snapshot.data?.docs ?? [];
+    return Consumer<TravelService>(builder: (context, travelService, child) {
+      return StreamBuilder<QuerySnapshot>(
+          stream: travelService.filtering(
+              'lodgeArea', widget.sendSelectedValue, sendLodgeClass),
+          builder: (context, snapshot) {
+            //document를 firebase database에서 불러옴
+            final documents = snapshot.data?.docs ?? [];
 
-          //lodgeArea의 index로 number index 생성
-          List<int> ramdomlodgeIndexList =
-              List<int>.generate(documents.length, (index) => index);
-          //lodgeArea index list를 shuffle하여 랜덤 음식점 리스트 호출
-          ramdomlodgeIndexList.shuffle();
+            //lodgeArea의 index로 number index 생성
+            List<int> ramdomlodgeIndexList =
+                List<int>.generate(documents.length, (index) => index);
+            //lodgeArea index list를 shuffle하여 랜덤 음식점 리스트 호출
+            ramdomlodgeIndexList.shuffle();
 
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
-          }
-          if (snapshot.hasError) {
-            return Text('Error loading data: ${snapshot.error!}');
-          }
-          return Column(
-            children: [
-              SizedBox(height: 13),
-              Padding(
-                padding: const EdgeInsets.only(left: 18.0),
-                child: Container(
-                  height: 32,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _selectedLodgeClassification = "전체";
-                          });
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 10.0),
-                          child: Container(
-                            height: 32,
-                            width: 66,
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                  width: 1,
-                                  color: Colors.grey[500]!,
-                                ),
-                                borderRadius: BorderRadius.circular(16),
-                                color: _selectedLodgeClassification == "전체"
-                                    ? Color.fromRGBO(221, 81, 37, 1)
-                                    : Colors.white),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "전체",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: _selectedLodgeClassification == "전체"
-                                        ? Colors.white
-                                        : Colors.black),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _selectedLodgeClassification = "1인실";
-                          });
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 10.0),
-                          child: Container(
-                            height: 32,
-                            width: 66,
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                  width: 1,
-                                  color: Colors.grey[500]!,
-                                ),
-                                borderRadius: BorderRadius.circular(16),
-                                color: _selectedLodgeClassification == "1인실"
-                                    ? Color.fromRGBO(221, 81, 37, 1)
-                                    : Colors.white),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "1인실",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: _selectedLodgeClassification == "1인실"
-                                        ? Colors.white
-                                        : Colors.black),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _selectedLodgeClassification = "다인실";
-                          });
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 10.0),
-                          child: Container(
-                            height: 32,
-                            width: 66,
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                  width: 1,
-                                  color: Colors.grey[500]!,
-                                ),
-                                borderRadius: BorderRadius.circular(16),
-                                color: _selectedLodgeClassification == "다인실"
-                                    ? Color.fromRGBO(221, 81, 37, 1)
-                                    : Colors.white),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "다인실",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: _selectedLodgeClassification == "다인실"
-                                        ? Colors.white
-                                        : Colors.black),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 16),
-              // 키워드에 따른 음식점 리스트
-              Expanded(
-                child: ListView.builder(
-                  itemCount: documents.length,
-                  itemBuilder: (context, index) {
-                    final doc = documents[ramdomlodgeIndexList[index]];
-
-                    //Firestore 인덱스 가져오기
-                    String lodgeBreakFastYn = doc.get('BreakfastYn');
-                    String lodgeSubtitle = doc.get('Subtitle');
-                    String lodgeAddress = doc.get('address');
-                    String lodgeArea = doc.get('area');
-                    String lodgeBusinessHours = doc.get('businessHours');
-                    String lodgeIdx = doc.get('idx');
-                    String lodgeName = doc.get('name');
-                    String lodgeNaverLink = doc.get('naverlink');
-                    String lodgePartyYn = doc.get('partyYn');
-                    String lodgePhoneNumber = doc.get('phoneNumber');
-                    String lodgePriceType1 = doc.get('priceType1');
-                    String lodgePriceType2 = doc.get('priceType2');
-                    String lodgePriceType3 = doc.get('priceType3');
-                    String lodgeToiletYn = doc.get('toiletYn');
-                    String lodgeUrl1 = doc.get('url1');
-                    String lodgeUrl2 = doc.get('url2');
-
-                    final lodgetosend = LodgeToSend(
-                        lodgeBreakFastYn,
-                        lodgeSubtitle,
-                        lodgeAddress,
-                        lodgeArea,
-                        lodgeBusinessHours,
-                        lodgeIdx,
-                        lodgeName,
-                        lodgeNaverLink,
-                        lodgePartyYn,
-                        lodgePhoneNumber,
-                        lodgePriceType1,
-                        lodgePriceType2,
-                        lodgePriceType3,
-                        lodgeToiletYn,
-                        lodgeUrl1,
-                        lodgeUrl2);
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Text('Error loading data: ${snapshot.error!}');
+            }
+            return Column(
+              children: [
+                SizedBox(height: 13),
+                Padding(
+                  padding: const EdgeInsets.only(left: 18.0),
+                  child: Container(
+                    height: 32,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
                       children: [
-                        //Stack 구조
-                        Stack(
-                          children: [
-                            //사진 박스
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 18.0, right: 18.0),
-                              child: GestureDetector(
-                                onTap: (() {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => LodgeInfo(
-                                              lodgetoreceive: lodgetosend,
-                                            )),
-                                  );
-                                }),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                    color: Colors.grey,
-
-                                    //사진 삽입
-                                    image: DecorationImage(
-                                      image: NetworkImage(lodgeUrl1),
-                                      fit: BoxFit.cover,
-                                    ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selectedLodgeClassification = "전체";
+                            });
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 10.0),
+                            child: Container(
+                              height: 32,
+                              width: 66,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                    width: 1,
+                                    color: Colors.grey[500]!,
                                   ),
-                                  width: double.maxFinite,
-                                  height: 142, //실제 높이 142-16 = 126
+                                  borderRadius: BorderRadius.circular(16),
+                                  color: _selectedLodgeClassification == "전체"
+                                      ? Color.fromRGBO(221, 81, 37, 1)
+                                      : Colors.white),
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "전체",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color:
+                                          _selectedLodgeClassification == "전체"
+                                              ? Colors.white
+                                              : Colors.black),
                                 ),
                               ),
-                            ),
-                            // 하트 아이콘
-                            /*Positioned(
-                              top: 10,
-                              right: 30,
-                              child: GestureDetector(
-                                onTap: () {
-                                  // setState(() => isPressed = !isPressed);
-                                },
-                                child: Container(
-                                  height: 30,
-                                  width: 30,
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey[700]!.withOpacity(0.2),
-                                    borderRadius: BorderRadius.circular(100),
-                                  ),
-                                  child:
-                                      // (isPressed) ? Icon(
-                                      // Icons.favorite_border,
-                                      // color: Colors.white,
-                                      // size: 24,
-                                      // ),
-                                      // :
-                                      // Icon(
-                                      // Icons.favorite,
-                                      // color: Colors.red,
-                                      // size: 24,
-                                      // ),
-                                      Icon(
-                                    Icons.favorite_border,
-                                    color: Colors.white,
-                                    size: 24,
-                                  ),
-                                ),
-                              ),
-                            ),*/
-                            // 해시태그 키워드
-                            Positioned(
-                              bottom: 10,
-                              left: 28,
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8.0),
-                                    child: Text(
-                                      "#$lodgePriceType3",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                        shadows: [
-                                          BoxShadow(
-                                            color: Color(0x9e000000),
-                                            offset: Offset(0, 2),
-                                            blurRadius: 2,
-                                            spreadRadius: 0,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              top: 9.0, left: 24.0, bottom: 2.0),
-                          child: Text(
-                            lodgeName,
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              top: 2.0, left: 24.0, bottom: 14.0),
-                          child: Text(
-                            lodgeAddress,
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey[700]!,
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selectedLodgeClassification = "1인실";
+                            });
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 10.0),
+                            child: Container(
+                              height: 32,
+                              width: 66,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                    width: 1,
+                                    color: Colors.grey[500]!,
+                                  ),
+                                  borderRadius: BorderRadius.circular(16),
+                                  color: _selectedLodgeClassification == "1인실"
+                                      ? Color.fromRGBO(221, 81, 37, 1)
+                                      : Colors.white),
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "1인실",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color:
+                                          _selectedLodgeClassification == "1인실"
+                                              ? Colors.white
+                                              : Colors.black),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selectedLodgeClassification = "다인실";
+                            });
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 10.0),
+                            child: Container(
+                              height: 32,
+                              width: 66,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                    width: 1,
+                                    color: Colors.grey[500]!,
+                                  ),
+                                  borderRadius: BorderRadius.circular(16),
+                                  color: _selectedLodgeClassification == "다인실"
+                                      ? Color.fromRGBO(221, 81, 37, 1)
+                                      : Colors.white),
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "다인실",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color:
+                                          _selectedLodgeClassification == "다인실"
+                                              ? Colors.white
+                                              : Colors.black),
+                                ),
+                              ),
                             ),
                           ),
                         ),
                       ],
-                    );
-                  },
+                    ),
+                  ),
                 ),
-              ),
-            ],
-          );
-        });
+                SizedBox(height: 16),
+                // 키워드에 따른 음식점 리스트
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: documents.length,
+                    itemBuilder: (context, index) {
+                      final doc = documents[ramdomlodgeIndexList[index]];
+
+                      //Firestore 인덱스 가져오기
+
+                      final lodgetosend = LodgeToSend(
+                          lodgeBreakFastYn: doc.get('BreakfastYn'),
+                          lodgeSubtitle: doc.get('Subtitle'),
+                          lodgeAddress: doc.get('address'),
+                          lodgeArea: doc.get('area'),
+                          lodgeBusinessHours: doc.get('businessHours'),
+                          lodgeIdx: doc.get('idx'),
+                          lodgeName: doc.get('name'),
+                          lodgeNaverLink: doc.get('naverlink'),
+                          lodgePartyYn: doc.get('partyYn'),
+                          lodgePhoneNumber: doc.get('phoneNumber'),
+                          lodgePriceType1: doc.get('priceType1'),
+                          lodgePriceType2: doc.get('priceType2'),
+                          lodgePriceType3: doc.get('priceType3'),
+                          lodgeToiletYn: doc.get('toiletYn'),
+                          lodgeUrl1: doc.get('url1'),
+                          lodgeUrl2: doc.get('url2'));
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          //Stack 구조
+                          Stack(
+                            children: [
+                              //사진 박스
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 18.0, right: 18.0),
+                                child: GestureDetector(
+                                  onTap: (() {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => LodgeInfo(
+                                                lodgetoreceive: lodgetosend,
+                                              )),
+                                    );
+                                  }),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(10)),
+                                      color: Colors.grey,
+
+                                      //사진 삽입
+                                      image: DecorationImage(
+                                        image: NetworkImage(
+                                            lodgetosend.lodgeUrl1!),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    width: double.maxFinite,
+                                    height: 142, //실제 높이 142-16 = 126
+                                  ),
+                                ),
+                              ),
+                              // 하트 아이콘
+                              /*Positioned(
+                                  top: 10,
+                                  right: 30,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      // setState(() => isPressed = !isPressed);
+                                    },
+                                    child: Container(
+                                      height: 30,
+                                      width: 30,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[700]!.withOpacity(0.2),
+                                        borderRadius: BorderRadius.circular(100),
+                                      ),
+                                      child:
+                                          // (isPressed) ? Icon(
+                                          // Icons.favorite_border,
+                                          // color: Colors.white,
+                                          // size: 24,
+                                          // ),
+                                          // :
+                                          // Icon(
+                                          // Icons.favorite,
+                                          // color: Colors.red,
+                                          // size: 24,
+                                          // ),ㄴ
+                                          Icon(
+                                        Icons.favorite_border,
+                                        color: Colors.white,
+                                        size: 24,
+                                      ),
+                                    ),
+                                  ),
+                                ),*/
+                              // 해시태그 키워드
+                              Positioned(
+                                bottom: 10,
+                                left: 28,
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(right: 8.0),
+                                      child: Text(
+                                        "#${lodgetosend.lodgePriceType3}",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          shadows: [
+                                            BoxShadow(
+                                              color: Color(0x9e000000),
+                                              offset: Offset(0, 2),
+                                              blurRadius: 2,
+                                              spreadRadius: 0,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 9.0, left: 24.0, bottom: 2.0),
+                            child: Text(
+                              lodgetosend.lodgeName!,
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 2.0, left: 24.0, bottom: 14.0),
+                            child: Text(
+                              lodgetosend.lodgeAddress!,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey[700]!,
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ],
+            );
+          });
+    });
   }
 }
 
-// Place Body
+// Place tabBody
 class PlacetogoList extends StatefulWidget {
   const PlacetogoList({Key? key, required this.sendSelectedValue})
       : super(key: key);
@@ -1095,497 +985,448 @@ class PlacetogoList extends StatefulWidget {
 //lodge classification 변수 지정
 var _selectedPlaceClassification = "전체";
 
-class PlaceToSend {
-  final String placeAddress;
-  final String placeArea;
-  final String placeBusinessHours;
-  final String placeClassifiaction;
-  final String placeField13;
-  final String placeIdx;
-  final String placeName;
-  final String placeNaverLink;
-  final String placeNote;
-  final String placePhoneNumber;
-  final String placePrice;
-  final String placeSubtitle;
-  final String placeUrl1;
-  final String placeUrl2;
-
-  const PlaceToSend(
-      this.placeAddress,
-      this.placeArea,
-      this.placeBusinessHours,
-      this.placeClassifiaction,
-      this.placeField13,
-      this.placeIdx,
-      this.placeName,
-      this.placeNaverLink,
-      this.placeNote,
-      this.placePhoneNumber,
-      this.placePrice,
-      this.placeSubtitle,
-      this.placeUrl1,
-      this.placeUrl2);
-}
-
 class _PlacetogoListState extends State<PlacetogoList> {
   @override
   Widget build(BuildContext context) {
     //숙소 Classification 변수 지정
     String sendPlaceClass = _selectedPlaceClassification;
     // 전체 Column 구조
-    return StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance
-            .collection('placeArea')
-            .where('area',
-                isEqualTo: widget.sendSelectedValue == "전체"
-                    ? null
-                    : widget.sendSelectedValue)
-            .where('classification',
-                isEqualTo: sendPlaceClass == "전체" ? null : sendPlaceClass)
-            .snapshots(),
-        builder: (context, snapshot) {
-          //document를 firebase database에서 불러옴
-          final documents = snapshot.data?.docs ?? [];
+    return Consumer<TravelService>(builder: (context, travelService, child) {
+      return StreamBuilder<QuerySnapshot>(
+          stream: travelService.filtering(
+              'placeArea', widget.sendSelectedValue, sendPlaceClass),
+          builder: (context, snapshot) {
+            //document를 firebase database에서 불러옴
+            final documents = snapshot.data?.docs ?? [];
 
-          //lodgeArea의 index로 number index 생성
-          List<int> ramdomplaceIndexList =
-              List<int>.generate(documents.length, (index) => index);
-          //lodgeArea index list를 shuffle하여 랜덤 음식점 리스트 호출
-          ramdomplaceIndexList.shuffle();
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
-          }
-          if (snapshot.hasError) {
-            return Text('Error loading data: ${snapshot.error!}');
-          }
-          return Column(
-            children: [
-              SizedBox(height: 13),
-              Padding(
-                padding: const EdgeInsets.only(left: 18.0),
-                child: Container(
-                  height: 32,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _selectedPlaceClassification = "전체";
-                          });
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 10.0),
-                          child: Container(
-                            height: 32,
-                            width: 66,
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                  width: 1,
-                                  color: Colors.grey[500]!,
-                                ),
-                                borderRadius: BorderRadius.circular(16),
-                                color: _selectedPlaceClassification == "전체"
-                                    ? Color.fromRGBO(221, 81, 37, 1)
-                                    : Colors.white),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "전체",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: _selectedPlaceClassification == "전체"
-                                        ? Colors.white
-                                        : Colors.black),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _selectedPlaceClassification = "바다";
-                          });
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 10.0),
-                          child: Container(
-                            height: 32,
-                            width: 66,
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                  width: 1,
-                                  color: Colors.grey[500]!,
-                                ),
-                                borderRadius: BorderRadius.circular(16),
-                                color: _selectedPlaceClassification == "바다"
-                                    ? Color.fromRGBO(221, 81, 37, 1)
-                                    : Colors.white),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "바다",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: _selectedPlaceClassification == "바다"
-                                        ? Colors.white
-                                        : Colors.black),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _selectedPlaceClassification = "공원";
-                          });
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 10.0),
-                          child: Container(
-                            height: 32,
-                            width: 66,
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                  width: 1,
-                                  color: Colors.grey[500]!,
-                                ),
-                                borderRadius: BorderRadius.circular(16),
-                                color: _selectedPlaceClassification == "공원"
-                                    ? Color.fromRGBO(221, 81, 37, 1)
-                                    : Colors.white),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "공원",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: _selectedPlaceClassification == "공원"
-                                        ? Colors.white
-                                        : Colors.black),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _selectedPlaceClassification = "체험";
-                          });
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 10.0),
-                          child: Container(
-                            height: 32,
-                            width: 66,
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                  width: 1,
-                                  color: Colors.grey[500]!,
-                                ),
-                                borderRadius: BorderRadius.circular(16),
-                                color: _selectedPlaceClassification == "체험"
-                                    ? Color.fromRGBO(221, 81, 37, 1)
-                                    : Colors.white),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "체험",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: _selectedPlaceClassification == "체험"
-                                        ? Colors.white
-                                        : Colors.black),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _selectedPlaceClassification = "테마파크";
-                          });
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 10.0),
-                          child: Container(
-                            height: 32,
-                            width: 66,
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                  width: 1,
-                                  color: Colors.grey[500]!,
-                                ),
-                                borderRadius: BorderRadius.circular(16),
-                                color: _selectedPlaceClassification == "테마파크"
-                                    ? Color.fromRGBO(221, 81, 37, 1)
-                                    : Colors.white),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "테마파크",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color:
-                                        _selectedPlaceClassification == "테마파크"
-                                            ? Colors.white
-                                            : Colors.black),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _selectedPlaceClassification = "자연명소";
-                          });
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 10.0),
-                          child: Container(
-                            height: 32,
-                            width: 66,
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                  width: 1,
-                                  color: Colors.grey[500]!,
-                                ),
-                                borderRadius: BorderRadius.circular(16),
-                                color: _selectedPlaceClassification == "자연명소"
-                                    ? Color.fromRGBO(221, 81, 37, 1)
-                                    : Colors.white),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "자연명소",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color:
-                                        _selectedPlaceClassification == "자연명소"
-                                            ? Colors.white
-                                            : Colors.black),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _selectedPlaceClassification = "관람";
-                          });
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 10.0),
-                          child: Container(
-                            height: 32,
-                            width: 66,
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                  width: 1,
-                                  color: Colors.grey[500]!,
-                                ),
-                                borderRadius: BorderRadius.circular(16),
-                                color: _selectedPlaceClassification == "관람"
-                                    ? Color.fromRGBO(221, 81, 37, 1)
-                                    : Colors.white),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "관람",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: _selectedPlaceClassification == "관람"
-                                        ? Colors.white
-                                        : Colors.black),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 16),
-              // 키워드에 따른 음식점 리스트
-              Expanded(
-                child: ListView.builder(
-                  itemCount: documents.length,
-                  itemBuilder: (context, index) {
-                    //랜덤 음식점 index 호출하여 음식점 무작위 나열
-                    final doc = documents[ramdomplaceIndexList[index]];
-
-                    //Place data 호출
-                    String placeAddress = doc.get('address');
-                    String placeArea = doc.get('area');
-                    String placeBusinessHours = doc.get('businessHours');
-                    String placeClassifiaction = doc.get('classification');
-                    String placeField13 = doc.get('field13');
-                    String placeIdx = doc.get('idx');
-                    String placeName = doc.get('name');
-                    String placeNaverLink = doc.get('naverlink');
-                    String placeNote = doc.get('note');
-                    String placePhoneNumber = doc.get('phoneNumber');
-                    String placePrice = doc.get('price');
-                    String placeSubtitle = doc.get('subTitle');
-                    String placeUrl1 = doc.get('url1');
-                    String placeUrl2 = doc.get('url2');
-
-                    final placetosend = PlaceToSend(
-                        placeAddress,
-                        placeArea,
-                        placeBusinessHours,
-                        placeClassifiaction,
-                        placeField13,
-                        placeIdx,
-                        placeName,
-                        placeNaverLink,
-                        placeNote,
-                        placePhoneNumber,
-                        placePrice,
-                        placeSubtitle,
-                        placeUrl1,
-                        placeUrl2); //Firestore 변수 설정
-
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+            //lodgeArea의 index로 number index 생성
+            List<int> ramdomplaceIndexList =
+                List<int>.generate(documents.length, (index) => index);
+            //lodgeArea index list를 shuffle하여 랜덤 음식점 리스트 호출
+            ramdomplaceIndexList.shuffle();
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Text('Error loading data: ${snapshot.error!}');
+            }
+            return Column(
+              children: [
+                SizedBox(height: 13),
+                Padding(
+                  padding: const EdgeInsets.only(left: 18.0),
+                  child: Container(
+                    height: 32,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
                       children: [
-                        //Stack 구조
-                        Stack(
-                          children: [
-                            //사진 박스
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 18.0, right: 18.0),
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => PlaceInfo(
-                                              placetoreceive: placetosend,
-                                            )),
-                                  );
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                    color: Colors.grey,
-
-                                    //사진 삽입
-                                    image: DecorationImage(
-                                      image: NetworkImage(placeUrl1),
-                                      fit: BoxFit.cover,
-                                    ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selectedPlaceClassification = "전체";
+                            });
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 10.0),
+                            child: Container(
+                              height: 32,
+                              width: 66,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                    width: 1,
+                                    color: Colors.grey[500]!,
                                   ),
-                                  width: double.maxFinite,
-                                  height: 142, //실제 높이 142-16 = 126
+                                  borderRadius: BorderRadius.circular(16),
+                                  color: _selectedPlaceClassification == "전체"
+                                      ? Color.fromRGBO(221, 81, 37, 1)
+                                      : Colors.white),
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "전체",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color:
+                                          _selectedPlaceClassification == "전체"
+                                              ? Colors.white
+                                              : Colors.black),
                                 ),
                               ),
-                            ),
-                            // 하트 아이콘
-                            /*Positioned(
-                              top: 10,
-                              right: 30,
-                              child: GestureDetector(
-                                onTap: () {
-                                  // setState(() => isPressed = !isPressed);
-                                },
-                                child: Container(
-                                  height: 30,
-                                  width: 30,
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey[700]!.withOpacity(0.2),
-                                    borderRadius: BorderRadius.circular(100),
-                                  ),
-                                  child:
-                                      // (isPressed) ? Icon(
-                                      // Icons.favorite_border,
-                                      // color: Colors.white,
-                                      // size: 24,
-                                      // ),
-                                      // :
-                                      // Icon(
-                                      // Icons.favorite,
-                                      // color: Colors.red,
-                                      // size: 24,
-                                      // ),
-                                      Icon(
-                                    Icons.favorite_border,
-                                    color: Colors.white,
-                                    size: 24,
-                                  ),
-                                ),
-                              ),
-                            ),*/
-                            // 해시태그 키워드
-                            Positioned(
-                              bottom: 10,
-                              left: 28,
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8.0),
-                                    child: Text(
-                                      "#$placeArea",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                        shadows: [
-                                          BoxShadow(
-                                            color: Color(0x9e000000),
-                                            offset: Offset(0, 2),
-                                            blurRadius: 2,
-                                            spreadRadius: 0,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              top: 9.0, left: 24.0, bottom: 2.0),
-                          child: Text(
-                            placeName,
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              top: 2.0, left: 24.0, bottom: 14.0),
-                          child: Text(
-                            placeAddress,
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey[700]!,
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selectedPlaceClassification = "바다";
+                            });
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 10.0),
+                            child: Container(
+                              height: 32,
+                              width: 66,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                    width: 1,
+                                    color: Colors.grey[500]!,
+                                  ),
+                                  borderRadius: BorderRadius.circular(16),
+                                  color: _selectedPlaceClassification == "바다"
+                                      ? Color.fromRGBO(221, 81, 37, 1)
+                                      : Colors.white),
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "바다",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color:
+                                          _selectedPlaceClassification == "바다"
+                                              ? Colors.white
+                                              : Colors.black),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selectedPlaceClassification = "공원";
+                            });
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 10.0),
+                            child: Container(
+                              height: 32,
+                              width: 66,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                    width: 1,
+                                    color: Colors.grey[500]!,
+                                  ),
+                                  borderRadius: BorderRadius.circular(16),
+                                  color: _selectedPlaceClassification == "공원"
+                                      ? Color.fromRGBO(221, 81, 37, 1)
+                                      : Colors.white),
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "공원",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color:
+                                          _selectedPlaceClassification == "공원"
+                                              ? Colors.white
+                                              : Colors.black),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selectedPlaceClassification = "체험";
+                            });
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 10.0),
+                            child: Container(
+                              height: 32,
+                              width: 66,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                    width: 1,
+                                    color: Colors.grey[500]!,
+                                  ),
+                                  borderRadius: BorderRadius.circular(16),
+                                  color: _selectedPlaceClassification == "체험"
+                                      ? Color.fromRGBO(221, 81, 37, 1)
+                                      : Colors.white),
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "체험",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color:
+                                          _selectedPlaceClassification == "체험"
+                                              ? Colors.white
+                                              : Colors.black),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selectedPlaceClassification = "테마파크";
+                            });
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 10.0),
+                            child: Container(
+                              height: 32,
+                              width: 66,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                    width: 1,
+                                    color: Colors.grey[500]!,
+                                  ),
+                                  borderRadius: BorderRadius.circular(16),
+                                  color: _selectedPlaceClassification == "테마파크"
+                                      ? Color.fromRGBO(221, 81, 37, 1)
+                                      : Colors.white),
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "테마파크",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color:
+                                          _selectedPlaceClassification == "테마파크"
+                                              ? Colors.white
+                                              : Colors.black),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selectedPlaceClassification = "자연명소";
+                            });
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 10.0),
+                            child: Container(
+                              height: 32,
+                              width: 66,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                    width: 1,
+                                    color: Colors.grey[500]!,
+                                  ),
+                                  borderRadius: BorderRadius.circular(16),
+                                  color: _selectedPlaceClassification == "자연명소"
+                                      ? Color.fromRGBO(221, 81, 37, 1)
+                                      : Colors.white),
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "자연명소",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color:
+                                          _selectedPlaceClassification == "자연명소"
+                                              ? Colors.white
+                                              : Colors.black),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selectedPlaceClassification = "관람";
+                            });
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 10.0),
+                            child: Container(
+                              height: 32,
+                              width: 66,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                    width: 1,
+                                    color: Colors.grey[500]!,
+                                  ),
+                                  borderRadius: BorderRadius.circular(16),
+                                  color: _selectedPlaceClassification == "관람"
+                                      ? Color.fromRGBO(221, 81, 37, 1)
+                                      : Colors.white),
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "관람",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color:
+                                          _selectedPlaceClassification == "관람"
+                                              ? Colors.white
+                                              : Colors.black),
+                                ),
+                              ),
                             ),
                           ),
                         ),
                       ],
-                    );
-                  },
+                    ),
+                  ),
                 ),
-              ),
-            ],
-          );
-        });
+                SizedBox(height: 16),
+                // 키워드에 따른 음식점 리스트
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: documents.length,
+                    itemBuilder: (context, index) {
+                      //랜덤 음식점 index 호출하여 음식점 무작위 나열
+                      final doc = documents[ramdomplaceIndexList[index]];
+                      final placetosend = PlaceToSend(
+                          placeAddress: doc.get('address'),
+                          placeArea: doc.get('area'),
+                          placeBusinessHours: doc.get('businessHours'),
+                          placeClassifiaction: doc.get('classification'),
+                          placeField13: doc.get('field13'),
+                          placeIdx: doc.get('idx'),
+                          placeName: doc.get('name'),
+                          placeNaverLink: doc.get('naverlink'),
+                          placeNote: doc.get('note'),
+                          placePhoneNumber: doc.get('phoneNumber'),
+                          placePrice: doc.get('price'),
+                          placeSubtitle: doc.get('subTitle'),
+                          placeUrl1: doc.get('url1'),
+                          placeUrl2: doc.get('url2'));
+
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          //Stack 구조
+                          Stack(
+                            children: [
+                              //사진 박스
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 18.0, right: 18.0),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => PlaceInfo(
+                                                placetoreceive: placetosend,
+                                              )),
+                                    );
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(10)),
+                                      color: Colors.grey,
+
+                                      //사진 삽입
+                                      image: DecorationImage(
+                                        image: NetworkImage(
+                                            placetosend.placeUrl1!),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    width: double.maxFinite,
+                                    height: 142, //실제 높이 142-16 = 126
+                                  ),
+                                ),
+                              ),
+                              // 하트 아이콘
+                              /*Positioned(
+                                  top: 10,
+                                  right: 30,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      // setState(() => isPressed = !isPressed);
+                                    },
+                                    child: Container(
+                                      height: 30,
+                                      width: 30,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[700]!.withOpacity(0.2),
+                                        borderRadius: BorderRadius.circular(100),
+                                      ),
+                                      child:
+                                          // (isPressed) ? Icon(
+                                          // Icons.favorite_border,
+                                          // color: Colors.white,
+                                          // size: 24,
+                                          // ),
+                                          // :
+                                          // Icon(
+                                          // Icons.favorite,
+                                          // color: Colors.red,
+                                          // size: 24,
+                                          // ),
+                                          Icon(
+                                        Icons.favorite_border,
+                                        color: Colors.white,
+                                        size: 24,
+                                      ),
+                                    ),
+                                  ),
+                                ),*/
+                              // 해시태그 키워드
+                              Positioned(
+                                bottom: 10,
+                                left: 28,
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(right: 8.0),
+                                      child: Text(
+                                        "#${placetosend.placeArea}",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          shadows: [
+                                            BoxShadow(
+                                              color: Color(0x9e000000),
+                                              offset: Offset(0, 2),
+                                              blurRadius: 2,
+                                              spreadRadius: 0,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 9.0, left: 24.0, bottom: 2.0),
+                            child: Text(
+                              placetosend.placeName!,
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 2.0, left: 24.0, bottom: 14.0),
+                            child: Text(
+                              placetosend.placeAddress!,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey[700]!,
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ],
+            );
+          });
+    });
   }
 }
