@@ -29,5 +29,16 @@ class TravelService extends ChangeNotifier {
   Future<QuerySnapshot> businessHourData(String foodidx) async {
     return await travelCollection.where('idx', isEqualTo: foodidx).get();
   }
-  //tmap 앱으로 길 안내하는 url
+
+//place_list 파일 stream bulider 필터링
+  Stream<QuerySnapshot> filtering(
+      String collectionName, String sendSelectedValue, String sendClass) {
+    return FirebaseFirestore.instance
+        .collection(collectionName)
+        .where('area',
+            isEqualTo: sendSelectedValue == "전체" ? null : sendSelectedValue)
+        .where('classification',
+            isEqualTo: sendClass == "전체" ? null : sendClass)
+        .snapshots();
+  }
 }
