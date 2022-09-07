@@ -154,12 +154,13 @@ class _PlaceListState extends State<PlaceList> {
                               ),
                             )),
                             Tab(
-                                child: Text(
-                              "관광지",
-                              style: TextStyle(
-                                fontSize: 16,
+                              child: Text(
+                                "관광지",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
                               ),
-                            )),
+                            ),
                           ],
                         ),
                       ],
@@ -815,7 +816,7 @@ class _LodgeListState extends State<LodgeList> {
 
                       //Firestore 인덱스 가져오기
 
-                      final lodgetosend = LodgeToSend(
+                      final LodgeToSend lodgetosend = LodgeToSend(
                           lodgeBreakFastYn: doc.get('BreakfastYn'),
                           lodgeSubtitle: doc.get('Subtitle'),
                           lodgeAddress: doc.get('address'),
@@ -936,7 +937,6 @@ class _LodgeListState extends State<LodgeList> {
                               ),
                             ],
                           ),
-
                           Padding(
                             padding: const EdgeInsets.only(
                                 top: 9.0, left: 24.0, bottom: 2.0),
@@ -1276,7 +1276,7 @@ class _PlacetogoListState extends State<PlacetogoList> {
                     itemBuilder: (context, index) {
                       //랜덤 음식점 index 호출하여 음식점 무작위 나열
                       final doc = documents[ramdomplaceIndexList[index]];
-                      final placetosend = PlaceToSend(
+                      final PlaceToSend placetosend = PlaceToSend(
                           placeAddress: doc.get('address'),
                           placeArea: doc.get('area'),
                           placeBusinessHours: doc.get('businessHours'),

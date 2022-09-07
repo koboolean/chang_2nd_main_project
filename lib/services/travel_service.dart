@@ -41,5 +41,4 @@ class TravelService extends ChangeNotifier {
             isEqualTo: sendClass == "전체" ? null : sendClass)
         .snapshots();
   }
-  // Stream<QuerySnapshot>
 }
