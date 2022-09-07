@@ -62,8 +62,9 @@ class _PlaceListState extends State<PlaceList> {
                 iconTheme: IconThemeData(color: Colors.black),
                 leading: Padding(
                   padding: const EdgeInsets.only(left: 18.0),
-                  child: BackButton(
-                    color: Colors.black,
+                  child: IconButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    icon: Icon(Icons.arrow_back_ios),
                   ),
                 ),
                 title: const Text(
