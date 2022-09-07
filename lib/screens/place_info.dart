@@ -401,7 +401,7 @@ class _FoodInfoState extends State<FoodInfo> {
               ),
               onPressed: () async {
                 //음식점 길안내 로직
-                firebaseAnalyticsLog(user.uid, Text('Tmap foodGuide'));
+                firebaseAnalyticsLog(user.uid, "Tmap foodGuide");
                 final idx = widget.foodtoreceive.foodIdx;
 
                 final geocode = FirebaseFirestore.instance
