@@ -1,7 +1,7 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 
 /// SignUp
-void signUpAnalyticsLog(uid) async{
+void signUpAnalyticsLog(String uid) async{
   await FirebaseAnalytics.instance.logSignUp(signUpMethod: uid);
 }
 

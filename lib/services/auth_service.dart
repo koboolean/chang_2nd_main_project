@@ -102,7 +102,7 @@ class AuthService extends ChangeNotifier {
       await FirebaseAuth.instance.signInWithCredential(credential);
 
       // 애널리틱스 로그인 관련사항
-      signUpAnalyticsLog(credential.idToken);
+      signUpAnalyticsLog(credential.idToken.toString());
 
 
       onSuccess();
@@ -132,7 +132,7 @@ class AuthService extends ChangeNotifier {
 
       final authResult = await FirebaseAuth.instance.signInWithCredential(oauthCredential);
 
-      signUpAnalyticsLog(oauthCredential.idToken);
+      signUpAnalyticsLog(oauthCredential.idToken.toString());
 
       onSuccess();
 
