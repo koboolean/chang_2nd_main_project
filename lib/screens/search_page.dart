@@ -383,11 +383,11 @@ class _MySearchState extends State<MySearch>
                                   builder: (context, snapshot) {
                                     final docs =
                                         snapshot.data?.docs ?? []; // 문서들 가져오기
-                                    if (docs.isEmpty) {
-                                      return showUndfinedValue();
-                                    } else {
-                                      return selectSearchValue(docs, "food");
-                                    }
+                                    return Column(children: [
+                                      docs.isEmpty ?
+                                      showUndfinedValue() :
+                                      selectSearchValue(docs, "food")
+                                    ],);
                                   },
                                 );
                               }),
@@ -403,11 +403,12 @@ class _MySearchState extends State<MySearch>
                                   builder: (context, snapshot) {
                                     final docs =
                                         snapshot.data?.docs ?? []; // 문서들 가져오기
-                                    if (docs.isEmpty) {
-                                      return showUndfinedValue();
-                                    } else {
-                                      return selectSearchValue(docs, "lodge");
-                                    }
+                                    return Column(children: [
+                                        docs.isEmpty ?
+                                          showUndfinedValue() :
+                                          selectSearchValue(docs, "lodge")
+                                    ],);
+
                                   },
                                 );
                               }),
@@ -423,11 +424,11 @@ class _MySearchState extends State<MySearch>
                                   builder: (context, snapshot) {
                                     final docs =
                                         snapshot.data?.docs ?? []; // 문서들 가져오기
-                                    if (docs.isEmpty) {
-                                      return showUndfinedValue();
-                                    } else {
-                                      return selectSearchValue(docs, "place");
-                                    }
+                                    return Column(children: [
+                                      docs.isEmpty ?
+                                      showUndfinedValue() :
+                                      selectSearchValue(docs, "place")
+                                    ],);
                                   },
                                 );
                               }),
