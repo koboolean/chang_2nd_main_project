@@ -26,7 +26,7 @@ class _MyPageState extends State<MyPage> {
 
     rootBundle.loadString("pubspec.yaml").then((yamlValue) {
       var yaml = loadYaml(yamlValue);
-      version.value = yaml['version'].toString();
+      version.value = yaml['version'].toString().split("+")[0];
     });
 
     return Consumer(
