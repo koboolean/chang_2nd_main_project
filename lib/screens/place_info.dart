@@ -213,7 +213,15 @@ class _FoodInfoState extends State<FoodInfo> {
                     var hourDocs = snapshot.data?.docs ?? [];
                     var hours = hourDocs[0].get('businessHours').toString();
                     var breakTime = hourDocs[0].get('breaktime_LO').toString();
-                    List<String> businessHours = hours.split(',');
+                    List<String> vHours = hours.split(',');
+
+                    List<String> businessHours = [];
+
+                    for(var i in vHours){
+                      var hurs = i.substring(0,1) == " " ? i.substring(1) : i;
+                      businessHours.add(hurs);
+                    }
+
                     String lineNumbering = hours.replaceAll(',', '\n');
                     String currentDate = DateFormat('E', 'ko')
                         .format(DateTime.now())
