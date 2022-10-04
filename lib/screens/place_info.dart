@@ -216,7 +216,15 @@ class _FoodInfoState extends State<FoodInfo> {
                     var hourDocs = snapshot.data?.docs ?? [];
                     var hours = hourDocs[0].get('businessHours').toString();
                     var breakTime = hourDocs[0].get('breaktime_LO').toString();
-                    List<String> businessHours = hours.split(',');
+                    List<String> vHours = hours.split(',');
+
+                    List<String> businessHours = [];
+
+                    for (var i in vHours) {
+                      var hurs = i.substring(0, 1) == " " ? i.substring(1) : i;
+                      businessHours.add(hurs);
+                    }
+
                     String lineNumbering = hours.replaceAll(',', '\n');
                     String currentDate = DateFormat('E', 'ko')
                         .format(DateTime.now())
@@ -310,31 +318,6 @@ class _FoodInfoState extends State<FoodInfo> {
                               ],
                             ),
                           ),
-                          ListTile(
-                            dense: true, // 리스트타일에서 수직 밀도를 맞춤
-                            leading: Text(
-                              "1인분 주문",
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            title: Row(
-                              children: [
-                                SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width - 325,
-                                ),
-                                Text(
-                                  widget.foodtoreceive.foodServingSize,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
 
                           Container(
                             height: 7,
@@ -373,7 +356,7 @@ class _FoodInfoState extends State<FoodInfo> {
                           //음식 설명
                           Padding(
                             padding: const EdgeInsets.all(18.0),
-                            child: Text(widget.foodtoreceive.foodNote),
+                            child: Text(widget.foodtoreceive.foodDescription),
                           ),
                         ],
                       ),
@@ -404,7 +387,7 @@ class _FoodInfoState extends State<FoodInfo> {
               ),
               onPressed: () async {
                 //음식점 길안내 로직
-                firebaseAnalyticsLog(user.uid, Text('Tmap foodGuide'));
+                firebaseAnalyticsLog(user.uid, "Tmap foodGuide");
                 final idx = widget.foodtoreceive.foodIdx;
 
                 final geocode = FirebaseFirestore.instance
@@ -765,7 +748,7 @@ class _LodgeInfoState extends State<LodgeInfo> {
               ),
               onPressed: () async {
                 //음식점 길안내 로직
-                firebaseAnalyticsLog(user.uid, Text('Tmap foodGuide'));
+                firebaseAnalyticsLog(user.uid, "Tmap foodGuide");
                 final idx = widget.lodgetoreceive.lodgeIdx;
 
                 final geocode = FirebaseFirestore.instance
@@ -1121,7 +1104,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
               ),
               onPressed: () async {
                 //음식점 길안내 로직
-                firebaseAnalyticsLog(user.uid, Text('Tmap foodGuide'));
+                firebaseAnalyticsLog(user.uid, "Tmap foodGuide");
                 final idx = widget.placetoreceive.placeIdx;
 
                 final geocode = FirebaseFirestore.instance

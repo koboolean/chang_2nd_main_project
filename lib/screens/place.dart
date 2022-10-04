@@ -4,7 +4,6 @@ import 'dart:math';
 import 'package:chang_2nd_main_project/screens/place_info.dart';
 import 'package:chang_2nd_main_project/screens/place_list.dart';
 import 'package:chang_2nd_main_project/screens/search_page.dart';
-import 'package:chang_2nd_main_project/services/event_service.dart';
 import 'package:chang_2nd_main_project/services/favorite_button.dart';
 import 'package:chang_2nd_main_project/services/favorite_service.dart';
 import 'package:chang_2nd_main_project/services/firebase_analytics.dart';
@@ -16,9 +15,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-// import 'package:url_launcher/url_launcher.dart';
-import '../widgets/url_launch.dart';
+
 import '../services/auth_service.dart';
+import '../services/event_service.dart';
+import '../widgets/url_launch.dart';
 
 /// 홈페이지
 class Place extends StatefulWidget {
@@ -279,6 +279,7 @@ class FoodToSend {
   final String foodArea;
   final String foodBusinessHours;
   final String foodClassification;
+  final String foodDescription;
   final String foodField14;
   final String foodIdx;
   final String foodName;
@@ -296,6 +297,7 @@ class FoodToSend {
       this.foodArea,
       this.foodBusinessHours,
       this.foodClassification,
+      this.foodDescription,
       this.foodField14,
       this.foodIdx,
       this.foodName,
@@ -375,21 +377,23 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                       final doc = documents[ramdomfoodIndexList[index]];
 
                       //Firestore 인덱스 가져오기
-                      String foodSubtitle = doc.get('Subtitle');
-                      String foodAddress = doc.get('address');
-                      String foodBusinessHours = doc.get('businessHours');
-                      String foodClassification = doc.get('classification');
-                      String foodField14 = doc.get('field14');
-                      String foodIdx = doc.get('idx');
-                      String foodNaverLink = doc.get('naverlink');
-                      String foodNote = doc.get('note');
-                      String foodPhonenumber = doc.get('phoneNumber');
-                      String foodPrice = doc.get('price');
-                      String foodServingSize = doc.get('servingSize');
-                      String foodName = doc.get('name');
-                      String foodUrl1 = doc.get('url1');
-                      String foodUrl2 = doc.get('url2');
-                      String foodArea = doc.get('area');
+                      String foodSubtitle = doc.get('Subtitle') ?? "";
+                      String foodAddress = doc.get('address') ?? "";
+                      String foodBusinessHours = doc.get('businessHours') ?? "";
+                      String foodClassification =
+                          doc.get('classification') ?? "";
+                      String foodDescription = doc.get('description') ?? "";
+                      String foodField14 = doc.get('field14') ?? "";
+                      String foodIdx = doc.get('idx') ?? "";
+                      String foodNaverLink = doc.get('naverlink') ?? "";
+                      String foodNote = doc.get('note') ?? "";
+                      String foodPhonenumber = doc.get('phoneNumber') ?? "";
+                      String foodPrice = doc.get('price') ?? "";
+                      String foodServingSize = doc.get('servingSize') ?? "";
+                      String foodName = doc.get('name') ?? "";
+                      String foodUrl1 = doc.get('url1') ?? "";
+                      String foodUrl2 = doc.get('url2') ?? "";
+                      String foodArea = doc.get('area') ?? "";
                       String foodDocId = doc.id;
 
                       final foodtosend = FoodToSend(
@@ -398,6 +402,7 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                           foodArea,
                           foodBusinessHours,
                           foodClassification,
+                          foodDescription,
                           foodField14,
                           foodIdx,
                           foodName,
@@ -474,7 +479,8 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                                 ),
                               ),
                             ),
-                            Positioned(
+
+                            /*Positioned(
                               top: 5,
                               right: 5,
                               child: InkWell(
@@ -536,7 +542,7 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                                   ),
                                 ),
                               ),
-                            ),
+                            ),*/
                             //맛집 이름
                             Positioned(
                               bottom: 30,
@@ -687,22 +693,23 @@ class _RecommendLodgeListState extends State<RecommendLodgeList> {
                       final doc = documents[ramdomlodgeIndexList[index]];
 
                       //Firestore 인덱스 가져오기
-                      String lodgeBreakFastYn = doc.get('BreakfastYn');
-                      String lodgeSubtitle = doc.get('Subtitle');
-                      String lodgeAddress = doc.get('address');
-                      String lodgeArea = doc.get('area');
-                      String lodgeBusinessHours = doc.get('businessHours');
-                      String lodgeIdx = doc.get('idx');
-                      String lodgeName = doc.get('name');
-                      String lodgeNaverLink = doc.get('naverlink');
-                      String lodgePartyYn = doc.get('partyYn');
-                      String lodgePhoneNumber = doc.get('phoneNumber');
-                      String lodgePriceType1 = doc.get('priceType1');
-                      String lodgePriceType2 = doc.get('priceType2');
-                      String lodgePriceType3 = doc.get('priceType3');
-                      String lodgeToiletYn = doc.get('toiletYn');
-                      String lodgeUrl1 = doc.get('url1');
-                      String lodgeUrl2 = doc.get('url2');
+                      String lodgeBreakFastYn = doc.get('BreakfastYn') ?? "";
+                      String lodgeSubtitle = doc.get('Subtitle') ?? "";
+                      String lodgeAddress = doc.get('address') ?? "";
+                      String lodgeArea = doc.get('area') ?? "";
+                      String lodgeBusinessHours =
+                          doc.get('businessHours') ?? "";
+                      String lodgeIdx = doc.get('idx') ?? "";
+                      String lodgeName = doc.get('name') ?? "";
+                      String lodgeNaverLink = doc.get('naverlink') ?? "";
+                      String lodgePartyYn = doc.get('partyYn') ?? "";
+                      String lodgePhoneNumber = doc.get('phoneNumber') ?? "";
+                      String lodgePriceType1 = doc.get('priceType1') ?? "";
+                      String lodgePriceType2 = doc.get('priceType2') ?? "";
+                      String lodgePriceType3 = doc.get('priceType3') ?? "";
+                      String lodgeToiletYn = doc.get('toiletYn') ?? "";
+                      String lodgeUrl1 = doc.get('url1') ?? "";
+                      String lodgeUrl2 = doc.get('url2') ?? "";
                       String lodgeDocId = doc.id;
 
                       final lodgetosend = LodgeToSend(
@@ -787,7 +794,7 @@ class _RecommendLodgeListState extends State<RecommendLodgeList> {
                               ),
                             ),
 
-                            Positioned(
+                            /*Positioned(
                               top: 5,
                               right: 5,
                               child: InkWell(
@@ -846,9 +853,10 @@ class _RecommendLodgeListState extends State<RecommendLodgeList> {
                                           ),
                                         );
                                       },
-                                    )),
+                                    )
+                                ),
                               ),
-                            ),
+                            ),*/
                             //맛집 이름
                             Positioned(
                               bottom: 30,
@@ -996,20 +1004,22 @@ class _RecommendPlaceListState extends State<RecommendPlaceList> {
                       final doc = documents[ramdomplaceIndexList[index]];
 
                       //Place data 호출
-                      String placeAddress = doc.get('address');
-                      String placeArea = doc.get('area');
-                      String placeBusinessHours = doc.get('businessHours');
-                      String placeClassifiaction = doc.get('classification');
-                      String placeField13 = doc.get('field13');
-                      String placeIdx = doc.get('idx');
-                      String placeName = doc.get('name');
-                      String placeNaverLink = doc.get('naverlink');
-                      String placeNote = doc.get('note');
-                      String placePhoneNumber = doc.get('phoneNumber');
-                      String placePrice = doc.get('price');
-                      String placeSubtitle = doc.get('subTitle');
-                      String placeUrl1 = doc.get('url1');
-                      String placeUrl2 = doc.get('url2');
+                      String placeAddress = doc.get('address') ?? "";
+                      String placeArea = doc.get('area') ?? "";
+                      String placeBusinessHours =
+                          doc.get('businessHours') ?? "";
+                      String placeClassifiaction =
+                          doc.get('classification') ?? "";
+                      String placeField13 = doc.get('field13') ?? "";
+                      String placeIdx = doc.get('idx') ?? "";
+                      String placeName = doc.get('name') ?? "";
+                      String placeNaverLink = doc.get('naverlink') ?? "";
+                      String placeNote = doc.get('note') ?? "";
+                      String placePhoneNumber = doc.get('phoneNumber') ?? "";
+                      String placePrice = doc.get('price') ?? "";
+                      String placeSubtitle = doc.get('subTitle') ?? "";
+                      String placeUrl1 = doc.get('url1') ?? "";
+                      String placeUrl2 = doc.get('url2') ?? "";
                       String placeDocId = doc.id;
 
                       final placetosend = PlaceToSend(
@@ -1092,7 +1102,7 @@ class _RecommendPlaceListState extends State<RecommendPlaceList> {
                                 ),
                               ),
                             ),
-                            Positioned(
+                            /*Positioned(
                               top: 5,
                               right: 5,
                               child: InkWell(
@@ -1152,7 +1162,7 @@ class _RecommendPlaceListState extends State<RecommendPlaceList> {
                                   ),
                                 ),
                               ),
-                            ),
+                            ),*/
                             //맛집 이름
                             Positioned(
                               bottom: 30,
