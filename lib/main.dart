@@ -12,9 +12,12 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:geolocator/geolocator.dart';
 
+import 'services/event_service.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // main 함수에서 async 사용하기 위함
   await Firebase.initializeApp(); // firebase 앱 시작
+
   runApp(
     MultiProvider(
       providers: [
@@ -27,6 +30,7 @@ void main() async {
         ChangeNotifierProvider(create: (context) => FavoriteListService()),
         ChangeNotifierProvider(create: (context) => SearchService()),
         ChangeNotifierProvider(create: (context) => FavoriteButton()),
+        ChangeNotifierProvider(create: (context) => EventBanner()),
       ],
       child: const MyApp(),
     ),

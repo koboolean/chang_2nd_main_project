@@ -132,9 +132,9 @@ class _ScheduleCompleteState extends State<ScheduleComplete>
                                 },
                                 onPageFinished: (url) async {
                                   /*osition =
-                                     *//* await Geolocator.getCurrentPosition(
+                                     */ /* await Geolocator.getCurrentPosition(
                                           desiredAccuracy:
-                                              LocationAccuracy.high);*//*
+                                              LocationAccuracy.high);*/ /*
                                   _webViewController?.runJavascript(
                                       'currentLocation(' +
                                           position.latitude.toString() +

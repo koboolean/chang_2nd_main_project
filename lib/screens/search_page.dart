@@ -2,6 +2,7 @@ import 'package:chang_2nd_main_project/model/foodInfo.dart';
 import 'package:chang_2nd_main_project/model/lodgeInfo.dart';
 import 'package:chang_2nd_main_project/model/placeInfo.dart';
 import 'package:chang_2nd_main_project/screens/place_info.dart';
+import 'package:chang_2nd_main_project/services/event_service.dart';
 import 'package:chang_2nd_main_project/services/search_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -209,6 +210,15 @@ class _MySearchState extends State<MySearch>
                         padding: const EdgeInsets.only(left: 18.0, right: 18.0),
                         child: GestureDetector(
                           onTap: () {
+                            //이벤트 팝업을 위한 페이지 이동 여부
+                            context
+                                .read<EventBanner>()
+                                .pageVisitClick
+                                .add(true);
+                            print(context
+                                .read<EventBanner>()
+                                .pageVisitClick
+                                .length);
                             Navigator.push(
                                 context,
                                 type == "place"

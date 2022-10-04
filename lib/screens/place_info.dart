@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:chang_2nd_main_project/services/event_service.dart';
 import 'package:chang_2nd_main_project/services/favorite_button.dart';
 import 'package:chang_2nd_main_project/services/firebase_analytics.dart';
 import 'package:chang_2nd_main_project/services/travel_service.dart';
@@ -66,7 +67,9 @@ class _FoodInfoState extends State<FoodInfo> {
               ),
             ),
             leading: IconButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: () {
+                Navigator.pop(context);
+              },
               icon: Icon(Icons.arrow_back_ios),
             ),
             actions: [
@@ -298,7 +301,7 @@ class _FoodInfoState extends State<FoodInfo> {
                                       MediaQuery.of(context).size.width - 345,
                                 ),
                                 Text(
-                                  widget.foodtoreceive.foodPrice,
+                                  '${widget.foodtoreceive.foodPrice} 원',
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,

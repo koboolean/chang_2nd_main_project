@@ -1,8 +1,10 @@
+// import 'dart:html';
 import 'dart:math';
 
 import 'package:chang_2nd_main_project/screens/place_info.dart';
 import 'package:chang_2nd_main_project/screens/place_list.dart';
 import 'package:chang_2nd_main_project/screens/search_page.dart';
+import 'package:chang_2nd_main_project/services/event_service.dart';
 import 'package:chang_2nd_main_project/services/favorite_button.dart';
 import 'package:chang_2nd_main_project/services/favorite_service.dart';
 import 'package:chang_2nd_main_project/services/firebase_analytics.dart';
@@ -14,7 +16,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-
+// import 'package:url_launcher/url_launcher.dart';
+import '../widgets/url_launch.dart';
 import '../services/auth_service.dart';
 
 /// 홈페이지
@@ -27,7 +30,6 @@ class Place extends StatefulWidget {
 
 class _PlaceState extends State<Place> {
   TextEditingController jobController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Consumer<TravelService>(
@@ -163,6 +165,18 @@ class _PlaceState extends State<Place> {
           body: SingleChildScrollView(
             child: Column(
               children: [
+                GestureDetector(
+                  onTap: () {
+                    launchInBrowser(Uri.parse(
+                        'https://docs.google.com/forms/d/1ZksVpUqnPvmQhCpwLx-NlP5IgTVd6Dkx-Icah6CEVgk/edit?usp=drivesdk'));
+                  },
+                  child: Image.asset(
+                    'assets/images/event_banner1.png',
+                    fit: BoxFit.cover,
+                    height: 134,
+                    width: 339,
+                  ),
+                ),
                 RecommendFoodList(),
                 RecommendLodgeList(),
                 RecommendPlaceList(),
@@ -176,6 +190,19 @@ class _PlaceState extends State<Place> {
       },
     );
   }
+
+  // Future<void> _launchInBrowser(Uri url) async {
+  //   if (await canLaunchUrl(url)) {
+  //     if (!await launchUrl(
+  //       url,
+  //       mode: LaunchMode.externalApplication,
+  //     )) {
+  //       throw 'Could not launch $url';
+  //     }
+  //   } else {
+  //     //print("Can't launch $url");
+  //   }
+  // }
 }
 
 //여행지 아이콘 함수
@@ -201,6 +228,8 @@ class _TravelPlaceState extends State<TravelPlace> {
           onTap: () {
             //PlaceList 이동 analytics
             firebaseScreenViewChanged(user.uid, "PlaceList()");
+            //해당 페이지 방문 여부
+            context.read<EventBanner>().pageVisitClick.add(true);
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => PlaceList()),
@@ -406,7 +435,15 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                                 //FoodInfo이동시 analytics 기록
                                 firebaseScreenViewChanged(
                                     user.uid, "FoodInfo()");
+                                //설문조사 이벤트 place_info페이지 카운트하기
+                                var isDoneEvent =
+                                    context.read<EventBanner>().eventCheck();
 
+                                if (isDoneEvent == false) {
+                                  context
+                                      .read<EventBanner>()
+                                      .increaseClick(context);
+                                }
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -437,7 +474,6 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                                 ),
                               ),
                             ),
-
                             Positioned(
                               top: 5,
                               right: 5,
@@ -714,6 +750,14 @@ class _RecommendLodgeListState extends State<RecommendLodgeList> {
                                 //LodgeInfo이동시 analytics 기록
                                 firebaseScreenViewChanged(
                                     user.uid, "LodgeInfo()");
+                                var isDoneEvent =
+                                    context.read<EventBanner>().eventCheck();
+
+                                if (isDoneEvent == false) {
+                                  context
+                                      .read<EventBanner>()
+                                      .increaseClick(context);
+                                }
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -1011,6 +1055,13 @@ class _RecommendPlaceListState extends State<RecommendPlaceList> {
                               onTap: () {
                                 firebaseScreenViewChanged(
                                     user.uid, "PlaceInfo()");
+                                var isDoneEvent =
+                                    context.read<EventBanner>().eventCheck();
+                                if (isDoneEvent == false) {
+                                  context
+                                      .read<EventBanner>()
+                                      .increaseClick(context);
+                                }
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -1078,7 +1129,6 @@ class _RecommendPlaceListState extends State<RecommendPlaceList> {
                                     builder: (context, favoriteButton, child) {
                                       var favoritePlaceList =
                                           favoriteButton.favoritePlaceList;
-                                      print(favoritePlaceList);
                                       return Container(
                                         width: 27,
                                         height: 27,
