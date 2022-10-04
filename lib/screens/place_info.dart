@@ -217,8 +217,8 @@ class _FoodInfoState extends State<FoodInfo> {
 
                     List<String> businessHours = [];
 
-                    for(var i in vHours){
-                      var hurs = i.substring(0,1) == " " ? i.substring(1) : i;
+                    for (var i in vHours) {
+                      var hurs = i.substring(0, 1) == " " ? i.substring(1) : i;
                       businessHours.add(hurs);
                     }
 
@@ -315,31 +315,6 @@ class _FoodInfoState extends State<FoodInfo> {
                               ],
                             ),
                           ),
-                          ListTile(
-                            dense: true, // 리스트타일에서 수직 밀도를 맞춤
-                            leading: Text(
-                              "1인분 주문",
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            title: Row(
-                              children: [
-                                SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width - 325,
-                                ),
-                                Text(
-                                  widget.foodtoreceive.foodServingSize,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
 
                           Container(
                             height: 7,
@@ -378,7 +353,7 @@ class _FoodInfoState extends State<FoodInfo> {
                           //음식 설명
                           Padding(
                             padding: const EdgeInsets.all(18.0),
-                            child: Text(widget.foodtoreceive.foodNote),
+                            child: Text(widget.foodtoreceive.foodDescription),
                           ),
                         ],
                       ),
