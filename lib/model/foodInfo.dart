@@ -1,4 +1,3 @@
-
 class FoodInfoModel {
   final String area;
   final String name;
