@@ -498,6 +498,7 @@ class _FoodListState extends State<FoodList> {
                           foodAddress: doc.get('address'),
                           foodBusinessHours: doc.get('businessHours'),
                           foodClassification: doc.get('classification'),
+                          foodDescription: doc.get('description'),
                           foodField14: doc.get('field14'),
                           foodIdx: doc.get('idx'),
                           foodName: doc.get('name'),
