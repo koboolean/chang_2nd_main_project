@@ -250,6 +250,7 @@ class FoodToSend {
   final String foodArea;
   final String foodBusinessHours;
   final String foodClassification;
+  final String foodDescription;
   final String foodField14;
   final String foodIdx;
   final String foodName;
@@ -267,6 +268,7 @@ class FoodToSend {
       this.foodArea,
       this.foodBusinessHours,
       this.foodClassification,
+      this.foodDescription,
       this.foodField14,
       this.foodIdx,
       this.foodName,
@@ -349,7 +351,9 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                       String foodSubtitle = doc.get('Subtitle') ?? "";
                       String foodAddress = doc.get('address') ?? "";
                       String foodBusinessHours = doc.get('businessHours') ?? "";
-                      String foodClassification = doc.get('classification') ?? "";
+                      String foodClassification =
+                          doc.get('classification') ?? "";
+                      String foodDescription = doc.get('description') ?? "";
                       String foodField14 = doc.get('field14') ?? "";
                       String foodIdx = doc.get('idx') ?? "";
                       String foodNaverLink = doc.get('naverlink') ?? "";
@@ -369,6 +373,7 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                           foodArea,
                           foodBusinessHours,
                           foodClassification,
+                          foodDescription,
                           foodField14,
                           foodIdx,
                           foodName,
@@ -655,7 +660,8 @@ class _RecommendLodgeListState extends State<RecommendLodgeList> {
                       String lodgeSubtitle = doc.get('Subtitle') ?? "";
                       String lodgeAddress = doc.get('address') ?? "";
                       String lodgeArea = doc.get('area') ?? "";
-                      String lodgeBusinessHours = doc.get('businessHours') ?? "";
+                      String lodgeBusinessHours =
+                          doc.get('businessHours') ?? "";
                       String lodgeIdx = doc.get('idx') ?? "";
                       String lodgeName = doc.get('name') ?? "";
                       String lodgeNaverLink = doc.get('naverlink') ?? "";
@@ -955,8 +961,10 @@ class _RecommendPlaceListState extends State<RecommendPlaceList> {
                       //Place data 호출
                       String placeAddress = doc.get('address') ?? "";
                       String placeArea = doc.get('area') ?? "";
-                      String placeBusinessHours = doc.get('businessHours') ?? "";
-                      String placeClassifiaction = doc.get('classification') ?? "";
+                      String placeBusinessHours =
+                          doc.get('businessHours') ?? "";
+                      String placeClassifiaction =
+                          doc.get('classification') ?? "";
                       String placeField13 = doc.get('field13') ?? "";
                       String placeIdx = doc.get('idx') ?? "";
                       String placeName = doc.get('name') ?? "";
