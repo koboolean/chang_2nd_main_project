@@ -138,7 +138,8 @@ class _PlaceListState extends State<PlaceList> {
                           indicatorColor: Color.fromRGBO(221, 81, 37, 1),
                           labelColor: Color.fromRGBO(221, 81, 37, 1),
                           indicatorWeight: 3,
-                          unselectedLabelColor: Colors.black,
+                          unselectedLabelColor:
+                              Color.fromRGBO(131, 123, 117, 1),
                           tabs: [
                             Tab(
                                 child: Text(
@@ -269,7 +270,7 @@ class _FoodListState extends State<FoodList> {
                                       fontWeight: FontWeight.w500,
                                       color: _selectedFoodClassification == "전체"
                                           ? Colors.white
-                                          : Colors.black),
+                                          : Color.fromRGBO(131, 123, 117, 1)),
                                 ),
                               ),
                             ),
@@ -303,7 +304,7 @@ class _FoodListState extends State<FoodList> {
                                       fontWeight: FontWeight.w500,
                                       color: _selectedFoodClassification == "한식"
                                           ? Colors.white
-                                          : Colors.black),
+                                          : Color.fromRGBO(131, 123, 117, 1)),
                                 ),
                               ),
                             ),
@@ -337,7 +338,7 @@ class _FoodListState extends State<FoodList> {
                                       fontWeight: FontWeight.w500,
                                       color: _selectedFoodClassification == "양식"
                                           ? Colors.white
-                                          : Colors.black),
+                                          : Color.fromRGBO(131, 123, 117, 1)),
                                 ),
                               ),
                             ),
@@ -371,7 +372,7 @@ class _FoodListState extends State<FoodList> {
                                       fontWeight: FontWeight.w500,
                                       color: _selectedFoodClassification == "일식"
                                           ? Colors.white
-                                          : Colors.black),
+                                          : Color.fromRGBO(131, 123, 117, 1)),
                                 ),
                               ),
                             ),
@@ -405,7 +406,7 @@ class _FoodListState extends State<FoodList> {
                                       fontWeight: FontWeight.w500,
                                       color: _selectedFoodClassification == "중식"
                                           ? Colors.white
-                                          : Colors.black),
+                                          : Color.fromRGBO(131, 123, 117, 1)),
                                 ),
                               ),
                             ),
@@ -439,7 +440,7 @@ class _FoodListState extends State<FoodList> {
                                       fontWeight: FontWeight.w500,
                                       color: _selectedFoodClassification == "카페"
                                           ? Colors.white
-                                          : Colors.black),
+                                          : Color.fromRGBO(131, 123, 117, 1)),
                                 ),
                               ),
                             ),
@@ -473,7 +474,7 @@ class _FoodListState extends State<FoodList> {
                                       fontWeight: FontWeight.w500,
                                       color: _selectedFoodClassification == "기타"
                                           ? Colors.white
-                                          : Colors.black),
+                                          : Color.fromRGBO(131, 123, 117, 1)),
                                 ),
                               ),
                             ),
@@ -559,7 +560,7 @@ class _FoodListState extends State<FoodList> {
                                     height: 30,
                                     width: 30,
                                     decoration: BoxDecoration(
-                                      color: Colors.grey[700]!.withOpacity(0.2),
+                                      color: Color.fromRGBO(131, 123, 117, 1)!.withOpacity(0.2),
                                       borderRadius: BorderRadius.circular(100),
                                     ),
                                     child:
@@ -632,7 +633,7 @@ class _FoodListState extends State<FoodList> {
                               foodtosend.foodAddress!,
                               style: TextStyle(
                                 fontSize: 12,
-                                color: Colors.grey[700]!,
+                                color: Color.fromRGBO(131, 123, 117, 1),
                               ),
                             ),
                           ),
@@ -725,10 +726,10 @@ class _LodgeListState extends State<LodgeList> {
                                   "전체",
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,
-                                      color:
-                                          _selectedLodgeClassification == "전체"
-                                              ? Colors.white
-                                              : Colors.black),
+                                      color: _selectedLodgeClassification ==
+                                              "전체"
+                                          ? Colors.white
+                                          : Color.fromRGBO(131, 123, 117, 1)),
                                 ),
                               ),
                             ),
@@ -760,10 +761,10 @@ class _LodgeListState extends State<LodgeList> {
                                   "1인실",
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,
-                                      color:
-                                          _selectedLodgeClassification == "1인실"
-                                              ? Colors.white
-                                              : Colors.black),
+                                      color: _selectedLodgeClassification ==
+                                              "1인실"
+                                          ? Colors.white
+                                          : Color.fromRGBO(131, 123, 117, 1)),
                                 ),
                               ),
                             ),
@@ -795,10 +796,10 @@ class _LodgeListState extends State<LodgeList> {
                                   "다인실",
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,
-                                      color:
-                                          _selectedLodgeClassification == "다인실"
-                                              ? Colors.white
-                                              : Colors.black),
+                                      color: _selectedLodgeClassification ==
+                                              "다인실"
+                                          ? Colors.white
+                                          : Color.fromRGBO(131, 123, 117, 1)),
                                 ),
                               ),
                             ),
@@ -885,7 +886,7 @@ class _LodgeListState extends State<LodgeList> {
                                       height: 30,
                                       width: 30,
                                       decoration: BoxDecoration(
-                                        color: Colors.grey[700]!.withOpacity(0.2),
+                                        color: Color.fromRGBO(131, 123, 117, 1)!.withOpacity(0.2),
                                         borderRadius: BorderRadius.circular(100),
                                       ),
                                       child:
@@ -957,7 +958,7 @@ class _LodgeListState extends State<LodgeList> {
                               lodgetosend.lodgeAddress!,
                               style: TextStyle(
                                 fontSize: 12,
-                                color: Colors.grey[700]!,
+                                color: Color.fromRGBO(131, 123, 117, 1),
                               ),
                             ),
                           ),
@@ -1047,10 +1048,10 @@ class _PlacetogoListState extends State<PlacetogoList> {
                                   "전체",
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,
-                                      color:
-                                          _selectedPlaceClassification == "전체"
-                                              ? Colors.white
-                                              : Colors.black),
+                                      color: _selectedPlaceClassification ==
+                                              "전체"
+                                          ? Colors.white
+                                          : Color.fromRGBO(131, 123, 117, 1)),
                                 ),
                               ),
                             ),
@@ -1082,10 +1083,10 @@ class _PlacetogoListState extends State<PlacetogoList> {
                                   "바다",
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,
-                                      color:
-                                          _selectedPlaceClassification == "바다"
-                                              ? Colors.white
-                                              : Colors.black),
+                                      color: _selectedPlaceClassification ==
+                                              "바다"
+                                          ? Colors.white
+                                          : Color.fromRGBO(131, 123, 117, 1)),
                                 ),
                               ),
                             ),
@@ -1117,10 +1118,10 @@ class _PlacetogoListState extends State<PlacetogoList> {
                                   "공원",
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,
-                                      color:
-                                          _selectedPlaceClassification == "공원"
-                                              ? Colors.white
-                                              : Colors.black),
+                                      color: _selectedPlaceClassification ==
+                                              "공원"
+                                          ? Colors.white
+                                          : Color.fromRGBO(131, 123, 117, 1)),
                                 ),
                               ),
                             ),
@@ -1152,10 +1153,10 @@ class _PlacetogoListState extends State<PlacetogoList> {
                                   "체험",
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,
-                                      color:
-                                          _selectedPlaceClassification == "체험"
-                                              ? Colors.white
-                                              : Colors.black),
+                                      color: _selectedPlaceClassification ==
+                                              "체험"
+                                          ? Colors.white
+                                          : Color.fromRGBO(131, 123, 117, 1)),
                                 ),
                               ),
                             ),
@@ -1187,10 +1188,10 @@ class _PlacetogoListState extends State<PlacetogoList> {
                                   "테마파크",
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,
-                                      color:
-                                          _selectedPlaceClassification == "테마파크"
-                                              ? Colors.white
-                                              : Colors.black),
+                                      color: _selectedPlaceClassification ==
+                                              "테마파크"
+                                          ? Colors.white
+                                          : Color.fromRGBO(131, 123, 117, 1)),
                                 ),
                               ),
                             ),
@@ -1222,10 +1223,10 @@ class _PlacetogoListState extends State<PlacetogoList> {
                                   "자연명소",
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,
-                                      color:
-                                          _selectedPlaceClassification == "자연명소"
-                                              ? Colors.white
-                                              : Colors.black),
+                                      color: _selectedPlaceClassification ==
+                                              "자연명소"
+                                          ? Colors.white
+                                          : Color.fromRGBO(131, 123, 117, 1)),
                                 ),
                               ),
                             ),
@@ -1257,10 +1258,10 @@ class _PlacetogoListState extends State<PlacetogoList> {
                                   "관람",
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,
-                                      color:
-                                          _selectedPlaceClassification == "관람"
-                                              ? Colors.white
-                                              : Colors.black),
+                                      color: _selectedPlaceClassification ==
+                                              "관람"
+                                          ? Colors.white
+                                          : Color.fromRGBO(131, 123, 117, 1)),
                                 ),
                               ),
                             ),
@@ -1344,7 +1345,7 @@ class _PlacetogoListState extends State<PlacetogoList> {
                                       height: 30,
                                       width: 30,
                                       decoration: BoxDecoration(
-                                        color: Colors.grey[700]!.withOpacity(0.2),
+                                        color: Color.fromRGBO(131, 123, 117, 1)!.withOpacity(0.2),
                                         borderRadius: BorderRadius.circular(100),
                                       ),
                                       child:
@@ -1417,7 +1418,7 @@ class _PlacetogoListState extends State<PlacetogoList> {
                               placetosend.placeAddress!,
                               style: TextStyle(
                                 fontSize: 12,
-                                color: Colors.grey[700]!,
+                                color: Color.fromRGBO(131, 123, 117, 1),
                               ),
                             ),
                           ),
