@@ -436,13 +436,14 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                               ),
                             ),
                             InkWell(
-                              onTap: () {
+                              onTap: () async {
                                 //FoodInfo이동시 analytics 기록
                                 firebaseScreenViewChanged(
                                     user.uid, "FoodInfo()");
                                 //설문조사 이벤트 place_info페이지 카운트하기
-                                var isDoneEvent =
-                                    context.read<EventBanner>().eventCheck();
+                                var isDoneEvent = await context
+                                    .read<EventBanner>()
+                                    .getEventIsDone();
 
                                 if (isDoneEvent == false) {
                                   context
@@ -753,12 +754,13 @@ class _RecommendLodgeListState extends State<RecommendLodgeList> {
                             ),
 
                             InkWell(
-                              onTap: () {
+                              onTap: () async {
                                 //LodgeInfo이동시 analytics 기록
                                 firebaseScreenViewChanged(
                                     user.uid, "LodgeInfo()");
-                                var isDoneEvent =
-                                    context.read<EventBanner>().eventCheck();
+                                var isDoneEvent = await context
+                                    .read<EventBanner>()
+                                    .getEventIsDone();
 
                                 if (isDoneEvent == false) {
                                   context
@@ -1062,11 +1064,13 @@ class _RecommendPlaceListState extends State<RecommendPlaceList> {
                             //음영 및 Gradient 효과 layer
                             InkWell(
                               //PlaceInfo이동시 analytics 기록
-                              onTap: () {
+                              onTap: () async {
                                 firebaseScreenViewChanged(
                                     user.uid, "PlaceInfo()");
-                                var isDoneEvent =
-                                    context.read<EventBanner>().eventCheck();
+                                var isDoneEvent = await context
+                                    .read<EventBanner>()
+                                    .getEventIsDone();
+
                                 if (isDoneEvent == false) {
                                   context
                                       .read<EventBanner>()

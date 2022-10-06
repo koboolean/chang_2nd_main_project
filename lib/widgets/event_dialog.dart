@@ -29,7 +29,7 @@ Future<void> dialogBuilder(BuildContext context) {
                 ),
                 onPressed: () {
                   //EventBanner 클래스 변수들 초기화 해서 다시 조건에 맞으면 팝업노출
-                  context.read<EventBanner>().setEventIsDone();
+                  //context.read<EventBanner>().setEventIsDone();
                   context.read<EventBanner>().placeInfoVisitClick = 0;
                   context.read<EventBanner>().pageVisitClick.clear();
                   Navigator.of(context).pop();
@@ -38,7 +38,7 @@ Future<void> dialogBuilder(BuildContext context) {
             ),
           ],
         ),
-        //title: Text('test'),
+
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             top: Radius.circular(25),
@@ -64,7 +64,8 @@ Future<void> dialogBuilder(BuildContext context) {
                     '후기 알려주기',
                     style: TextStyle(color: Colors.white),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
+                    await context.read<EventBanner>().setEventIsDone();
                     launchInBrowser(Uri.parse(
                         'https://docs.google.com/forms/d/1ZksVpUqnPvmQhCpwLx-NlP5IgTVd6Dkx-Icah6CEVgk/edit?usp=drivesdk'));
                     Navigator.of(context).pop();
@@ -93,7 +94,7 @@ Future<void> dialogBuilder(BuildContext context) {
                   ),
                   onPressed: () {
                     //EventBanner 클래스 변수들 초기화 해서 다시 조건에 맞으면 팝업노출
-                    context.read<EventBanner>().setEventIsDone();
+                    //context.read<EventBanner>().setEventIsDone();
                     context.read<EventBanner>().placeInfoVisitClick = 0;
                     context.read<EventBanner>().pageVisitClick.clear();
                     Navigator.of(context).pop();

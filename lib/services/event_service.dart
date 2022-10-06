@@ -12,17 +12,17 @@ class EventBanner extends ChangeNotifier {
 
   getEventIsDone() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.clear();
+    // 테스트용 나중에 삭제 해야함
+    // prefs.clear();
     isDoneEvent = prefs.getBool('isDoneEvent') ?? false;
-    //print(placeInfoVisitClick); //이벤트 참여 확인 ->true
+    return isDoneEvent;
   }
 
   setEventIsDone() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     await prefs.setBool('isDoneEvent', !isDoneEvent);
-
-    //notifyListeners();
+    print('setEventisDone $isDoneEvent');
   }
 
   // getEventComplete() {}
@@ -36,15 +36,12 @@ class EventBanner extends ChangeNotifier {
     if (isDoneEvent == false &&
         placeInfoVisitClick >= 3 &&
         pageVisitClick.length >= 2) {
-      isDoneEvent = !isDoneEvent;
-      setEventIsDone();
+      //isDoneEvent = !isDoneEvent;
+      //setEventIsDone();
+
       //이벤트 팝업창
       dialogBuilder(context);
     }
-  }
-
-  bool eventCheck() {
-    getEventIsDone();
-    return isDoneEvent;
+    print('방문클릭 $placeInfoVisitClick');
   }
 }
