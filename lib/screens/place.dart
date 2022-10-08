@@ -215,6 +215,7 @@ class _TravelPlaceState extends State<TravelPlace> {
           onTap: () {
             //PlaceList 이동 analytics
             firebaseScreenViewChanged(user.uid, "PlaceList()");
+            context.read<EventBanner>().pageVisitClick.add(true);
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => PlaceList()),
