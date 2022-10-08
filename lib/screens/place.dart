@@ -1,4 +1,3 @@
-// import 'dart:html';
 import 'dart:math';
 
 import 'package:chang_2nd_main_project/screens/place_info.dart';
@@ -30,6 +29,7 @@ class Place extends StatefulWidget {
 
 class _PlaceState extends State<Place> {
   TextEditingController jobController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Consumer<TravelService>(
@@ -190,19 +190,6 @@ class _PlaceState extends State<Place> {
       },
     );
   }
-
-  // Future<void> _launchInBrowser(Uri url) async {
-  //   if (await canLaunchUrl(url)) {
-  //     if (!await launchUrl(
-  //       url,
-  //       mode: LaunchMode.externalApplication,
-  //     )) {
-  //       throw 'Could not launch $url';
-  //     }
-  //   } else {
-  //     //print("Can't launch $url");
-  //   }
-  // }
 }
 
 //여행지 아이콘 함수
@@ -228,8 +215,6 @@ class _TravelPlaceState extends State<TravelPlace> {
           onTap: () {
             //PlaceList 이동 analytics
             firebaseScreenViewChanged(user.uid, "PlaceList()");
-            //해당 페이지 방문 여부
-            context.read<EventBanner>().pageVisitClick.add(true);
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => PlaceList()),
@@ -253,6 +238,7 @@ class _TravelPlaceState extends State<TravelPlace> {
                   "제주도",
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
+                    color: Color.fromRGBO(90, 86, 82, 1),
                   ),
                 ),
               ),
@@ -1070,7 +1056,6 @@ class _RecommendPlaceListState extends State<RecommendPlaceList> {
                                 var isDoneEvent = await context
                                     .read<EventBanner>()
                                     .getEventIsDone();
-
                                 if (isDoneEvent == false) {
                                   context
                                       .read<EventBanner>()
@@ -1143,6 +1128,7 @@ class _RecommendPlaceListState extends State<RecommendPlaceList> {
                                     builder: (context, favoriteButton, child) {
                                       var favoritePlaceList =
                                           favoriteButton.favoritePlaceList;
+                                      print(favoritePlaceList);
                                       return Container(
                                         width: 27,
                                         height: 27,
