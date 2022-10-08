@@ -8,6 +8,7 @@ class FoodInfoModel {
   final String foodArea;
   final String foodBusinessHours;
   final String foodClassification;
+  final String foodDescription;
   final String foodField14;
   final String foodIdx;
   final String foodName;
@@ -29,6 +30,7 @@ class FoodInfoModel {
       this.foodArea,
       this.foodBusinessHours,
       this.foodClassification,
+      this.foodDescription,
       this.foodField14,
       this.foodIdx,
       this.foodName,
