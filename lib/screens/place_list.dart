@@ -60,19 +60,22 @@ class _PlaceListState extends State<PlaceList> {
                 backgroundColor: Colors.white,
                 centerTitle: false,
                 iconTheme: IconThemeData(color: Colors.black),
-                leading: Padding(
-                  padding: const EdgeInsets.only(left: 18.0),
-                  child: IconButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    icon: Icon(Icons.arrow_back_ios),
-                  ),
-                ),
-                title: const Text(
-                  "제주도",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 17,
+                //leading: Padding(
+                //  padding: const EdgeInsets.only(left: 18.0),
+                //  child: IconButton(
+                //    onPressed: () => Navigator.of(context).pop(),
+                //    icon: Icon(Icons.arrow_back_ios),
+                //  ),
+                //),
+                title: Padding(
+                  padding: const EdgeInsets.only(left: 16.0),
+                  child: const Text(
+                    "제주도",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 17,
+                    ),
                   ),
                 ),
                 actions: [
