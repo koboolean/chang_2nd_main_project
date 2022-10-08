@@ -216,10 +216,10 @@ class _TravelPlaceState extends State<TravelPlace> {
             //PlaceList 이동 analytics
             firebaseScreenViewChanged(user.uid, "PlaceList()");
             context.read<EventBanner>().pageVisitClick.add(true);
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => PlaceList()),
-            );
+            //Navigator.push(
+            //  context,
+            //  MaterialPageRoute(builder: (context) => PlaceList()),
+            //);
           },
           child: Padding(
             padding: const EdgeInsets.only(right: 6.0),
