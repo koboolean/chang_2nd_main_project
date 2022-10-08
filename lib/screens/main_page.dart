@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
 
   final List<Widget> _children = [
     Place(),
-    PlaceList(),
+    //PlaceList(),
     FavoriteCity(),
     //AddSchedule(),
     MyPage()
@@ -62,12 +62,12 @@ class _HomePageState extends State<HomePage> {
               ),
               label: '홈',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.reorder),
-              activeIcon:
-                  Icon(Icons.reorder, color: Color.fromRGBO(221, 81, 37, 1)),
-              label: '리스트',
-            ),
+            //BottomNavigationBarItem(
+            //  icon: Icon(Icons.reorder),
+            //  activeIcon:
+            //      Icon(Icons.reorder, color: Color.fromRGBO(221, 81, 37, 1)),
+            //  label: '리스트',
+            //),
             BottomNavigationBarItem(
                 icon: SvgPicture.asset(
                   'assets/images/favorite.svg',
