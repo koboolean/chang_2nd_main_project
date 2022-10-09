@@ -1,6 +1,7 @@
 import 'package:chang_2nd_main_project/screens/favorite_city.dart';
 import 'package:chang_2nd_main_project/screens/place.dart';
 import 'package:chang_2nd_main_project/screens/mypage.dart';
+import 'package:chang_2nd_main_project/screens/place_list.dart';
 import 'package:chang_2nd_main_project/services/auth_service.dart';
 import 'package:chang_2nd_main_project/services/firebase_analytics.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ class _HomePageState extends State<HomePage> {
 
   final List<Widget> _children = [
     Place(),
+    PlaceList(),
     FavoriteCity(),
     //AddSchedule(),
     MyPage()
@@ -59,6 +61,12 @@ class _HomePageState extends State<HomePage> {
                 color: Color.fromRGBO(221, 81, 37, 1),
               ),
               label: '홈',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.reorder),
+              activeIcon:
+                  Icon(Icons.reorder, color: Color.fromRGBO(221, 81, 37, 1)),
+              label: '리스트',
             ),
             BottomNavigationBarItem(
                 icon: SvgPicture.asset(

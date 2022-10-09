@@ -83,6 +83,7 @@ class _MySearchState extends State<MySearch>
           String foodAddress = doc.get('address');
           String foodBusinessHours = doc.get('businessHours');
           String foodClassification = doc.get('classification');
+          String foodDescription = doc.get('description');
           String foodField14 = doc.get('field14');
           String foodIdx = doc.get('idx');
           String foodNaverLink = doc.get('naverlink');
@@ -105,6 +106,7 @@ class _MySearchState extends State<MySearch>
               foodArea,
               foodBusinessHours,
               foodClassification,
+              foodDescription,
               foodField14,
               foodIdx,
               foodName,
