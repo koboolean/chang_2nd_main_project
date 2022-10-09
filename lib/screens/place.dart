@@ -166,17 +166,64 @@ class _PlaceState extends State<Place> {
             child: Column(
               children: [
                 GestureDetector(
-                  onTap: () {
-                    launchInBrowser(Uri.parse(
-                        'https://docs.google.com/forms/d/1ZksVpUqnPvmQhCpwLx-NlP5IgTVd6Dkx-Icah6CEVgk/edit?usp=drivesdk'));
-                  },
-                  child: Image.asset(
-                    'assets/images/event_banner1.png',
-                    fit: BoxFit.cover,
-                    height: 134,
-                    width: 339,
-                  ),
-                ),
+                    onTap: () {
+                      launchInBrowser(Uri.parse(
+                          'https://docs.google.com/forms/d/1ZksVpUqnPvmQhCpwLx-NlP5IgTVd6Dkx-Icah6CEVgk/edit?usp=drivesdk'));
+                    },
+                    child: Stack(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(18.0),
+                          child: Container(
+                            height: 134,
+                            width: double.infinity,
+                            padding: EdgeInsets.all(15),
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                  begin: FractionalOffset.centerLeft,
+                                  end: FractionalOffset.centerRight,
+                                  colors: [
+                                    Color.fromRGBO(217, 73, 31, 1),
+                                    Color.fromRGBO(224, 148, 48, 1),
+                                  ],
+                                  stops: [
+                                    0,
+                                    1
+                                  ]),
+                            ),
+                            child: Row(
+                              children: [
+                                SvgPicture.asset(
+                                  'assets/images/feedbackbanner_text.svg',
+                                  fit: BoxFit.cover,
+                                ),
+                                Spacer(),
+                                Container(
+                                  // height:
+                                  //     MediaQuery.of(context).size.height - 700,
+                                  // width: MediaQuery.of(context).size.width - 550,
+                                  child: FittedBox(
+                                    fit: BoxFit.cover,
+                                    child: Image.asset(
+                                      'assets/images/coffeeicon2.png',
+                                      // height: 110,
+                                      // width: 100,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          left: 10,
+                          top: 21,
+                          child: Padding(
+                            padding: const EdgeInsets.all(18.0),
+                          ),
+                        ),
+                      ],
+                    )),
                 RecommendFoodList(),
                 RecommendLodgeList(),
                 RecommendPlaceList(),
