@@ -13,10 +13,13 @@ Future<void> dialogBuilder(BuildContext context) {
         contentPadding: EdgeInsets.zero,
         content: Stack(
           children: [
-            Image.asset(
-              'assets/images/event_banner2.png',
-              fit: BoxFit.cover,
-              width: double.infinity,
+            Container(
+              decoration: BoxDecoration(shape: BoxShape.rectangle),
+              child: Image.asset(
+                'assets/images/event_banner2.png',
+                fit: BoxFit.cover,
+                width: double.infinity,
+              ),
             ),
             Positioned(
               top: MediaQuery.of(context).size.height - 630,
@@ -42,6 +45,7 @@ Future<void> dialogBuilder(BuildContext context) {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             top: Radius.circular(25),
+            bottom: Radius.circular(25),
           ),
         ),
         actionsAlignment: MainAxisAlignment.center,

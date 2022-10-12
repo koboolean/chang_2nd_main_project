@@ -13,7 +13,7 @@ class EventBanner extends ChangeNotifier {
   getEventIsDone() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     // 테스트용 나중에 삭제 해야함
-    // prefs.clear();
+    //prefs.clear();
     isDoneEvent = prefs.getBool('isDoneEvent') ?? false;
     return isDoneEvent;
   }
@@ -22,7 +22,7 @@ class EventBanner extends ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     await prefs.setBool('isDoneEvent', !isDoneEvent);
-    print('setEventisDone $isDoneEvent');
+    // print('setEventisDone $isDoneEvent');
   }
 
   // getEventComplete() {}
@@ -42,6 +42,6 @@ class EventBanner extends ChangeNotifier {
       //이벤트 팝업창
       dialogBuilder(context);
     }
-    print('방문클릭 $placeInfoVisitClick');
+    // print('방문클릭 $placeInfoVisitClick');
   }
 }
