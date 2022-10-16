@@ -1,15 +1,10 @@
 import 'dart:math';
 
 import 'package:chang_2nd_main_project/screens/place_info.dart';
-import 'package:chang_2nd_main_project/screens/place_list.dart';
 import 'package:chang_2nd_main_project/screens/search_page.dart';
-import 'package:chang_2nd_main_project/services/favorite_button.dart';
-import 'package:chang_2nd_main_project/services/favorite_service.dart';
 import 'package:chang_2nd_main_project/services/firebase_analytics.dart';
 import 'package:chang_2nd_main_project/services/travel_service.dart';
-import 'package:chang_2nd_main_project/widgets/tobeContinue.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';

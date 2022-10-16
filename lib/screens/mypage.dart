@@ -66,7 +66,7 @@ class _MyPageState extends State<MyPage> {
                   ),
                   SizedBox(height: 15),
                   Text(
-                    (user.displayName != null) ? '${user.displayName}' :"IOS사용자",
+                    (user.displayName != null) ? '${user.displayName}' : "IOS사용자",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                   ),
                   Text(

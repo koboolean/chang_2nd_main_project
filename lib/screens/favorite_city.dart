@@ -1,12 +1,10 @@
-import 'dart:developer';
-
 import 'package:chang_2nd_main_project/services/auth_service.dart';
-import 'package:chang_2nd_main_project/services/search_service.dart';
+import 'package:chang_2nd_main_project/services/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../services/favorite_service.dart';
 import 'favorite_list.dart';
-import 'package:chang_2nd_main_project/services/firebase_analytics.dart';
 
 /// 홈 페이지
 /// 홈페이지

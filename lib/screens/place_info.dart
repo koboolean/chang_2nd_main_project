@@ -1,19 +1,15 @@
 import 'dart:async';
 
-import 'package:chang_2nd_main_project/services/event_service.dart';
-import 'package:chang_2nd_main_project/services/favorite_button.dart';
 import 'package:chang_2nd_main_project/services/firebase_analytics.dart';
 import 'package:chang_2nd_main_project/services/travel_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
-import '../services/auth_service.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:intl/intl.dart';
-import 'package:localization/localization.dart';
+
+import '../services/auth_service.dart';
 
 /// 음식점 상세 설명 페이지
 class FoodInfo extends StatefulWidget {

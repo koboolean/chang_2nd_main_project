@@ -1,17 +1,15 @@
 // import 'package:chang_2nd_main_project/screens/favorite_list.dart';
+import 'package:chang_2nd_main_project/model/foodToSend.dart';
+import 'package:chang_2nd_main_project/model/lodgeToSend.dart';
+import 'package:chang_2nd_main_project/model/placeToSend.dart';
 import 'package:chang_2nd_main_project/screens/place_info.dart';
 import 'package:chang_2nd_main_project/screens/search_page.dart';
-import 'package:chang_2nd_main_project/widgets/tobeContinue.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:chang_2nd_main_project/services/travel_service.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../services/auth_service.dart';
-import 'package:chang_2nd_main_project/model/foodToSend.dart';
-import 'package:chang_2nd_main_project/model/lodgeToSend.dart';
-import 'package:chang_2nd_main_project/model/placeToSend.dart';
 
 /// 홈페이지
 class PlaceList extends StatefulWidget {

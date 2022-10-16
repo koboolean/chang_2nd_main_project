@@ -57,12 +57,15 @@ Future<void> dialogBuilder(BuildContext context) {
                 width: 245,
                 height: 40,
                 child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    textStyle: Theme.of(context).textTheme.labelLarge,
-                    backgroundColor: Color.fromRGBO(221, 81, 37, 1),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
+                  style: ButtonStyle(
+                    //textStyle: Theme.of(context).textTheme.labelLarge,
+                    backgroundColor :  MaterialStateProperty.all<Color>(Color.fromRGBO(221, 81, 37, 1)),
+                    shape: MaterialStateProperty.all<
+                        RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius:
+                          BorderRadius.circular(30),
+                        )),
                   ),
                   child: const Text(
                     '후기 알려주기',
@@ -82,13 +85,16 @@ Future<void> dialogBuilder(BuildContext context) {
               Container(
                 width: 245,
                 height: 40,
-                child: TextButton(
-                  style: ElevatedButton.styleFrom(
-                    textStyle: Theme.of(context).textTheme.labelLarge,
-                    backgroundColor: Color.fromRGBO(210, 210, 210, 0.38),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    //textStyle: Theme.of(context).textTheme.labelLarge,
+                    backgroundColor :  MaterialStateProperty.all<Color>(Color.fromRGBO(210, 210, 210, 0.38)),
+                    shape: MaterialStateProperty.all<
+                        RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius:
+                          BorderRadius.circular(30),
+                        )),
                   ),
                   child: const Text(
                     '다시 보지 않기',

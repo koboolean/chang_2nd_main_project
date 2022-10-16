@@ -197,7 +197,9 @@ class _MySearchState extends State<MySearch>
       }
     }
     return Expanded(
-        child: GridView.builder(
+        child :
+        arr.isEmpty ? showUndfinedValue("검색에 대한 결과를 찾을 수 없어요.") :
+        GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2, childAspectRatio: 0.8),
             itemCount: arr.length,
@@ -385,7 +387,7 @@ class _MySearchState extends State<MySearch>
                   child: TabBarView(
                     children: [
                       (name == "")
-                          ? showUndfinedValue()
+                          ? showUndfinedValue("검색어를 입력해주세요.")
                           : Padding(
                               padding: const EdgeInsets.only(top: 50.0),
                               child: Consumer<SearchService>(
@@ -398,7 +400,7 @@ class _MySearchState extends State<MySearch>
                                     return Column(
                                       children: [
                                         docs.isEmpty
-                                            ? showUndfinedValue()
+                                            ? showUndfinedValue("검색어를 입력해주세요.")
                                             : selectSearchValue(docs, "food")
                                       ],
                                     );
@@ -407,7 +409,7 @@ class _MySearchState extends State<MySearch>
                               }),
                             ),
                       (name == "")
-                          ? showUndfinedValue()
+                          ? showUndfinedValue("검색어를 입력해주세요.")
                           : Padding(
                               padding: const EdgeInsets.only(top: 50.0),
                               child: Consumer<SearchService>(
@@ -420,7 +422,7 @@ class _MySearchState extends State<MySearch>
                                     return Column(
                                       children: [
                                         docs.isEmpty
-                                            ? showUndfinedValue()
+                                            ? showUndfinedValue("검색어를 입력해주세요.")
                                             : selectSearchValue(docs, "lodge")
                                       ],
                                     );
@@ -429,7 +431,7 @@ class _MySearchState extends State<MySearch>
                               }),
                             ),
                       (name == "")
-                          ? showUndfinedValue()
+                          ? showUndfinedValue("검색어를 입력해주세요.")
                           : Padding(
                               padding: const EdgeInsets.only(top: 50.0),
                               child: Consumer<SearchService>(
@@ -442,7 +444,7 @@ class _MySearchState extends State<MySearch>
                                     return Column(
                                       children: [
                                         docs.isEmpty
-                                            ? showUndfinedValue()
+                                            ? showUndfinedValue("검색어를 입력해주세요.")
                                             : selectSearchValue(docs, "place")
                                       ],
                                     );

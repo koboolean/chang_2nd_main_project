@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-Center showUndfinedValue(){
+Center showUndfinedValue(String value){
   return Center(
     child: Column(
       mainAxisAlignment : MainAxisAlignment.center,
@@ -17,7 +17,7 @@ Center showUndfinedValue(){
         ),
         SizedBox(height: 10),
         Text(
-          "검색어를 입력해주세요",
+          value,
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
