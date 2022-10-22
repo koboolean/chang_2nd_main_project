@@ -212,6 +212,18 @@ class _FoodInfoState extends State<FoodInfo> {
                     var hourDocs = snapshot.data?.docs ?? [];
                     var hours = hourDocs[0].get('businessHours').toString();
                     var breakTime = hourDocs[0].get('breaktime_LO').toString();
+
+                    //descrpition에서 설명 추출하기
+                    var description1 =
+                        widget.foodtoreceive.foodDescription.split("\n\n");
+                    var description1List = description1[0].split("\n");
+                    description1List.removeAt(0);
+                    var description1Final = description1List.join("\n");
+
+                    var description2List = description1[1].split("\n");
+                    description2List.removeAt(0);
+                    var description2Final = description2List.join("\n");
+
                     List<String> vHours = hours.split(',');
 
                     List<String> businessHours = [];
@@ -349,10 +361,66 @@ class _FoodInfoState extends State<FoodInfo> {
                               ),
                             ),
                           ),
+                          //주황색 구분 박스
+                          Padding(
+                            padding: const EdgeInsets.only(top: 23, left: 18.0),
+                            child: Container(
+                              height: 4,
+                              width: 42,
+                              color: Color.fromRGBO(221, 81, 37, 1),
+                            ),
+                          ),
+                          //혼밥러들을 위한 소소한 정보
+                          Padding(
+                            padding: const EdgeInsets.only(top: 14, left: 18.0),
+                            child: Text(
+                              '혼밥러들을 위한 소소한 정보',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
                           //음식 설명
                           Padding(
-                            padding: const EdgeInsets.all(18.0),
-                            child: Text(widget.foodtoreceive.foodDescription),
+                            padding: const EdgeInsets.only(left: 18.0, top: 8),
+                            child: Text(
+                              description1Final,
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                          //주황색 구분 박스
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(top: 36.0, left: 18.0),
+                            child: Container(
+                              height: 4,
+                              width: 42,
+                              color: Color.fromRGBO(221, 81, 37, 1),
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(top: 14.0, left: 18.0),
+                            child: Text(
+                              '에디터 한 줄 평',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          //음식 설명
+                          Padding(
+                            padding: const EdgeInsets.only(left: 18.0, top: 8),
+                            child: Text(
+                              description2Final,
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
                           ),
                         ],
                       ),
