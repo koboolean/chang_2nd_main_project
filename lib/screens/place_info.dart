@@ -216,6 +216,13 @@ class _FoodInfoState extends State<FoodInfo> {
                     //descrpition에서 설명 추출하기
                     var description1 =
                         widget.foodtoreceive.foodDescription.split("\n\n");
+
+                    if (description1.asMap().containsKey(1)) {
+                      "";
+                    } else {
+                      description1.insert(1, "0");
+                    }
+
                     var description1List = description1[0].split("\n");
                     description1List.removeAt(0);
                     var description1Final = description1List.join("\n");
