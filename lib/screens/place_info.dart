@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 import '../services/auth_service.dart';
 
@@ -41,6 +42,32 @@ class _FoodInfoState extends State<FoodInfo> {
   Widget build(BuildContext context) {
     final authService = context.read<AuthService>();
     final user = authService.currentUser()!;
+
+    //음식점 사진 Url list 생성
+    List<String> foodUrlList = [
+      widget.foodtoreceive.foodUrl2,
+      widget.foodtoreceive.foodUrl3,
+      widget.foodtoreceive.foodUrl4,
+      widget.foodtoreceive.foodUrl5,
+      widget.foodtoreceive.foodUrl6,
+      widget.foodtoreceive.foodUrl7,
+      widget.foodtoreceive.foodUrl8,
+      widget.foodtoreceive.foodUrl9,
+      widget.foodtoreceive.foodUrl10,
+      widget.foodtoreceive.foodUrl1
+    ];
+    int CurrentPos = 0;
+
+    print(foodUrlList);
+
+    //Carousel slider 삽입할 사진 이미지 정의
+    Widget buildImage(String foodUrlImage, int index) => Container(
+          width: double.infinity,
+          margin: EdgeInsets.only(left: 18.0, right: 18.0),
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.network(foodUrlImage, fit: BoxFit.cover)),
+        );
 
     return Consumer(
       builder: (context, travelService, child) {
@@ -333,13 +360,14 @@ class _FoodInfoState extends State<FoodInfo> {
                               ],
                             ),
                           ),
-
+                          //회색 가로줄
                           Container(
                             height: 7,
                             decoration: BoxDecoration(
                               color: Color.fromRGBO(243, 243, 243, 1),
                             ),
                           ),
+                          //Subtitle
                           Padding(
                             padding: const EdgeInsets.only(
                                 left: 18, top: 24, bottom: 16.0, right: 18),
@@ -351,23 +379,37 @@ class _FoodInfoState extends State<FoodInfo> {
                               ),
                             ),
                           ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(left: 18.0, right: 18.0),
-                            child: Container(
-                              width: double.infinity,
-                              height: 216,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(8.0),
-                                child: Image(
-                                  image: NetworkImage(
-                                    widget.foodtoreceive.foodUrl2,
-                                  ),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
+
+                          //이미지 여러장 보여주기
+                          Stack(
+                            children: [
+                              CarouselSlider.builder(
+                                  options: CarouselOptions(
+                                      autoPlay: true,
+                                      height: 216,
+                                      viewportFraction: 1,
+                                      onPageChanged: ((index, reason) {
+                                        setState(() {
+                                          CurrentPos = index + 1;
+                                        });
+                                      })),
+                                  itemCount: foodUrlList.length,
+                                  itemBuilder: (context, index, realIndex) {
+                                    final foodUrlImage = foodUrlList[index];
+                                    return buildImage(foodUrlImage, index);
+                                  }),
+                              Positioned(
+                                  right: 35,
+                                  top: 10,
+                                  child: Text(
+                                    '$CurrentPos / ${foodUrlList.length}',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                  )),
+                            ],
                           ),
+
                           //주황색 구분 박스
                           Padding(
                             padding: const EdgeInsets.only(top: 23, left: 18.0),
