@@ -79,21 +79,37 @@ class _MySearchState extends State<MySearch>
       if (selNm.toString().contains(name)) {
         final Object send;
         if (type == "food") {
-          String foodSubtitle = doc.get('Subtitle');
-          String foodAddress = doc.get('address');
-          String foodBusinessHours = doc.get('businessHours');
-          String foodClassification = doc.get('classification');
-          String foodDescription = doc.get('description');
-          String foodField14 = doc.get('field14');
-          String foodIdx = doc.get('idx');
-          String foodNaverLink = doc.get('naverlink');
-          String foodNote = doc.get('note');
-          String foodPhonenumber = doc.get('phoneNumber');
-          String foodPrice = doc.get('price');
-          String foodServingSize = doc.get('servingSize');
-          String foodName = doc.get('name');
-          String foodUrl1 = doc.get('url1');
-          String foodUrl2 = doc.get('url2');
+          String foodSubtitle = doc.get('Subtitle') ?? '';
+          String foodAddress = doc.get('address') ?? '';
+          String foodBusinessHours = doc.get('businessHours') ?? '';
+          String foodClassification = doc.get('classification') ?? '';
+          String foodDescription = doc.get('description') ?? '';
+          String foodField14 = doc.get('field14') ?? '';
+          String foodIdx = doc.get('idx') ?? '';
+          String foodNaverLink = doc.get('naverlink') ?? '';
+          String foodNote = doc.get('note') ?? '';
+          String foodPhonenumber = doc.get('phoneNumber') ?? '';
+          String foodPrice = doc.get('price') ?? '';
+          String foodServingSize = doc.get('servingSize') ?? '';
+          String foodName = doc.get('name') ?? '';
+          String foodUrl1 = doc.get('url1') ?? '';
+          String foodUrl2 = doc.get('url2') ?? '';
+          String foodUrl3 =
+              doc.data().toString().contains('url3') ? doc.get('url3') : '';
+          String foodUrl4 =
+              doc.data().toString().contains('url4') ? doc.get('url4') : '';
+          String foodUrl5 =
+              doc.data().toString().contains('url5') ? doc.get('url5') : '';
+          String foodUrl6 =
+              doc.data().toString().contains('url6') ? doc.get('url6') : '';
+          String foodUrl7 =
+              doc.data().toString().contains('url7') ? doc.get('url7') : '';
+          String foodUrl8 =
+              doc.data().toString().contains('url8') ? doc.get('url8') : '';
+          String foodUrl9 =
+              doc.data().toString().contains('url9') ? doc.get('url9') : '';
+          String foodUrl10 =
+              doc.data().toString().contains('url10') ? doc.get('url10') : '';
           String foodArea = doc.get('area');
 
           send = FoodInfoModel(
@@ -116,7 +132,15 @@ class _MySearchState extends State<MySearch>
               foodPrice,
               foodServingSize,
               foodUrl1,
-              foodUrl2);
+              foodUrl2,
+              foodUrl3,
+              foodUrl4,
+              foodUrl5,
+              foodUrl6,
+              foodUrl7,
+              foodUrl8,
+              foodUrl9,
+              foodUrl10);
         } else if (type == "lodge") {
           String lodgeBreakFastYn = doc.get('BreakfastYn');
           String lodgeSubtitle = doc.get('Subtitle');
@@ -197,120 +221,121 @@ class _MySearchState extends State<MySearch>
       }
     }
     return Expanded(
-        child :
-        arr.isEmpty ? showUndfinedValue("검색에 대한 결과를 찾을 수 없어요.") :
-        GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, childAspectRatio: 0.8),
-            itemCount: arr.length,
-            itemBuilder: (context, index) {
-              var data = arr[index];
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Stack(
+        child: arr.isEmpty
+            ? showUndfinedValue("검색에 대한 결과를 찾을 수 없어요.")
+            : GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2, childAspectRatio: 0.8),
+                itemCount: arr.length,
+                itemBuilder: (context, index) {
+                  var data = arr[index];
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 18.0, right: 18.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            //이벤트 팝업을 위한 페이지 이동 여부
-                            context
-                                .read<EventBanner>()
-                                .pageVisitClick
-                                .add(true);
-                            // print(context
-                            //     .read<EventBanner>()
-                            //     .pageVisitClick
-                            //     .length);
-                            Navigator.push(
-                                context,
-                                type == "place"
-                                    ? MaterialPageRoute(
-                                        builder: (context) => PlaceInfo(
-                                              placetoreceive: data,
-                                            ))
-                                    : type == "food"
+                      Stack(
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(left: 18.0, right: 18.0),
+                            child: GestureDetector(
+                              onTap: () {
+                                //이벤트 팝업을 위한 페이지 이동 여부
+                                context
+                                    .read<EventBanner>()
+                                    .pageVisitClick
+                                    .add(true);
+                                // print(context
+                                //     .read<EventBanner>()
+                                //     .pageVisitClick
+                                //     .length);
+                                Navigator.push(
+                                    context,
+                                    type == "place"
                                         ? MaterialPageRoute(
-                                            builder: (context) => FoodInfo(
-                                                  foodtoreceive: data,
+                                            builder: (context) => PlaceInfo(
+                                                  placetoreceive: data,
                                                 ))
-                                        : MaterialPageRoute(
-                                            builder: (context) => LodgeInfo(
-                                                  lodgetoreceive: data,
-                                                )));
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
-                              color: Colors.grey,
+                                        : type == "food"
+                                            ? MaterialPageRoute(
+                                                builder: (context) => FoodInfo(
+                                                      foodtoreceive: data,
+                                                    ))
+                                            : MaterialPageRoute(
+                                                builder: (context) => LodgeInfo(
+                                                      lodgetoreceive: data,
+                                                    )));
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                  color: Colors.grey,
 
-                              //사진 삽입
-                              image: DecorationImage(
-                                image: NetworkImage(data.url1),
-                                fit: BoxFit.cover,
+                                  //사진 삽입
+                                  image: DecorationImage(
+                                    image: NetworkImage(data.url1),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                width: double.maxFinite,
+                                height: 142, //실제 높이 142-16 = 126
                               ),
                             ),
-                            width: double.maxFinite,
-                            height: 142, //실제 높이 142-16 = 126
                           ),
+                          Positioned(
+                            bottom: 10,
+                            left: 28,
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 8.0),
+                                  child: Text(
+                                    data.area,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                      shadows: [
+                                        BoxShadow(
+                                          color: Color(0x9e000000),
+                                          offset: Offset(0, 2),
+                                          blurRadius: 2,
+                                          spreadRadius: 0,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 9.0, left: 15.0, bottom: 2.0, right: 14),
+                        child: Text(
+                          data.name,
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              overflow: TextOverflow.ellipsis),
                         ),
                       ),
-                      Positioned(
-                        bottom: 10,
-                        left: 28,
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(right: 8.0),
-                              child: Text(
-                                data.area,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                  shadows: [
-                                    BoxShadow(
-                                      color: Color(0x9e000000),
-                                      offset: Offset(0, 2),
-                                      blurRadius: 2,
-                                      spreadRadius: 0,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 2.0, left: 15.0, bottom: 14.0, right: 14),
+                        child: Text(
+                          data.address,
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey[700]!,
+                              overflow: TextOverflow.ellipsis),
                         ),
                       ),
                     ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        top: 9.0, left: 15.0, bottom: 2.0, right: 14),
-                    child: Text(
-                      data.name,
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          overflow: TextOverflow.ellipsis),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        top: 2.0, left: 15.0, bottom: 14.0, right: 14),
-                    child: Text(
-                      data.address,
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey[700]!,
-                          overflow: TextOverflow.ellipsis),
-                    ),
-                  ),
-                ],
-              );
-            }));
+                  );
+                }));
   }
 
   @override
