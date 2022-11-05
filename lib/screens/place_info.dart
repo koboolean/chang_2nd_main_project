@@ -56,9 +56,17 @@ class _FoodInfoState extends State<FoodInfo> {
       widget.foodtoreceive.foodUrl10,
       widget.foodtoreceive.foodUrl1
     ];
-    int CurrentPos = 0;
+    var _CurrentPos;
 
-    print(foodUrlList);
+    //음식사진 리스트 중 빈칸 제거
+    foodUrlList.remove("");
+    foodUrlList.remove("");
+    foodUrlList.remove("");
+    foodUrlList.remove("");
+    foodUrlList.remove("");
+    foodUrlList.remove("");
+    foodUrlList.remove("");
+    foodUrlList.remove("");
 
     //Carousel slider 삽입할 사진 이미지 정의
     Widget buildImage(String foodUrlImage, int index) => Container(
@@ -108,7 +116,8 @@ class _FoodInfoState extends State<FoodInfo> {
                     //공유 이벤트 발생
                     firebaseAnalyticsLog(user.uid, "Share()");
                     Share.share(
-                        "[SOLT]\n${user.displayName}님께서 장소를 공유하셨어요\n${widget.foodtoreceive.foodAddress}\n[음식점명 : ${widget.foodtoreceive.foodName}]");
+                        "[SOLT]\n${user.displayName}님께서 장소를 공유하셨어요\n${widget.foodtoreceive.foodAddress}\n[음식점명 : ${widget.foodtoreceive.foodName}]",
+                        sharePositionOrigin: Rect.fromLTWH(0, 0, 24, 24));
                   },
                 ),
               ),
@@ -385,28 +394,32 @@ class _FoodInfoState extends State<FoodInfo> {
                             children: [
                               CarouselSlider.builder(
                                   options: CarouselOptions(
-                                      autoPlay: true,
+                                      autoPlay: false,
                                       height: 216,
                                       viewportFraction: 1,
                                       onPageChanged: ((index, reason) {
-                                        setState(() {
-                                          CurrentPos = index + 1;
-                                        });
+                                        setState(() {});
                                       })),
                                   itemCount: foodUrlList.length,
                                   itemBuilder: (context, index, realIndex) {
                                     final foodUrlImage = foodUrlList[index];
+                                    _CurrentPos =
+                                        foodUrlList.indexOf(foodUrlImage) + 1;
+                                    print(_CurrentPos);
                                     return buildImage(foodUrlImage, index);
                                   }),
                               Positioned(
-                                  right: 35,
-                                  top: 10,
-                                  child: Text(
-                                    '$CurrentPos / ${foodUrlList.length}',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                    ),
-                                  )),
+                                right: 35,
+                                top: 10,
+                                child: _CurrentPos == null
+                                    ? Text("")
+                                    : Text(
+                                        '$_CurrentPos / ${foodUrlList.length}',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                              ),
                             ],
                           ),
 
@@ -584,7 +597,8 @@ class _LodgeInfoState extends State<LodgeInfo> {
                     //공유 이벤트 발생
                     firebaseAnalyticsLog(user.uid, "Share()");
                     Share.share(
-                        "[SOLT]\n${user.displayName}님께서 장소를 공유하셨어요\n${widget.lodgetoreceive.lodgeAddress}\n[숙소명 :${widget.lodgetoreceive.lodgeName}]");
+                        "[SOLT]\n${user.displayName}님께서 장소를 공유하셨어요\n${widget.lodgetoreceive.lodgeAddress}\n[숙소명 :${widget.lodgetoreceive.lodgeName}]",
+                        sharePositionOrigin: Rect.fromLTWH(0, 0, 24, 24));
                   },
                 ),
               ),
@@ -946,8 +960,8 @@ class _PlaceInfoState extends State<PlaceInfo> {
                     //공유 이벤트 발생
                     firebaseAnalyticsLog(user.uid, "Share()");
                     Share.share(
-                      "[SOLT]\n${user.displayName}님께서 장소를 공유하셨어요\n${widget.placetoreceive.placeAddress}\n[관광지명 :${widget.placetoreceive.placeName}]",
-                    );
+                        "[SOLT]\n${user.displayName}님께서 장소를 공유하셨어요\n${widget.placetoreceive.placeAddress}\n[관광지명 :${widget.placetoreceive.placeName}]",
+                        sharePositionOrigin: Rect.fromLTWH(0, 0, 24, 24));
                   },
                 ),
               ),
