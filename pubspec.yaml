@@ -18,6 +18,7 @@ dependencies:
   provider: ^6.0.2 #provider
   google_fonts: ^2.2.0 #google Fonts
   dotted_line: ^3.1.0 #dotted line
+  carousel_slider: ^4.0.0 #사진 여러장 보여주는 패키지
 
   geolocator: ^9.0.1  #위치 정보
   webview_flutter_plus: ^0.3.0+2

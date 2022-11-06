@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 import '../services/auth_service.dart';
 
@@ -44,6 +45,40 @@ class _FoodInfoState extends State<FoodInfo> {
     final user = authService.currentUser()!;
     // late String lat ;
     // late String long ;
+
+    //음식점 사진 Url list 생성
+    List<String> foodUrlList = [
+      widget.foodtoreceive.foodUrl2,
+      widget.foodtoreceive.foodUrl3,
+      widget.foodtoreceive.foodUrl4,
+      widget.foodtoreceive.foodUrl5,
+      widget.foodtoreceive.foodUrl6,
+      widget.foodtoreceive.foodUrl7,
+      widget.foodtoreceive.foodUrl8,
+      widget.foodtoreceive.foodUrl9,
+      widget.foodtoreceive.foodUrl10,
+      widget.foodtoreceive.foodUrl1
+    ];
+    var _CurrentPos;
+
+    //음식사진 리스트 중 빈칸 제거
+    foodUrlList.remove("");
+    foodUrlList.remove("");
+    foodUrlList.remove("");
+    foodUrlList.remove("");
+    foodUrlList.remove("");
+    foodUrlList.remove("");
+    foodUrlList.remove("");
+    foodUrlList.remove("");
+
+    //Carousel slider 삽입할 사진 이미지 정의
+    Widget buildImage(String foodUrlImage, int index) => Container(
+          width: double.infinity,
+          margin: EdgeInsets.only(left: 18.0, right: 18.0),
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.network(foodUrlImage, fit: BoxFit.cover)),
+        );
 
     return Consumer(
       builder: (context, travelService, child) {
@@ -84,7 +119,8 @@ class _FoodInfoState extends State<FoodInfo> {
                     //공유 이벤트 발생
                     firebaseAnalyticsLog(user.uid, "Share()");
                     Share.share(
-                        "[SOLT]\n${user.displayName}님께서 장소를 공유하셨어요\n${widget.foodtoreceive.foodAddress}\n[음식점명 : ${widget.foodtoreceive.foodName}]");
+                        "[SOLT]\n${user.displayName}님께서 장소를 공유하셨어요\n${widget.foodtoreceive.foodAddress}\n[음식점명 : ${widget.foodtoreceive.foodName}]",
+                        sharePositionOrigin: Rect.fromLTWH(0, 0, 24, 24));
                   },
                 ),
               ),
@@ -251,6 +287,25 @@ class _FoodInfoState extends State<FoodInfo> {
                     var hourDocs = snapshot.data?.docs ?? [];
                     var hours = hourDocs[0].get('businessHours').toString();
                     var breakTime = hourDocs[0].get('breaktime_LO').toString();
+
+                    //descrpition에서 설명 추출하기
+                    var description1 =
+                        widget.foodtoreceive.foodDescription.split("\n\n");
+
+                    if (description1.asMap().containsKey(1)) {
+                      "";
+                    } else {
+                      description1.insert(1, "0");
+                    }
+
+                    var description1List = description1[0].split("\n");
+                    description1List.removeAt(0);
+                    var description1Final = description1List.join("\n");
+
+                    var description2List = description1[1].split("\n");
+                    description2List.removeAt(0);
+                    var description2Final = description2List.join("\n");
+
                     List<String> vHours = hours.split(',');
 
                     List<String> businessHours = [];
@@ -353,13 +408,14 @@ class _FoodInfoState extends State<FoodInfo> {
                               ],
                             ),
                           ),
-
+                          //회색 가로줄
                           Container(
                             height: 7,
                             decoration: BoxDecoration(
                               color: Color.fromRGBO(243, 243, 243, 1),
                             ),
                           ),
+                          //Subtitle
                           Padding(
                             padding: const EdgeInsets.only(
                                 left: 18, top: 24, bottom: 16.0, right: 18),
@@ -371,27 +427,101 @@ class _FoodInfoState extends State<FoodInfo> {
                               ),
                             ),
                           ),
+
+                          //이미지 여러장 보여주기
+                          Stack(
+                            children: [
+                              CarouselSlider.builder(
+                                  options: CarouselOptions(
+                                      autoPlay: false,
+                                      height: 216,
+                                      viewportFraction: 1,
+                                      onPageChanged: ((index, reason) {
+                                        setState(() {});
+                                      })),
+                                  itemCount: foodUrlList.length,
+                                  itemBuilder: (context, index, realIndex) {
+                                    final foodUrlImage = foodUrlList[index];
+                                    _CurrentPos =
+                                        foodUrlList.indexOf(foodUrlImage) + 1;
+                                    print(_CurrentPos);
+                                    return buildImage(foodUrlImage, index);
+                                  }),
+                              Positioned(
+                                right: 35,
+                                top: 10,
+                                child: _CurrentPos == null
+                                    ? Text("")
+                                    : Text(
+                                        '$_CurrentPos / ${foodUrlList.length}',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                              ),
+                            ],
+                          ),
+
+                          //주황색 구분 박스
                           Padding(
-                            padding:
-                                const EdgeInsets.only(left: 18.0, right: 18.0),
+                            padding: const EdgeInsets.only(top: 23, left: 18.0),
                             child: Container(
-                              width: double.infinity,
-                              height: 216,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(8.0),
-                                child: Image(
-                                  image: NetworkImage(
-                                    widget.foodtoreceive.foodUrl2,
-                                  ),
-                                  fit: BoxFit.cover,
-                                ),
+                              height: 4,
+                              width: 42,
+                              color: Color.fromRGBO(221, 81, 37, 1),
+                            ),
+                          ),
+                          //혼밥러들을 위한 소소한 정보
+                          Padding(
+                            padding: const EdgeInsets.only(top: 14, left: 18.0),
+                            child: Text(
+                              '혼밥러들을 위한 소소한 정보',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
                           //음식 설명
                           Padding(
-                            padding: const EdgeInsets.all(18.0),
-                            child: Text(widget.foodtoreceive.foodDescription),
+                            padding: const EdgeInsets.only(left: 18.0, top: 8),
+                            child: Text(
+                              description1Final,
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                          //주황색 구분 박스
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(top: 36.0, left: 18.0),
+                            child: Container(
+                              height: 4,
+                              width: 42,
+                              color: Color.fromRGBO(221, 81, 37, 1),
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(top: 14.0, left: 18.0),
+                            child: Text(
+                              '에디터 한 줄 평',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          //음식 설명
+                          Padding(
+                            padding: const EdgeInsets.only(left: 18.0, top: 8),
+                            child: Text(
+                              description2Final,
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -506,7 +636,8 @@ class _LodgeInfoState extends State<LodgeInfo> {
                     //공유 이벤트 발생
                     firebaseAnalyticsLog(user.uid, "Share()");
                     Share.share(
-                        "[SOLT]\n${user.displayName}님께서 장소를 공유하셨어요\n${widget.lodgetoreceive.lodgeAddress}\n[숙소명 :${widget.lodgetoreceive.lodgeName}]");
+                        "[SOLT]\n${user.displayName}님께서 장소를 공유하셨어요\n${widget.lodgetoreceive.lodgeAddress}\n[숙소명 :${widget.lodgetoreceive.lodgeName}]",
+                        sharePositionOrigin: Rect.fromLTWH(0, 0, 24, 24));
                   },
                 ),
               ),
@@ -868,8 +999,8 @@ class _PlaceInfoState extends State<PlaceInfo> {
                     //공유 이벤트 발생
                     firebaseAnalyticsLog(user.uid, "Share()");
                     Share.share(
-                      "[SOLT]\n${user.displayName}님께서 장소를 공유하셨어요\n${widget.placetoreceive.placeAddress}\n[관광지명 :${widget.placetoreceive.placeName}]",
-                    );
+                        "[SOLT]\n${user.displayName}님께서 장소를 공유하셨어요\n${widget.placetoreceive.placeAddress}\n[관광지명 :${widget.placetoreceive.placeName}]",
+                        sharePositionOrigin: Rect.fromLTWH(0, 0, 24, 24));
                   },
                 ),
               ),

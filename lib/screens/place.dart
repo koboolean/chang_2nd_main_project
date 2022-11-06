@@ -300,24 +300,41 @@ class FoodToSend {
   final String foodServingSize;
   final String foodUrl1;
   final String foodUrl2;
+  final String foodUrl3;
+  final String foodUrl4;
+  final String foodUrl5;
+  final String foodUrl6;
+  final String foodUrl7;
+  final String foodUrl8;
+  final String foodUrl9;
+  final String foodUrl10;
 
   const FoodToSend(
-      this.foodSubtitle,
-      this.foodAddress,
-      this.foodArea,
-      this.foodBusinessHours,
-      this.foodClassification,
-      this.foodDescription,
-      this.foodField14,
-      this.foodIdx,
-      this.foodName,
-      this.foodNaverLink,
-      this.foodNote,
-      this.foodPhonenumber,
-      this.foodPrice,
-      this.foodServingSize,
-      this.foodUrl1,
-      this.foodUrl2);
+    this.foodSubtitle,
+    this.foodAddress,
+    this.foodArea,
+    this.foodBusinessHours,
+    this.foodClassification,
+    this.foodDescription,
+    this.foodField14,
+    this.foodIdx,
+    this.foodName,
+    this.foodNaverLink,
+    this.foodNote,
+    this.foodPhonenumber,
+    this.foodPrice,
+    this.foodServingSize,
+    this.foodUrl1,
+    this.foodUrl2,
+    this.foodUrl3,
+    this.foodUrl4,
+    this.foodUrl5,
+    this.foodUrl6,
+    this.foodUrl7,
+    this.foodUrl8,
+    this.foodUrl9,
+    this.foodUrl10,
+  );
 }
 
 //음식점 제안 코멘트
@@ -403,26 +420,75 @@ class _RecommendFoodListState extends State<RecommendFoodList> {
                       String foodName = doc.get('name') ?? "";
                       String foodUrl1 = doc.get('url1') ?? "";
                       String foodUrl2 = doc.get('url2') ?? "";
+                      //url0이 있는지 검사 후 있는 경우 불러오기
+                      String foodUrl3 = doc.data().toString().contains('url3')
+                          ? doc.get('url3')
+                          : '';
+                      String foodUrl4 = doc.data().toString().contains('url4')
+                          ? doc.get('url4')
+                          : '';
+                      String foodUrl5 = doc.data().toString().contains('url5')
+                          ? doc.get('url5')
+                          : '';
+                      String foodUrl6 = doc.data().toString().contains('url6')
+                          ? doc.get('url6')
+                          : '';
+                      String foodUrl7 = doc.data().toString().contains('url7')
+                          ? doc.get('url7')
+                          : '';
+                      String foodUrl8 = doc.data().toString().contains('url8')
+                          ? doc.get('url8')
+                          : '';
+                      String foodUrl9 = doc.data().toString().contains('url9')
+                          ? doc.get('url9')
+                          : '';
+                      String foodUrl10 = doc.data().toString().contains('url10')
+                          ? doc.get('url10')
+                          : '';
                       String foodArea = doc.get('area') ?? "";
                       String foodDocId = doc.id;
 
                       final foodtosend = FoodToSend(
-                          foodSubtitle,
-                          foodAddress,
-                          foodArea,
-                          foodBusinessHours,
-                          foodClassification,
-                          foodDescription,
-                          foodField14,
-                          foodIdx,
-                          foodName,
-                          foodNaverLink,
-                          foodNote,
-                          foodPhonenumber,
-                          foodPrice,
-                          foodServingSize,
-                          foodUrl1,
-                          foodUrl2);
+                        foodSubtitle,
+                        foodAddress,
+                        foodArea,
+                        foodBusinessHours,
+                        foodClassification,
+                        foodDescription,
+                        foodField14,
+                        foodIdx,
+                        foodName,
+                        foodNaverLink,
+                        foodNote,
+                        foodPhonenumber,
+                        foodPrice,
+                        foodServingSize,
+                        foodUrl1,
+                        foodUrl2,
+                        foodUrl3,
+                        foodUrl4,
+                        foodUrl5,
+                        foodUrl6,
+                        foodUrl7,
+                        foodUrl8,
+                        foodUrl9,
+                        foodUrl10,
+                      );
+
+                      final foodUrlList = [
+                        foodUrl2,
+                        foodUrl3,
+                        foodUrl4,
+                        foodUrl5,
+                        foodUrl6,
+                        foodUrl7,
+                        foodUrl8,
+                        foodUrl9,
+                        foodUrl10,
+                        foodUrl1
+                      ];
+
+                      bool urlCheck = foodUrlList.remove("");
 
                       return Padding(
                         padding: const EdgeInsets.only(
