@@ -112,6 +112,7 @@ class _ScheduleCompleteState extends State<ScheduleComplete>
                             ],
                           ),
                         ),
+                        /*아래 container는 widgets폴더 place_info_map.dart 와 같은 코드 */
                         Container(
                           height: 200,
                           width: double.infinity,
@@ -159,6 +160,7 @@ class _ScheduleCompleteState extends State<ScheduleComplete>
                             },
                           ),
                         ),
+                        ////////////////////////////////////////////
                         Container(
                           padding: EdgeInsets.symmetric(horizontal: 18),
                           child: TabBar(

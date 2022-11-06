@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:chang_2nd_main_project/services/firebase_analytics.dart';
 import 'package:chang_2nd_main_project/services/travel_service.dart';
+import 'package:chang_2nd_main_project/widgets/place_info_map.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -41,6 +42,8 @@ class _FoodInfoState extends State<FoodInfo> {
   Widget build(BuildContext context) {
     final authService = context.read<AuthService>();
     final user = authService.currentUser()!;
+    // late String lat ;
+    // late String long ;
 
     return Consumer(
       builder: (context, travelService, child) {
@@ -136,12 +139,48 @@ class _FoodInfoState extends State<FoodInfo> {
                     //음식점 주소
                     Padding(
                       padding: const EdgeInsets.only(bottom: 6.0),
-                      child: Text(
-                        widget.foodtoreceive.foodAddress,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                        ),
+                      child: Row(
+                        children: [
+                          Text(
+                            widget.foodtoreceive.foodAddress,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () async {
+                              final idx = widget.foodtoreceive.foodIdx;
+
+                              final geocode = FirebaseFirestore.instance
+                                  .collection('geocode_foodArea')
+                                  .where('idx', isEqualTo: idx);
+                              final geoValue = await geocode.get();
+
+                              final latLong = geoValue.docs.toList();
+                              final lat = latLong[0]['lat'];
+                              final long = latLong[0]['long'];
+
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => PlaceInfoMap(
+                                    mapAddress:
+                                        widget.foodtoreceive.foodAddress,
+                                    mapName: widget.foodtoreceive.foodName,
+                                    mapImage: widget.foodtoreceive.foodUrl1,
+                                    mapLat: lat,
+                                    mapLong: long,
+                                  ),
+                                ),
+                              );
+                            },
+                            icon: Icon(
+                              Icons.map_outlined,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
 

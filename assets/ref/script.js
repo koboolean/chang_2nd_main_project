@@ -6,7 +6,7 @@ function createMap(){
     map = new Tmapv2.Map("map_div", {
         center : new Tmapv2.LatLng(33.4794947,126.4919039),
         width : "100%",
-        height : "400px",
+        height : "100%",
         zoom : 15,
         zoomControl : true,
         scrollwheel : true
@@ -34,3 +34,4 @@ function currentLocation(lat, lon){
     map.setCenter(markerPosition);
     markers.push(marker);
 }
+
