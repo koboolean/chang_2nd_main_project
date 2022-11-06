@@ -118,8 +118,9 @@ class _FoodInfoState extends State<FoodInfo> {
                   onPressed: () {
                     //공유 이벤트 발생
                     firebaseAnalyticsLog(user.uid, "Share()");
+                    var userName = user.displayName != null ? user.displayName : "사용자";
                     Share.share(
-                        "[SOLT]\n${user.displayName}님께서 장소를 공유하셨어요\n${widget.foodtoreceive.foodAddress}\n[음식점명 : ${widget.foodtoreceive.foodName}]",
+                        "[SOLT]\n${userName!}님께서 장소를 공유하셨어요\n${widget.foodtoreceive.foodAddress}\n[음식점명 : ${widget.foodtoreceive.foodName}]",
                         sharePositionOrigin: Rect.fromLTWH(0, 0, 24, 24));
                   },
                 ),
@@ -635,8 +636,9 @@ class _LodgeInfoState extends State<LodgeInfo> {
                   onPressed: () {
                     //공유 이벤트 발생
                     firebaseAnalyticsLog(user.uid, "Share()");
+                    var userName = user.displayName != null ? user.displayName : "사용자";
                     Share.share(
-                        "[SOLT]\n${user.displayName}님께서 장소를 공유하셨어요\n${widget.lodgetoreceive.lodgeAddress}\n[숙소명 :${widget.lodgetoreceive.lodgeName}]",
+                        "[SOLT]\n${userName!}님께서 장소를 공유하셨어요\n${widget.lodgetoreceive.lodgeAddress}\n[숙소명 :${widget.lodgetoreceive.lodgeName}]",
                         sharePositionOrigin: Rect.fromLTWH(0, 0, 24, 24));
                   },
                 ),
@@ -998,8 +1000,9 @@ class _PlaceInfoState extends State<PlaceInfo> {
                   onPressed: () {
                     //공유 이벤트 발생
                     firebaseAnalyticsLog(user.uid, "Share()");
+                    var userName = user.displayName != null ? user.displayName : "사용자";
                     Share.share(
-                        "[SOLT]\n${user.displayName}님께서 장소를 공유하셨어요\n${widget.placetoreceive.placeAddress}\n[관광지명 :${widget.placetoreceive.placeName}]",
+                        "[SOLT]\n${userName!}님께서 장소를 공유하셨어요\n${widget.placetoreceive.placeAddress}\n[관광지명 :${widget.placetoreceive.placeName}]",
                         sharePositionOrigin: Rect.fromLTWH(0, 0, 24, 24));
                   },
                 ),
