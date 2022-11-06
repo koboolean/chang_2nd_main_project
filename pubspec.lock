@@ -42,14 +42,14 @@ packages:
       name: carousel_slider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.0"
-  charcode:
+    version: "4.1.1"
+  characters:
     dependency: transitive
     description:
-      name: charcode
+      name: characters
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.3.1"
+    version: "1.2.1"
   checked_yaml:
     dependency: transitive
     description:
