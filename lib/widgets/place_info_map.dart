@@ -108,8 +108,9 @@ class _PlaceInfoMap extends State<PlaceInfoMap> {
                   ),
                 ),
                 Positioned(
-                  bottom: MediaQuery.of(context).size.height - 620,
+                  bottom: 20,
                   right: 10,
+                  left: 10,
                   child: Container(
                     padding: EdgeInsetsDirectional.all(9),
                     width: 339,
